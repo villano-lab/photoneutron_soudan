@@ -13,6 +13,12 @@ void plotCanvas(TCanvas *c1, string name="default",bool dopng=false)
      c1->Print(Form("%s.png",name.c_str()));
 
 }
+//plot a  canvas to .png or .eps
+void plotCanvas(TCanvas *c1, string name="default",string ext="eps")
+{
+     c1->Print(Form("%s.%s",name.c_str(),ext.c_str()));
+
+}
 //make a frame for plotting histos or graphs
 TH1 *makeFrame(double xmin,double xmax,double ymin,double ymax, int bins, string xtit, string ytit,double ytitoff=0.8, double xtitoff=1.0)
 {

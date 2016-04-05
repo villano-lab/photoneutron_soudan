@@ -1,0 +1,260 @@
+Using the raw sima2root program is a bit awkward, which is why I would
+like to create scripts which use this binary but do directory manipulation
+to make the package more user-friendly.  Documentation takes a lot of time
+so I started here with a quick user guide on how to use the raw binary.
+
+There are basically 3 steps which are notated below.  First you have to
+get and compile the code, then you have to set up the file chain files,
+then you run the code on the file chain files to produce the root output
+to any directory you like. 
+
+Step 1: Get and Compile-------------------------------------------
+
+If you are one of the select few, you can access the code through my cvs
+repository. First set the correct environment variables: (note: 'usr>' is
+my version of a prompt, 'susr>' a root prompt)
+
+usr>export CVSROOT=<username>@physics.umn.edu:/data/giacdms1/villaa/repositories/code_repository/
+usr>export CVS_RSH=/usr/bin/ssh
+
+Here, <username> is your username and you must be part of the CDMS group
+on the umn physics computer system.  In the future there may be another group with
+a smaller number of people, which you will need to be added to if you need to re-checkout
+a later version of the code.
+
+Now you can check the code out:
+
+usr>cvs checkout sima2ROOT
+
+Hopefully this worked, if not contact me there might be a permissions issue.  At this
+point you have to go into the directory you just created:
+
+usr>cd sima2ROOT/testprogram/
+
+And then compile the code:
+
+usr>make -f makefile.cdms
+
+Note that if you only type make it will use the standard "makefile" and it will fail because
+that points to the wrong directories.   At this point your code should have compiled with
+no errors.  As a side-effect, you will have compiled the code in the directory ../getSimEvent
+into static library called libgetSimEvent.a which resides in ../getSimEvent/.  This library
+contains a class for chaining the simulation event standard text files.  By standard I mean
+with the following header, and appropriate variables in the data portion:
+
+-----------------------------------------------------------------------------------------------
+<white space line.......>
+EV	DT	TS	P	Type	E1	D3	X1	Y1	Z1	X3	Y3	Z3	PX	PY	PZ	time	origevt	
+1	1001	100001	0	13	280000	10.47561022	0	0	14000	0.0006199656752	-0.000562375012	13934.13078	0	0	-1	0.2197160696	0	
+1	1001	100002	0	13	279988.844	0.3122849022	0.0006199656752	-0.000562375012	13934.13078	0.0005831612513	-0.0005689277527	13931.72347	-1.350837507e-05	-1.068818192e-06	-0.9999999999	0.2277460203	0	
+----------------------------------------------------------------------------------------------
+
+Step 2: set up the file chains----------------------------------------------
+
+The code as written is just the core part of what is going on.  I intend to write a script
+which goes over it to provide some useful directory functionality, like being able to transparently
+run on every file in a directory, and having the script look at the filename prefixes and make decisions
+on what the new file names should be.
+
+However, none of that exists, but this is still useable code.  We just have to specify...very explicitly
+on which files the code should be run.  For this purpose there are two files, the .dat file and the .list
+file.  The .dat file (see example.dat included here) just gets the directories and the basic structure
+of the input files setup for the getSimEvent object (which is used here to transparently loop over all
+simulated events instead of opening and closing every file manually, really these input files were devised
+for that class).  The .list file contains all the specifics of each file in the chain (like it's random
+generator number, run number, etc).  The .dat file looks like:
+
+-----------------------------------------------------------------------------------------------
+ntuple_type:	data
+runlist_pars:	4
+ntuple_before:  /data/giacdms1/villaa/data/GFcompare/GFcompareC9H12_280GeV_ _ _
+ntuple_after:   .txt	
+ntuple_list:	example.list
+selection_type: 8
+0.1	1.5
+-------------------------------------------------------------------------------------------------
+
+Just to be warned, I have occasionally had a bug where if there is a white space after one of these
+lines the code fails.  I think I took care of that, but might as well make sure these lines contain
+no whitespace after them.  The file works on tags, as you can see, they are left overs from my paw
+days (oh the shame!) because of the word "ntuple."  Anyway, lets go through the lines:
+
+line 1: (ntuple_type:) don't touch it, I used to have a "sim" flag that did something, it's useless with the files we're
+        reading.
+
+line 2: (runlist_pars:) number of parameters in the runlist, 4 in this case.
+
+line 3: (ntuple_before:) the absolute path of the files you want to read plus a "template" for their naming convention.
+        you can fill this out pretty simply, up to the underscores.  You need a space and then an underscore
+	for every "number" type object that you will fill in to this template.  For example, in the above
+	we will fill in a long random number, a run number, and a file number.  These numbers will be
+	listed in the .list file.  You can see that the numbers will be filled in between the underscores
+	and the last number is filled in AFTER THE LAST UNDERSCORE (no need for whitespace there, just end the
+	line).
+
+line 4: (ntuple_after:) space for any string or extension that goes after the last number.
+
+line 5: (ntuple_list:) the absolute path filename of the list file which contains the file numbers
+
+line 6: (selection_type:) ok, this is where I'll probably loose you, but don't worry, you might
+        just be able to keep this as-is.  The number here is an integer number which will be interpreted
+	in binary.  It will then be used to make "cuts" on the files in the example.list file.  For
+	example we have 8 here which in binary is:  1000.  This signifies that I will put a restriction
+	on the values in the 4th column (reading from left) in the example.list file.  
+	The selection is such that the least significant bit represents the LEFTMOST column in the
+	.list file.  Since the selection_type knows you are making a cut on one column only, it
+	expects you to list ONE range on the lines after it...as I have done.  This means that it
+	will only take files for which the 4th column has a number between 0.1 and 1.5.  I used this
+	for a binary switch to turn some runs off if I didnt like them.  If you have a number in this
+	line which makes the program think it should expect 4 ranges then you only supply 2 ranges
+	on the lines below, it will probably seg-fault or something lame.  If you do it the other way
+	and specify too many ranges, it might be ok, and it might seg-fault just for spite.  The code
+	has not been cleaned up for general use so I can't be sure that every input you can think of
+	is OK. 
+
+line 7-infinity: ranges for the specification of the line above. These ranges are interpreted as real
+                 numbers, so if you want something to be one integer, just bracket it closely like:
+		 0.9<x<1.1, if you want x to be integer and unity.  The syntax for this line is
+		 simply:
+
+		 0.9	1.1
+
+		 That can be any amount of whitespace between them.  
+		
+Now, after the tags like (ntuple_list:) there can be any amount of whitespace before the data. 
+
+Now for the .list file.  Here is a few lines of the file included in this directory:
+
+
+-----------------------------------------------------------------------------------------
+1306835159  000  000  1
+1306835159  000  001  1
+1306835159  000  002  1
+1306835159  000  003  1
+1306835159  000  004  1
+1306835159  000  005  1
+1306835159  000  006  1
+1306835159  000  007  1
+1306835159  000  008  1
+1306835159  000  009  1
+-----------------------------------------------------------------------------------------
+
+These files simply specify the random number, run number, and file number.  These are filled in left to right
+in the (ntuple_before:) template.   Notice because of the number of whitespaces that were placed in the
+(ntuple_before:) template specifier, the program knows only to use the first 3 columns to put in the run
+name.  So what is the last column?  Well (runlist_pars:) specified that the .list file would have 4 columns,
+but the number of whitespace in (ntuple_before:) signified only 3 of them are to be used to construct the 
+run name.  The last one (and any more you want to put in, remember to update (runlist_pars:) if you do) is
+meta-data, that can be cut on using the (selection_type:) specifier, along with the range specified after
+the (selection_type:).
+
+Actually these meta-parameters can be included in the .list file even if they are not cut on at the listing
+level.  They are made available to the user in the getSimEvent object and can be used for decision making.
+for example they can represent some sort of condition for that particular run file (like number of zips...just
+guessing) and one can cut on that parameter in the source code, as the events are served up from the chain
+object. 
+
+
+Step 3: Running the code---------------------------------------------------------------------------------
+
+This is actually the simplest part.  Three useful command-line flags exist.  They are -in, -dir, -o.
+
+All of these flags are to be followed by a string, if they are not, yet they exist on the command line, I 
+wouldn't be surprised to see the code seg-fault (ugh, I know, I have not packaged this properly for dispersal).
+
+The only flag that is really necessary is the -in flag.  This specifies the location of the .dat file in absolute
+path.  The .dat file itself then points to the .list file (see the ntuple_list: specifier).  If the path is not
+full, it is assumed it is relative to the execution directory. 
+
+The -dir flag is to set the directory you want the output to go, it defaults to the working directory, BEWARE
+the output could be many root files which are ~45Mb, so be cautious. 
+
+The -o flag specifies the prefix of the files which are to be written as .root files.  Note that many .txt files
+can be put into one .root file, the root tree structure keeps track (through variables seed,run and file) of
+which exact .txt file an event came from.  The .root file is named with the prefix specified in the -o flag (this
+defaults to "test") plus the seed, run, and file of the .txt file along with the file number of the root file
+in this particular running of the program. For example:
+
+test_1306835159_001_035_000.root
+
+This would be the first root file written out in this run who's first event came from the text file (with the
+specifications given above):
+
+/data/giacdms1/villaa/data/GFcompare/GFcompareC9H12_280GeV_1306835159_001_035.txt
+
+The -E flag is a binary switch which switches the root files from hit format to event/hit format.  In
+hit format the files have a leaf for each of the hit variables and an entry for every hit.  In event/hit
+format the files have a .root entry for every EVENT, and some of the leaf variables for that event are
+arrays (of double or single precision) which contain a list of values for each hit of the event.  It is
+easier (amung other things) to count events in this format. 
+
+The -dp flag changes the storage of floating point numbers from single precision to double precision.
+the default is single precision.  File sizes will go up by approx a factor of 2 when storing in
+double precision. 
+
+Here is an example of how to run the code:
+
+usr>./sima2root -in example.dat -o test
+
+This will result in the following files in your directory after execution (for the above parameters):
+
+
+test_1306835159_000_000_000.root
+test_1306835159_000_005_001.root
+test_1306835159_000_011_002.root
+
+Each root file consists of a single data tree called "datatree," which has all the parameters you would expect
+in there with the names taken from the header of the .txt files (except all lowercase).  In addition it includes
+parameters "seed," "run," and "file" to constrain the exact file that the particular hit came from. The trees
+just list each individual hit, this is the simplest.  In the future, it might be nice to organize these trees
+or have friend trees with data from a whole event for each record.  This is more natural for physics analysis. 
+
+UPDATE 06/18/11:  The initial version of the program had a bug in it.  This bug would cause several tree's to be
+                  written to one root file (all with the same name).  This is undesireable and was caused by
+		  the TTree::fAutoFlush variable set via TTree::SetAutoFlush(int) and retrieved by 
+		  TTree::GetAutoFlush(). The default value to be set is -30000000, which corresponds to
+		  30 Mb.  In this case, if a tree grew to over 30 Mb it would automatically be written
+		  to file, and typically the same file was open in the program.  Since it is hard-coded
+		  into the code to only write (not auto write) when 1000000 hits are processed (more if
+		  1000000 falls in the middle of an event), there is no garontee it will be under 30 Mb.
+		  The flag -flush now exists to set the integer "autoflush" from the command line.  At
+		  the moment it should be set to 0 to disable autoflush.  Typically negative values mean
+		  setting the auto write at a certain number of bits and positive values do so at a certain
+		  number of events written.  Neither is really appropriate for us here since we don't know
+		  how many will be written a-priori.  This means the code is somewhat vulnerable to creating
+		  very large Trees in a single file, but the circumstances for that are unlikely. 
+
+UPDATE 11/02/12:  added the -E and -dp flags for file format and precision specification, see above.
+
+To summarize the inputs we have:
+
+Flag                    Description                                         Default
+-in                     string pointing to .dat file                        "test.txt"
+-dir                    string pointing to .root storage directory          "./"
+-o                      string specifiying output file prefix               "test"
+-E			flag for event/hit organization --> true 	    false
+-dp			flag for double precision --> true 		    false
+-flush                  integer setting auto-flush                           0  (recommended not to modify, auto flush not currently supported)
+
+
+Step 4: ROOT script------------------------------------------------------------------------------
+
+I included a root script in this directory called:
+
+chainROOT.C
+
+Which has a function in it to create a chain from the root files created in the run with the parameters
+above.   This can be executed (from within root) as follows:
+
+root[0].L chainROOT.C
+root[1]TChain *ch = chainROOT();
+root[2]ch->Draw("ev");
+
+This creates a chain object from all the above root files and will draw a histogram of all the event numbers.
+From this view it is easy to see how many hits each event got, I find this useful, especially since sometimes
+I see "mega" events which have like 100,000 hits.  This probably won't happen for the smaller sims, I have
+a really big sensitive detector which I shoot like 280GeV muons at.  Note that the "Draw" member can also
+be run with cuts, see: http://root.cern.ch/root/html/TTree.html#TTree:Draw%2
+
+
+
