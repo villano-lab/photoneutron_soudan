@@ -190,8 +190,8 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 
   //make new TTree with total edepNR, edepER, nhit, NRhit, ERhit, positions?
   Long64_t nhit,NRhit,ERhit,totalevents;
-  Double_t edepNR,edepER;
-  Double_t NRedep[10000],ERedep[10000],NRx[10000],NRy[10000],NRz[10000],ERx[10000],ERy[10000],ERz[10000],NRPType[10000],ERPType[10000];
+  Double_t edepNR,edepER,edepNR_late,edepER_late;
+  Double_t NRedep[10000],ERedep[10000],NRx[10000],NRy[10000],NRz[10000],NRYield[10000],NRt[10000],ERx[10000],ERy[10000],ERz[10000],ERYield[10000],ERt[10000],NRPType[10000],ERPType[10000];
    
   // create tree and the ROOT file to store it
   TTree *datatree = new TTree(Form("edeptree_zip%d",zip),"energy deposition data");
@@ -204,16 +204,22 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
   datatree->Branch("ERhit",&ERhit,"ERhit/L");
   datatree->Branch("edepNR",&edepNR,"edepNR/D");
   datatree->Branch("edepER",&edepER,"edepER/D");
+  datatree->Branch("edepNR_late",&edepNR_late,"edepNR/D");
+  datatree->Branch("edepER_late",&edepER_late,"edepER/D");
   datatree->Branch("NRedep",&NRedep,"NRedep[NRhit]/D");
   datatree->Branch("NRPType",&NRPType,"NRPType[NRhit]/D");
   datatree->Branch("NRx",&NRx,"NRx[NRhit]/D");
   datatree->Branch("NRy",&NRy,"NRy[NRhit]/D");
   datatree->Branch("NRz",&NRz,"NRz[NRhit]/D");
+  datatree->Branch("NRt",&NRt,"NRt[NRhit]/D");
+  datatree->Branch("NRYield",&NRYield,"NRYield[NRhit]/D");
   datatree->Branch("ERedep",&ERedep,"ERedep[ERhit]/D");
   datatree->Branch("ERPType",&ERPType,"ERPType[ERhit]/D");
   datatree->Branch("ERx",&ERx,"ERx[ERhit]/D");
   datatree->Branch("ERy",&ERy,"ERy[ERhit]/D");
   datatree->Branch("ERz",&ERz,"ERz[ERhit]/D");
+  datatree->Branch("ERt",&ERt,"ERt[NRhit]/D");
+  datatree->Branch("ERYield",&ERYield,"ERYield[ERhit]/D");
 
   //we have to do this a little different, link to each event in chain by set branch address, 
   //then apply cut by TEventList, and use the method Next() to advance that list for each event passing
@@ -221,7 +227,7 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 
   //I think we need a max event here, use 10000?
   Int_t n;
-  Double_t Edep[10000],PType[10000],X1[10000],Y1[10000],Z1[10000];
+  Double_t Edep[10000],PType[10000],X1[10000],Y1[10000],Z1[10000],Time1[10000],Yield[10000];
 
   //set the branch addresses
   ch->SetBranchAddress("allzips.nhits",&n);
@@ -230,6 +236,8 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
   ch->SetBranchAddress("allzips.X1",X1);
   ch->SetBranchAddress("allzips.Y1",Y1);
   ch->SetBranchAddress("allzips.Z1",Z1);
+  ch->SetBranchAddress("allzips.Time1",Time1);
+  ch->SetBranchAddress("allzips.Yield",Yield);
 
   //apply the cut to get nhits>0 and at least one of the recoil types I'm looking for
   TEventList *elist = new TEventList(Form("elist_it%d",zip));
@@ -265,6 +273,8 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
       ERhit=0;
       edepNR=0.0;
       edepER=0.0;
+      edepNR_late=0.0;
+      edepER_late=0.0;
 
       if(n>10000){
 	cerr << "Saturate!" << endl;
@@ -283,21 +293,29 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
         if(PType[l]==11 || PType[l]==-11 || PType[l]==22){
 	  ERhit++;
           edepER+=Edep[l];
+	  if(Time1[l]>1e10) //ten seconds later
+            edepER_late+=Edep[l];
 	  ERedep[ERhit-1] = Edep[l];
 	  ERPType[ERhit-1] = PType[l];
 	  ERx[ERhit-1] = X1[l];
 	  ERy[ERhit-1] = Y1[l];
 	  ERz[ERhit-1] = Z1[l];
+	  ERt[ERhit-1] = Time1[l];
+	  ERYield[ERhit-1] = Yield[l];
 	  //cout << "Filling ER for zip " << zip << ": " << Edep[l] << ", " << PType[l] << ", " << X1[l] << ", " << Y1[l] << ", " << Z1[l] << endl;
 	}
 	else if(PType[l]==2112 || ((Long64_t)PType-(Long64_t)PType%10000)>1){
 	  NRhit++;
           edepNR+=Edep[l];
+	  if(Time1[l]>1e10) //ten seconds later
+            edepNR_late+=Edep[l];
 	  NRedep[NRhit-1] = Edep[l];
 	  NRPType[NRhit-1] = PType[l];
 	  NRx[NRhit-1] = X1[l];
 	  NRy[NRhit-1] = Y1[l];
 	  NRz[NRhit-1] = Z1[l];
+	  NRt[NRhit-1] = Time1[l];
+	  NRYield[NRhit-1] = Yield[l];
 	  //cout << "Filling NR for zip " << zip << ": " << Edep[l] << ", " << PType[l] << ", " << X1[l] << ", " << Y1[l] << ", " << Z1[l] << endl;
 	}
       }
