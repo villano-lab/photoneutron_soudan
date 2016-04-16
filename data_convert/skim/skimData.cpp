@@ -30,6 +30,7 @@
 
 using namespace std;
 
+void clearvec(double*,int);
 TChain *chainPhotoNSuperSim(int &nev,int n=-1,int datasetno=0,string source="ybe",string dir="/data/chocula/villaa/PhotoN_SuperSim/yberoot",string treename="mcmerged");
 TTree *projectSumDepEv(TChain *ch,string cut="",int maxev=1000000,int zip=1);
 TTree *projectSumDepEv_AllInfo(TChain *ch,string cut="",int maxev=1000000,int zip=1);
@@ -93,6 +94,7 @@ for(int i=0;i<15;i++){
   TH1D *h = new TH1D(Form("nr_zip%d",i+1),Form("nr_zip%d",i+1),100,0.0,5.0);
   hs->SetLineColor(kRed);
   TTree *condensed = projectSumDepEv_AllInfo(ch,Form("allzips.nhits>0 && allzips.DetNum==%d",i+1),100000000,i+1);
+  //TTree *condensed = projectSumDepEv(ch,Form("allzips.nhits>0 && allzips.DetNum==%d",i+1),100000000,i+1);
   condensed->SetName(Form("sumzip%d",i+1));
   cout << "Filling histograms for zip " << i+1 << endl;
   cout << "Have " << condensed->GetEntries() << " entries in tree for zip " << i+1 << endl;
@@ -111,6 +113,10 @@ for(int i=0;i<15;i++){
 f->Close();
    cout << "Finished writing file. " << endl;
    return 0;
+}
+void clearvec(double*vec,int size)
+{
+  for(int i=0;i<size;i++) vec[i]=-1;	
 }
 TTree *projectSumDepEv(TChain *ch,string cut,int maxev,int zip)
 {
@@ -145,6 +151,9 @@ TTree *projectSumDepEv(TChain *ch,string cut,int maxev,int zip)
   string edepNRstr = "Sum$(allzips.Edep*(("+NRcut+") && ("+cut+")))";
   string edepERstr = "Sum$(allzips.Edep*(("+ERcut+") && ("+cut+")))";
 
+  //implement counter
+  int count=0;
+
   //do 100M at a time
   int iterations=ntot/maxev;
 
@@ -169,6 +178,10 @@ TTree *projectSumDepEv(TChain *ch,string cut,int maxev,int zip)
       edepNR=edepNRvec[i];
       edepER=edepERvec[i];
       nhit=NRhit+ERhit;
+      if(nhit>0){
+        cout << "Filling event number " << count << ", with total hits " << ERhit+NRhit << ", " << ERhit << " erhits and " << NRhit << " nrhits" << endl;
+	count++;
+      }
       datatree->Fill();
     }
 
@@ -227,7 +240,7 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 
   //I think we need a max event here, use 10000?
   Int_t n;
-  Double_t Edep[10000],PType[10000],X1[10000],Y1[10000],Z1[10000],Time1[10000],Yield[10000];
+  Double_t Edep[10000],PType[10000],X1[10000],Y1[10000],Z1[10000],Time1[10000],Yield[10000],DetNum[10000];
 
   //set the branch addresses
   ch->SetBranchAddress("allzips.nhits",&n);
@@ -238,6 +251,7 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
   ch->SetBranchAddress("allzips.Z1",Z1);
   ch->SetBranchAddress("allzips.Time1",Time1);
   ch->SetBranchAddress("allzips.Yield",Yield);
+  ch->SetBranchAddress("allzips.DetNum",DetNum);
 
   //apply the cut to get nhits>0 and at least one of the recoil types I'm looking for
   TEventList *elist = new TEventList(Form("elist_it%d",zip));
@@ -266,7 +280,6 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 
       //set overall hits
       nhit=n;
-      //cout << "Got event " << count << " with " << n << "hits" << endl;
 
       //intitalize aggregate variables
       NRhit=0;
@@ -275,6 +288,20 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
       edepER=0.0;
       edepNR_late=0.0;
       edepER_late=0.0;
+      clearvec(NRedep,10000);
+      clearvec(NRPType,10000);
+      clearvec(NRx,10000);
+      clearvec(NRy,10000);
+      clearvec(NRz,10000);
+      clearvec(NRt,10000);
+      clearvec(NRYield,10000);
+      clearvec(ERedep,10000);
+      clearvec(ERPType,10000);
+      clearvec(ERx,10000);
+      clearvec(ERy,10000);
+      clearvec(ERz,10000);
+      clearvec(ERt,10000);
+      clearvec(ERYield,10000);
 
       if(n>10000){
 	cerr << "Saturate!" << endl;
@@ -284,13 +311,13 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 	datatree->Fill();
 	continue;
       }
-
   //write out the NR and ER cuts as strings
   //string ERcut = "(allzips.PType==11 || allzips.PType==-11) || allzips.PType==22";
   //string NRcut = "allzips.PType==2112 || allzips.PType-allzips.PType%10000>1";
       //loop through PType and fill appropriate variables
       for(int l=0;l<n;l++){
-        if(PType[l]==11 || PType[l]==-11 || PType[l]==22){
+	if(DetNum[l]!=zip) continue;
+        if((PType[l]==11 || PType[l]==-11) || PType[l]==22){
 	  ERhit++;
           edepER+=Edep[l];
 	  if(Time1[l]>1e10) //ten seconds later
@@ -321,7 +348,7 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
       }
 
       //fill
-      //cout << "Filling event number " << count << ", with total hits " << ERhit+NRhit << endl;
+      //cout << "Filling event number " << count << ", with total hits " << ERhit+NRhit << ", " << ERhit << " erhits and " << NRhit << " nrhits" << endl;
       datatree->Fill();
       //increment
       count++;

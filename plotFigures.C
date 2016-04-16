@@ -124,7 +124,7 @@ void plotNREDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe"
     plotCanvas(c1,Form("figures/NREDist_%s_zip%d",datatype.c_str(),zip),ext);
   }
 }
-void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe", string ext="eps",bool resave=false)
+void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe",string file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_trees.root",string postfix="", string ext="eps",bool resave=false)
 {
   
   //let's do some calculations to make the axis size ratio correct for some specified
@@ -170,20 +170,19 @@ void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe
   double xmax=60.0;
   double ymin=1.0e-1;
   double ymax=1e4;
-  string file;
   if(datatype=="ybe"){
     xmin=0.0;
     xmax=20.0;
     px=5.0;
     py=1e3;
-    file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_trees_160405_all.root";
+    //file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_trees_160405_all.root";
   }
   else if(datatype=="sbbe"){
     xmin=0.0;
     xmax=5.0;
     px=1.0;
     py=1e3;
-    file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/sbbe_trees_160405_all.root";
+    //file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/sbbe_trees_160405_all.root";
   }
   else{
     cout << "Unknown data type for plotting" << endl;
@@ -253,10 +252,10 @@ void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe
 
   //output the file
   if(print){
-    plotCanvas(c1,Form("figures/AllEDist_%s_zip%d",datatype.c_str(),zip),ext);
+    plotCanvas(c1,Form("figures/AllEDist%s_%s_zip%d",postfix.c_str(),datatype.c_str(),zip),ext);
   }
 }
-void plotPtDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe", string ext="eps",bool resave=false)
+void plotPtDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe",string file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_trees.root",string postfix="", string ext="eps",bool resave=false)
 {
   
   //let's do some calculations to make the axis size ratio correct for some specified
@@ -302,20 +301,19 @@ void plotPtDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe",
   double xmax=60.0;
   double ymin=1.0e-1;
   double ymax=1e4;
-  string file;
   if(datatype=="ybe"){
     xmin=0.0;
     xmax=100.0;
     px=25.0*1000;
     py=1e3;
-    file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_trees_160405_all_wtime_v2.root";
+    //file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_trees_160405_all_wtime_v2.root";
   }
   else if(datatype=="sbbe"){
     xmin=0.0;
     xmax=10.0;
     px=2.0*1000;
     py=1e3;
-    file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/sbbe_trees_160405_all_wtime_v2.root";
+    //file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/sbbe_trees_160405_all_wtime_v2.root";
   }
   else{
     cout << "Unknown data type for plotting" << endl;
@@ -387,6 +385,6 @@ void plotPtDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe",
 
   //output the file
   if(print){
-    plotCanvas(c1,Form("figures/PtDist_%s_zip%d",datatype.c_str(),zip),ext);
+    plotCanvas(c1,Form("figures/PtDist%s_%s_zip%d",postfix,datatype.c_str(),zip),ext);
   }
 }
