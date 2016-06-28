@@ -1,0 +1,791 @@
+  *******************************************
+  *                                         *
+  *        W E L C O M E  to  R O O T       *
+  *                                         *
+  *   Version   5.34/05  14 February 2013   *
+  *                                         *
+  *  You are welcome to visit our Web site  *
+  *          http://root.cern.ch            *
+  *                                         *
+  *******************************************
+
+ROOT 5.34/05 (tags/v5-34-05@48582, Feb 14 2013, 23:27:57 on linuxx8664gcc)
+
+CINT/ROOT C/C++ Interpreter version 5.18.00, July 2, 2010
+Type ? for help. Commands must be C++ statements.
+Enclose multiple statements between { }.
+
+Processing print.C("/data/chocula/villaa/PhotoN_SuperSim/thermalroot/thermal_SetID0x0002_p1000000_160428_183325_325418067_10160428_0000_merged.root")...
+******************************************************************************
+*Tree    :mcmerged  : Hit data from all SDs combined                         *
+*Entries :  1000000 : Total =      4874654306 bytes  File  Size = 2619409251 *
+*        :          : Tree compression factor =   1.86                       *
+******************************************************************************
+*Br    0 :EventNum  : EventNum/D                                             *
+*Entries :  1000000 : Total  Size=    8025262 bytes  File Size  =    1451973 *
+*Baskets :      252 : Basket Size=      41984 bytes  Compression=   5.52     *
+*............................................................................*
+*Br    1 :HitsPerEvent : HitsPerEvent/D                                      *
+*Entries :  1000000 : Total  Size=    8026286 bytes  File Size  =    1779835 *
+*Baskets :      252 : Basket Size=      41984 bytes  Compression=   4.51     *
+*............................................................................*
+*Br    2 :ZipsPerEvent : ZipsPerEvent/D                                      *
+*Entries :  1000000 : Total  Size=    8026286 bytes  File Size  =    1001676 *
+*Baskets :      252 : Basket Size=      41984 bytes  Compression=   8.01     *
+*............................................................................*
+*Br    3 :VetoPerEvent : VetoPerEvent/D                                      *
+*Entries :  1000000 : Total  Size=    8026286 bytes  File Size  =      63976 *
+*Baskets :      252 : Basket Size=      41984 bytes  Compression= 125.37     *
+*............................................................................*
+*Br    4 :BkgPerEvent : BkgPerEvent/D                                        *
+*Entries :  1000000 : Total  Size=    8026030 bytes  File Size  =      63724 *
+*Baskets :      252 : Basket Size=      41984 bytes  Compression= 125.87     *
+*............................................................................*
+*Br    5 :mcDecays.nhits : nhits/I                                           *
+*Entries :  1000000 : Total  Size=    4044088 bytes  File Size  =     653239 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=   6.18     *
+*............................................................................*
+*Br    6 :mcDecays.Empty : Empty[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    1466193 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=  12.11     *
+*............................................................................*
+*Br    7 :mcDecays.DetType : DetType[mcDecays.nhits]/D                       *
+*Entries :  1000000 : Total  Size=   17762422 bytes  File Size  =    1482379 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=  11.98     *
+*............................................................................*
+*Br    8 :mcDecays.DetNum : DetNum[mcDecays.nhits]/D                         *
+*Entries :  1000000 : Total  Size=   17762244 bytes  File Size  =    3097615 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   5.73     *
+*............................................................................*
+*Br    9 :mcDecays.TrkStep : TrkStep[mcDecays.nhits]/D                       *
+*Entries :  1000000 : Total  Size=   17762422 bytes  File Size  =    3385507 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   5.25     *
+*............................................................................*
+*Br   10 :mcDecays.Parent : Parent[mcDecays.nhits]/D                         *
+*Entries :  1000000 : Total  Size=   17762244 bytes  File Size  =    3052719 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   5.82     *
+*............................................................................*
+*Br   11 :mcDecays.PType : PType[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    3114407 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   5.70     *
+*............................................................................*
+*Br   12 :mcDecays.KE : KE[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =   12284706 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.45     *
+*............................................................................*
+*Br   13 :mcDecays.Edep : Edep[mcDecays.nhits]/D                             *
+*Entries :  1000000 : Total  Size=   17761888 bytes  File Size  =   11533206 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.54     *
+*............................................................................*
+*Br   14 :mcDecays.Yield : Yield[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    1643748 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=  10.80     *
+*............................................................................*
+*Br   15 :mcDecays.Depth : Depth[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =   13949416 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.27     *
+*............................................................................*
+*Br   16 :mcDecays.Xmom3 : Xmom3[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    4906237 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   3.62     *
+*............................................................................*
+*Br   17 :mcDecays.Ymom3 : Ymom3[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    4906688 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   3.62     *
+*............................................................................*
+*Br   18 :mcDecays.Zmom3 : Zmom3[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    4906592 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   3.62     *
+*............................................................................*
+*Br   19 :mcDecays.X3 : X3[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =   13473782 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.32     *
+*............................................................................*
+*Br   20 :mcDecays.Y3 : Y3[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =   13432186 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.32     *
+*............................................................................*
+*Br   21 :mcDecays.Z3 : Z3[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =   13488344 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.32     *
+*............................................................................*
+*Br   22 :mcDecays.Time3 : Time3[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    8033094 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   2.21     *
+*............................................................................*
+*Br   23 :mcDecays.Xmom1 : Xmom1[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =   14788367 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.20     *
+*............................................................................*
+*Br   24 :mcDecays.Ymom1 : Ymom1[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =   14789026 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.20     *
+*............................................................................*
+*Br   25 :mcDecays.Zmom1 : Zmom1[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =   14788499 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   1.20     *
+*............................................................................*
+*Br   26 :mcDecays.X1 : X1[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =    7876061 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   2.25     *
+*............................................................................*
+*Br   27 :mcDecays.Y1 : Y1[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =    7879485 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   2.25     *
+*............................................................................*
+*Br   28 :mcDecays.Z1 : Z1[mcDecays.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=   17761532 bytes  File Size  =    7906507 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   2.25     *
+*............................................................................*
+*Br   29 :mcDecays.Time1 : Time1[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    7825519 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=   2.27     *
+*............................................................................*
+*Br   30 :mcDecays.VolName : vector<string>                                  *
+*Entries :  1000000 : Total  Size=   32821821 bytes  File Size  =    4685306 *
+*Baskets :       97 : Basket Size=     722432 bytes  Compression=   7.00     *
+*............................................................................*
+*Br   31 :mcDecays.InOut : InOut[mcDecays.nhits]/D                           *
+*Entries :  1000000 : Total  Size=   17762066 bytes  File Size  =    1531971 *
+*Baskets :      174 : Basket Size=     209920 bytes  Compression=  11.59     *
+*............................................................................*
+*Br   32 :mcFluxCounter.nhits : nhits/I                                      *
+*Entries :  1000000 : Total  Size=    4046178 bytes  File Size  =     355212 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=  11.37     *
+*............................................................................*
+*Br   33 :mcFluxCounter.Empty : Empty[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =     428815 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=  13.34     *
+*............................................................................*
+*Br   34 :mcFluxCounter.DetType : DetType[mcFluxCounter.nhits]/D             *
+*Entries :  1000000 : Total  Size=    5732219 bytes  File Size  =     437683 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=  13.07     *
+*............................................................................*
+*Br   35 :mcFluxCounter.DetNum : DetNum[mcFluxCounter.nhits]/D               *
+*Entries :  1000000 : Total  Size=    5731713 bytes  File Size  =     438944 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=  13.03     *
+*............................................................................*
+*Br   36 :mcFluxCounter.TrkStep : TrkStep[mcFluxCounter.nhits]/D             *
+*Entries :  1000000 : Total  Size=    5732219 bytes  File Size  =    1116254 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   5.13     *
+*............................................................................*
+*Br   37 :mcFluxCounter.Parent : Parent[mcFluxCounter.nhits]/D               *
+*Entries :  1000000 : Total  Size=    5731713 bytes  File Size  =     621222 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   9.21     *
+*............................................................................*
+*Br   38 :mcFluxCounter.PType : PType[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =     438068 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=  13.06     *
+*............................................................................*
+*Br   39 :mcFluxCounter.KE : KE[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    2027063 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.82     *
+*............................................................................*
+*Br   40 :mcFluxCounter.Edep : Edep[mcFluxCounter.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    5730701 bytes  File Size  =     597873 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   9.57     *
+*............................................................................*
+*Br   41 :mcFluxCounter.Yield : Yield[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =     428815 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=  13.34     *
+*............................................................................*
+*Br   42 :mcFluxCounter.Depth : Depth[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    1048126 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   5.46     *
+*............................................................................*
+*Br   43 :mcFluxCounter.Xmom3 : Xmom3[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    1942203 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.95     *
+*............................................................................*
+*Br   44 :mcFluxCounter.Ymom3 : Ymom3[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    1942201 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.95     *
+*............................................................................*
+*Br   45 :mcFluxCounter.Zmom3 : Zmom3[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    1940978 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.95     *
+*............................................................................*
+*Br   46 :mcFluxCounter.X3 : X3[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    2119499 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.70     *
+*............................................................................*
+*Br   47 :mcFluxCounter.Y3 : Y3[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    2118886 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.70     *
+*............................................................................*
+*Br   48 :mcFluxCounter.Z3 : Z3[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    1544443 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   3.70     *
+*............................................................................*
+*Br   49 :mcFluxCounter.Time3 : Time3[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    1953224 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.93     *
+*............................................................................*
+*Br   50 :mcFluxCounter.Xmom1 : Xmom1[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    2143986 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.67     *
+*............................................................................*
+*Br   51 :mcFluxCounter.Ymom1 : Ymom1[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    2143793 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.67     *
+*............................................................................*
+*Br   52 :mcFluxCounter.Zmom1 : Zmom1[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    2142524 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.67     *
+*............................................................................*
+*Br   53 :mcFluxCounter.X1 : X1[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    2098702 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.73     *
+*............................................................................*
+*Br   54 :mcFluxCounter.Y1 : Y1[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    2097449 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.73     *
+*............................................................................*
+*Br   55 :mcFluxCounter.Z1 : Z1[mcFluxCounter.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    5729689 bytes  File Size  =    1535617 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   3.72     *
+*............................................................................*
+*Br   56 :mcFluxCounter.Time1 : Time1[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =    1936820 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   2.95     *
+*............................................................................*
+*Br   57 :mcFluxCounter.VolName : vector<string>                             *
+*Entries :  1000000 : Total  Size=   14857010 bytes  File Size  =    2373377 *
+*Baskets :      174 : Basket Size=     146944 bytes  Compression=   6.26     *
+*............................................................................*
+*Br   58 :mcFluxCounter.InOut : InOut[mcFluxCounter.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    5731207 bytes  File Size  =     596998 *
+*Baskets :      502 : Basket Size=      21504 bytes  Compression=   9.58     *
+*............................................................................*
+*Br   59 :mcHousing.nhits : nhits/I                                          *
+*Entries :  1000000 : Total  Size=    4044506 bytes  File Size  =      66871 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=  60.35     *
+*............................................................................*
+*Br   60 :mcHousing.Empty : Empty[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   61 :mcHousing.DetType : DetType[mcHousing.nhits]/D                     *
+*Entries :  1000000 : Total  Size=    4096943 bytes  File Size  =     126752 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.19     *
+*............................................................................*
+*Br   62 :mcHousing.DetNum : DetNum[mcHousing.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    4096107 bytes  File Size  =     125756 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.44     *
+*............................................................................*
+*Br   63 :mcHousing.TrkStep : TrkStep[mcHousing.nhits]/D                     *
+*Entries :  1000000 : Total  Size=    4096943 bytes  File Size  =     126752 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.19     *
+*............................................................................*
+*Br   64 :mcHousing.Parent : Parent[mcHousing.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    4096107 bytes  File Size  =     125756 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.44     *
+*............................................................................*
+*Br   65 :mcHousing.PType : PType[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   66 :mcHousing.KE : KE[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   67 :mcHousing.Edep : Edep[mcHousing.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094435 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br   68 :mcHousing.Yield : Yield[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   69 :mcHousing.Depth : Depth[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   70 :mcHousing.Xmom3 : Xmom3[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   71 :mcHousing.Ymom3 : Ymom3[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   72 :mcHousing.Zmom3 : Zmom3[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   73 :mcHousing.X3 : X3[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   74 :mcHousing.Y3 : Y3[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   75 :mcHousing.Z3 : Z3[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   76 :mcHousing.Time3 : Time3[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   77 :mcHousing.Xmom1 : Xmom1[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   78 :mcHousing.Ymom1 : Ymom1[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   79 :mcHousing.Zmom1 : Zmom1[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   80 :mcHousing.X1 : X1[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   81 :mcHousing.Y1 : Y1[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   82 :mcHousing.Z1 : Z1[mcHousing.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092763 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br   83 :mcHousing.Time1 : Time1[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   84 :mcHousing.VolName : vector<string>                                 *
+*Entries :  1000000 : Total  Size=   14020530 bytes  File Size  =    1494159 *
+*Baskets :      174 : Basket Size=     131584 bytes  Compression=   9.38     *
+*............................................................................*
+*Br   85 :mcHousing.InOut : InOut[mcHousing.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095271 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   86 :mcMultiTower.nhits : nhits/I                                       *
+*Entries :  1000000 : Total  Size=    4045760 bytes  File Size  =      68122 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=  59.26     *
+*............................................................................*
+*Br   87 :mcMultiTower.Empty : Empty[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br   88 :mcMultiTower.DetType : DetType[mcMultiTower.nhits]/D               *
+*Entries :  1000000 : Total  Size=    4099448 bytes  File Size  =     129248 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.59     *
+*............................................................................*
+*Br   89 :mcMultiTower.DetNum : DetNum[mcMultiTower.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    4098612 bytes  File Size  =     128416 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.78     *
+*............................................................................*
+*Br   90 :mcMultiTower.TrkStep : TrkStep[mcMultiTower.nhits]/D               *
+*Entries :  1000000 : Total  Size=    4099448 bytes  File Size  =     129248 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.59     *
+*............................................................................*
+*Br   91 :mcMultiTower.Parent : Parent[mcMultiTower.nhits]/D                 *
+*Entries :  1000000 : Total  Size=    4098612 bytes  File Size  =     128416 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.78     *
+*............................................................................*
+*Br   92 :mcMultiTower.PType : PType[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br   93 :mcMultiTower.KE : KE[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br   94 :mcMultiTower.Edep : Edep[mcMultiTower.nhits]/D                     *
+*Entries :  1000000 : Total  Size=    4096940 bytes  File Size  =     126752 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.19     *
+*............................................................................*
+*Br   95 :mcMultiTower.Yield : Yield[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br   96 :mcMultiTower.Depth : Depth[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br   97 :mcMultiTower.Xmom3 : Xmom3[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br   98 :mcMultiTower.Ymom3 : Ymom3[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br   99 :mcMultiTower.Zmom3 : Zmom3[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  100 :mcMultiTower.X3 : X3[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  101 :mcMultiTower.Y3 : Y3[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  102 :mcMultiTower.Z3 : Z3[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  103 :mcMultiTower.Time3 : Time3[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  104 :mcMultiTower.Xmom1 : Xmom1[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  105 :mcMultiTower.Ymom1 : Ymom1[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  106 :mcMultiTower.Zmom1 : Zmom1[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  107 :mcMultiTower.X1 : X1[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  108 :mcMultiTower.Y1 : Y1[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  109 :mcMultiTower.Z1 : Z1[mcMultiTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095268 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  110 :mcMultiTower.Time1 : Time1[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  111 :mcMultiTower.VolName : vector<string>                              *
+*Entries :  1000000 : Total  Size=   14021064 bytes  File Size  =    1492298 *
+*Baskets :      174 : Basket Size=     131584 bytes  Compression=   9.39     *
+*............................................................................*
+*Br  112 :mcMultiTower.InOut : InOut[mcMultiTower.nhits]/D                   *
+*Entries :  1000000 : Total  Size=    4097776 bytes  File Size  =     127584 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  31.98     *
+*............................................................................*
+*Br  113 :mcTower.nhits : nhits/I                                            *
+*Entries :  1000000 : Total  Size=    4043670 bytes  File Size  =      66037 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=  61.10     *
+*............................................................................*
+*Br  114 :mcTower.Empty : Empty[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  115 :mcTower.DetType : DetType[mcTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095273 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  116 :mcTower.DetNum : DetNum[mcTower.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094437 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  117 :mcTower.TrkStep : TrkStep[mcTower.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095273 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  118 :mcTower.Parent : Parent[mcTower.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094437 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  119 :mcTower.PType : PType[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  120 :mcTower.KE : KE[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  121 :mcTower.Edep : Edep[mcTower.nhits]/D                               *
+*Entries :  1000000 : Total  Size=    4092765 bytes  File Size  =     122428 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.29     *
+*............................................................................*
+*Br  122 :mcTower.Yield : Yield[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  123 :mcTower.Depth : Depth[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  124 :mcTower.Xmom3 : Xmom3[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  125 :mcTower.Ymom3 : Ymom3[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  126 :mcTower.Zmom3 : Zmom3[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  127 :mcTower.X3 : X3[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  128 :mcTower.Y3 : Y3[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  129 :mcTower.Z3 : Z3[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  130 :mcTower.Time3 : Time3[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  131 :mcTower.Xmom1 : Xmom1[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  132 :mcTower.Ymom1 : Ymom1[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  133 :mcTower.Zmom1 : Zmom1[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  134 :mcTower.X1 : X1[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  135 :mcTower.Y1 : Y1[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  136 :mcTower.Z1 : Z1[mcTower.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=    4091093 bytes  File Size  =     120764 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.74     *
+*............................................................................*
+*Br  137 :mcTower.Time1 : Time1[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  138 :mcTower.VolName : vector<string>                                   *
+*Entries :  1000000 : Total  Size=   14020174 bytes  File Size  =    1493732 *
+*Baskets :      174 : Basket Size=     131072 bytes  Compression=   9.38     *
+*............................................................................*
+*Br  139 :mcTower.InOut : InOut[mcTower.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093601 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  140 :mcVessel.nhits : nhits/I                                           *
+*Entries :  1000000 : Total  Size=    4044088 bytes  File Size  =      66454 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=  60.73     *
+*............................................................................*
+*Br  141 :mcVessel.Empty : Empty[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  142 :mcVessel.DetType : DetType[mcVessel.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    4096108 bytes  File Size  =     125756 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.44     *
+*............................................................................*
+*Br  143 :mcVessel.DetNum : DetNum[mcVessel.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095272 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  144 :mcVessel.TrkStep : TrkStep[mcVessel.nhits]/D                       *
+*Entries :  1000000 : Total  Size=    4096108 bytes  File Size  =     125756 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.44     *
+*............................................................................*
+*Br  145 :mcVessel.Parent : Parent[mcVessel.nhits]/D                         *
+*Entries :  1000000 : Total  Size=    4095272 bytes  File Size  =     124924 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.65     *
+*............................................................................*
+*Br  146 :mcVessel.PType : PType[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  147 :mcVessel.KE : KE[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  148 :mcVessel.Edep : Edep[mcVessel.nhits]/D                             *
+*Entries :  1000000 : Total  Size=    4093600 bytes  File Size  =     123260 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.07     *
+*............................................................................*
+*Br  149 :mcVessel.Yield : Yield[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  150 :mcVessel.Depth : Depth[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  151 :mcVessel.Xmom3 : Xmom3[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  152 :mcVessel.Ymom3 : Ymom3[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  153 :mcVessel.Zmom3 : Zmom3[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  154 :mcVessel.X3 : X3[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  155 :mcVessel.Y3 : Y3[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  156 :mcVessel.Z3 : Z3[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  157 :mcVessel.Time3 : Time3[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  158 :mcVessel.Xmom1 : Xmom1[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  159 :mcVessel.Ymom1 : Ymom1[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  160 :mcVessel.Zmom1 : Zmom1[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  161 :mcVessel.X1 : X1[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  162 :mcVessel.Y1 : Y1[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  163 :mcVessel.Z1 : Z1[mcVessel.nhits]/D                                 *
+*Entries :  1000000 : Total  Size=    4091928 bytes  File Size  =     121596 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  33.51     *
+*............................................................................*
+*Br  164 :mcVessel.Time1 : Time1[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  165 :mcVessel.VolName : vector<string>                                  *
+*Entries :  1000000 : Total  Size=   14020352 bytes  File Size  =    1490352 *
+*Baskets :      174 : Basket Size=     131072 bytes  Compression=   9.40     *
+*............................................................................*
+*Br  166 :mcVessel.InOut : InOut[mcVessel.nhits]/D                           *
+*Entries :  1000000 : Total  Size=    4094436 bytes  File Size  =     124092 *
+*Baskets :      832 : Basket Size=      10240 bytes  Compression=  32.86     *
+*............................................................................*
+*Br  167 :allzips.nhits : nhits/I                                            *
+*Entries :  1000000 : Total  Size=    4043670 bytes  File Size  =    1308407 *
+*Baskets :      417 : Basket Size=      10240 bytes  Compression=   3.08     *
+*............................................................................*
+*Br  168 :allzips.Empty : Empty[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =    2780426 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=  55.53     *
+*............................................................................*
+*Br  169 :allzips.DetType : DetType[allzips.nhits]/D                         *
+*Entries :  1000000 : Total  Size=  154403219 bytes  File Size  =    2928596 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=  52.72     *
+*............................................................................*
+*Br  170 :allzips.DetNum : DetNum[allzips.nhits]/D                           *
+*Entries :  1000000 : Total  Size=  154403082 bytes  File Size  =    8070071 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=  19.13     *
+*............................................................................*
+*Br  171 :allzips.TrkStep : TrkStep[allzips.nhits]/D                         *
+*Entries :  1000000 : Total  Size=  154403219 bytes  File Size  =   38520189 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   4.01     *
+*............................................................................*
+*Br  172 :allzips.Parent : Parent[allzips.nhits]/D                           *
+*Entries :  1000000 : Total  Size=  154403082 bytes  File Size  =   14809635 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=  10.43     *
+*............................................................................*
+*Br  173 :allzips.PType : PType[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =   12172826 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=  12.68     *
+*............................................................................*
+*Br  174 :allzips.KE : KE[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  154275827 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  175 :allzips.Edep : Edep[allzips.nhits]/D                               *
+*Entries :  1000000 : Total  Size=  154402808 bytes  File Size  =  125562356 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.23     *
+*............................................................................*
+*Br  176 :allzips.Yield : Yield[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =    2844049 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=  54.29     *
+*............................................................................*
+*Br  177 :allzips.Depth : Depth[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  154295326 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  178 :allzips.Xmom3 : Xmom3[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  107191490 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.44     *
+*............................................................................*
+*Br  179 :allzips.Ymom3 : Ymom3[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  107190013 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.44     *
+*............................................................................*
+*Br  180 :allzips.Zmom3 : Zmom3[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  107190016 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.44     *
+*............................................................................*
+*Br  181 :allzips.X3 : X3[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  154285752 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  182 :allzips.Y3 : Y3[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  154285699 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  183 :allzips.Z3 : Z3[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  154281442 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  184 :allzips.Time3 : Time3[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  104941951 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.47     *
+*............................................................................*
+*Br  185 :allzips.Xmom1 : Xmom1[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  154344050 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  186 :allzips.Ymom1 : Ymom1[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  154344000 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  187 :allzips.Zmom1 : Zmom1[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =  154343941 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.00     *
+*............................................................................*
+*Br  188 :allzips.X1 : X1[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  130001078 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.19     *
+*............................................................................*
+*Br  189 :allzips.Y1 : Y1[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  129829377 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.19     *
+*............................................................................*
+*Br  190 :allzips.Z1 : Z1[allzips.nhits]/D                                   *
+*Entries :  1000000 : Total  Size=  154402534 bytes  File Size  =  126941560 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.22     *
+*............................................................................*
+*Br  191 :allzips.Time1 : Time1[allzips.nhits]/D                             *
+*Entries :  1000000 : Total  Size=  154402945 bytes  File Size  =   99479818 *
+*Baskets :      133 : Basket Size=    2066432 bytes  Compression=   1.55     *
+*............................................................................*

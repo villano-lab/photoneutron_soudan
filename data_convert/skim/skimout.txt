@@ -1,0 +1,106 @@
+Organizing data for zip 1
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 1
+Filling histograms for zip 1
+Have 5176059 entries in tree for zip 1
+Writing TTree for zip 1
+Organizing data for zip 2
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 2
+Filling histograms for zip 2
+Have 5176059 entries in tree for zip 2
+Writing TTree for zip 2
+Organizing data for zip 3
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 3
+Filling histograms for zip 3
+Have 5176059 entries in tree for zip 3
+Writing TTree for zip 3
+Organizing data for zip 4
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 4
+Filling histograms for zip 4
+Have 5176059 entries in tree for zip 4
+Writing TTree for zip 4
+Organizing data for zip 5
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 5
+Filling histograms for zip 5
+Have 5176059 entries in tree for zip 5
+Writing TTree for zip 5
+Organizing data for zip 6
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 6
+Filling histograms for zip 6
+Have 5176059 entries in tree for zip 6
+Writing TTree for zip 6
+Organizing data for zip 7
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 7
+Filling histograms for zip 7
+Have 5176059 entries in tree for zip 7
+Writing TTree for zip 7
+Organizing data for zip 8
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 8
+Filling histograms for zip 8
+Have 5176059 entries in tree for zip 8
+Writing TTree for zip 8
+Organizing data for zip 9
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 9
+Filling histograms for zip 9
+Have 5176059 entries in tree for zip 9
+Writing TTree for zip 9
+Organizing data for zip 10
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 10
+Filling histograms for zip 10
+Have 5176059 entries in tree for zip 10
+Writing TTree for zip 10
+Organizing data for zip 11
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 11
+Filling histograms for zip 11
+Have 5176059 entries in tree for zip 11
+Writing TTree for zip 11
+Organizing data for zip 12
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 12
+Filling histograms for zip 12
+Have 5176059 entries in tree for zip 12
+Writing TTree for zip 12
+Organizing data for zip 13
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 13
+Filling histograms for zip 13
+Have 5176059 entries in tree for zip 13
+Writing TTree for zip 13
+Organizing data for zip 14
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 14
+Filling histograms for zip 14
+Have 5176059 entries in tree for zip 14
+Writing TTree for zip 14
+Organizing data for zip 15
+Processing 962000000 events
+iteration 1 of 1
+Returning TTree for zip 15
+Filling histograms for zip 15
+Have 5176059 entries in tree for zip 15
+Writing TTree for zip 15
+Finished writing file. 

@@ -20,3 +20,19 @@ Double_t lindhard(Double_t *x, Double_t *par){
   return kscale*g/(1+kscale*g);
 
 }
+Double_t lindhard_k(Double_t *x, Double_t *par){
+
+  //plausible values for parameters
+  //root [5] f->SetParameter(0,0.159);
+
+
+  Double_t Z = 32;
+  Double_t A = 73;
+  Double_t xvar = x[0]/1000.0; //change units from eV to keV
+
+  Double_t kscale = par[0];
+  Double_t escale = 11.5*pow(Z,(-7/3.0));
+  Double_t g = 3.0*pow((escale*xvar),0.15) + 0.7*pow((escale*xvar),0.6) + escale*xvar;
+  return kscale*g/(1+kscale*g);
+
+}

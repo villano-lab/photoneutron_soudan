@@ -33,7 +33,7 @@ using namespace std;
 void clearvec(double*,int);
 TChain *chainPhotoNSuperSim(int &nev,int n=-1,int datasetno=0,string source="ybe",string dir="/data/chocula/villaa/PhotoN_SuperSim/yberoot",string treename="mcmerged");
 TTree *projectSumDepEv(TChain *ch,string cut="",int maxev=1000000,int zip=1);
-TTree *projectSumDepEv_AllInfo(TChain *ch,string cut="",int maxev=1000000,int zip=1);
+TTree *projectSumDepEv_AllInfo(TChain *ch,string cut="",int maxev=1000000,int zip=1,bool keepall=false);
 int main(int argc, char *argv[])
 {
    string rep; 
@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
    int numfiles=-1;
    int datasetno=0;
    bool evtgrp=true;
+   bool keepall=false;
+   bool aligned=false;
 
    for(int i=0; i<argc; i++)
    {
@@ -63,6 +65,10 @@ int main(int argc, char *argv[])
         datasetno = atoi(argv[i+1]);
       if(rep=="-source")
         source = argv[i+1];
+      if(rep=="-keepall")
+	keepall = true;
+      if(rep=="-aligned")
+	aligned = true;
    }
 
    std::ostringstream oss;
@@ -93,22 +99,22 @@ for(int i=0;i<15;i++){
   TH1D *hs = new TH1D(Form("nrs_zip%d",i+1),Form("nrs_zip%d",i+1),100,0.0,5.0);
   TH1D *h = new TH1D(Form("nr_zip%d",i+1),Form("nr_zip%d",i+1),100,0.0,5.0);
   hs->SetLineColor(kRed);
-  TTree *condensed = projectSumDepEv_AllInfo(ch,Form("allzips.nhits>0 && allzips.DetNum==%d",i+1),100000000,i+1);
-  //TTree *condensed = projectSumDepEv(ch,Form("allzips.nhits>0 && allzips.DetNum==%d",i+1),100000000,i+1);
+  TTree *condensed;
+  if(keepall){
+    condensed = projectSumDepEv_AllInfo(ch,Form("allzips.nhits>0 && allzips.DetNum==%d",i+1),100000000,i+1,true);
+  }
+  else if(aligned){
+    condensed = projectSumDepEv_AllInfo(ch,Form("allzips.nhits>0",i+1),100000000,i+1,false);
+  }
+  else{
+    condensed = projectSumDepEv_AllInfo(ch,Form("allzips.nhits>0 && allzips.DetNum==%d",i+1),100000000,i+1,false);
+  }
   condensed->SetName(Form("sumzip%d",i+1));
   cout << "Filling histograms for zip " << i+1 << endl;
   cout << "Have " << condensed->GetEntries() << " entries in tree for zip " << i+1 << endl;
-  //condensed->Draw(Form("edepNR/1000>>nrs_zip%d",i+1),"NRhit==1 && ERhit==0","goff");
-  //condensed->Draw(Form("edepNR/1000>>nr_zip%d",i+1),"NRhit>1 && ERhit==0","goff");
-  //condensed->Draw("edepNR","NRhit==1 && ERhit==0","goff");
-  //condensed->Draw("edepNR","NRhit>1 && ERhit==0","goff");
  
   cout << "Writing TTree for zip " << i+1 << endl;
   condensed->Write(0,TObject::kOverwrite);
-  //cout << "Writing h for zip " << i+1 << endl;
-  //h->Write(0,TObject::kOverwrite);
-  //cout << "Writing hs for zip " << i+1 << endl;
-  //hs->Write(0,TObject::kOverwrite);
 }
 f->Close();
    cout << "Finished writing file. " << endl;
@@ -191,7 +197,7 @@ TTree *projectSumDepEv(TChain *ch,string cut,int maxev,int zip)
   cout << "Returning TTree for zip " << zip << endl;
   return datatree;
 }
-TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
+TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip,bool keepall)
 {
   Int_t nev;
 
@@ -202,7 +208,7 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 
 
   //make new TTree with total edepNR, edepER, nhit, NRhit, ERhit, positions?
-  Long64_t nhit,NRhit,ERhit,totalevents;
+  Long64_t nhit,NRhit,ERhit,totalevents,eventnum;
   Double_t edepNR,edepER,edepNR_late,edepER_late;
   Double_t NRedep[10000],ERedep[10000],NRx[10000],NRy[10000],NRz[10000],NRYield[10000],NRt[10000],ERx[10000],ERy[10000],ERz[10000],ERYield[10000],ERt[10000],NRPType[10000],ERPType[10000];
    
@@ -211,6 +217,7 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
   
   totalevents = ntot;
   // create branches in tree for each data column
+  datatree->Branch("eventnum",&eventnum,"eventnum/L");
   datatree->Branch("totalevents",&totalevents,"totalevents/L");
   datatree->Branch("nhit",&nhit,"nhit/L");
   datatree->Branch("NRhit",&NRhit,"NRhit/L");
@@ -255,14 +262,21 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
 
   //apply the cut to get nhits>0 and at least one of the recoil types I'm looking for
   TEventList *elist = new TEventList(Form("elist_it%d",zip));
-  //TEventList *elistall = new TEventList(Form("elist_all%d",zip));
-  ch->Draw(Form(">>elist_it%d",zip),cut.c_str(),"goff");
-  //ch->Draw(Form(">>elist_all%d",zip),"","goff");
-  Long64_t ncut = elist->GetN();
-  ch->SetEventList(elist);
-  //TEntryList *entrylist = ch->GetEntryList();
+  Long64_t ncut;
+  if(!keepall){
+    ch->Draw(Form(">>elist_it%d",zip),cut.c_str(),"goff");
+    ncut = elist->GetN();
+  }
+  else
+    ncut = ch->GetEntries();
 
-  ch->GetEvent(elist->GetEntry(0));
+  if(!keepall)
+    ch->SetEventList(elist);
+
+  if(!keepall)
+    ch->GetEvent(elist->GetEntry(0));
+  else
+    ch->GetEvent(0);
   //do 100M at a time
   int iterations=ncut/maxev;
 
@@ -282,6 +296,11 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
       nhit=n;
 
       //intitalize aggregate variables
+      if(!keepall)
+        eventnum = elist->GetEntry(count);
+      else
+	eventnum = count;
+
       NRhit=0;
       ERhit=0;
       edepNR=0.0;
@@ -353,7 +372,10 @@ TTree *projectSumDepEv_AllInfo(TChain *ch,string cut,int maxev,int zip)
       //increment
       count++;
       //set the event
-      ch->GetEvent(elist->GetEntry(count));
+      if(!keepall)
+        ch->GetEvent(elist->GetEntry(count));
+      else
+        ch->GetEvent(count);
     }
   }
 
