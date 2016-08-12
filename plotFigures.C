@@ -543,3 +543,175 @@ void plotYieldRecoilDist(bool print=0,bool isprelim=true,int zip=1,double volts=
       plotCanvas(c1,Form("figures/YRecoilDist%s_%s_zip%d_eres%d_pres%d",postfix.c_str(),datatype.c_str(),zip,(int)eres,(int)pres),ext);
   }
 }
+void plotYieldFromLindhard(bool print=0,bool isprelim=true,double lindhard=0.159,string ext="eps",bool resave=false)
+{
+  
+  //let's do some calculations to make the axis size ratio correct for some specified
+  //ratio of x-size to y-size.  
+  int xw=810,yw=-1;
+  double r=1.0;
+  double xr = 0.05;
+  double xl = 0.15;
+  double yt = 0.05;
+  double yb = 0.12;
+  double padsp=0.1;
+
+  findCanvasSize(xw,yw,1,1,r,xr,xl,yt,yb,padsp);
+
+  gROOT->SetStyle("Plain");
+  //make a canvas
+  TCanvas* c1 = (TCanvas*) gROOT->GetListOfCanvases()->FindObject("c1");
+  if(c1){
+    c1->Close();
+    c1 = new TCanvas("c1","Yield vs. Recoil Energy Scale ",200,10,xw,yw);
+  }
+  else
+    c1 = new TCanvas("c1","Yield vs. Recoil Energy Scale ",200,10,xw,yw);
+
+
+  c1->cd();
+  //log-log plot
+  //c1->SetLogy();
+  c1->SetLogx();
+  c1->SetTickx();
+  c1->SetTicky();
+  c1->SetLeftMargin(xl);
+  c1->SetBottomMargin(yb);
+  c1->SetTopMargin(yt);
+  c1->SetRightMargin(xr);
+  //c1->SetGrid(1,1);
+  TLegend *leg;
+  leg = new TLegend(0.25,0.15,0.90,0.30);
+
+  double px=20.0,py=0.09;
+  //size of x-axis
+  double xmin=1.0;
+  double xmax=1000.0;
+  double ymin=0.0;
+  double ymax=0.20;
+
+  gStyle->SetLineWidth(2);
+  gStyle->SetHistLineWidth(1);
+  gStyle->SetGridWidth(0);
+
+  //make a frame for this histogram
+  TH1* frame1;
+  frame1 = makeFrame(xmin,xmax,ymin,ymax,10,"Recoil Energy (eV)","Ionization Yield",1.2,1.2);
+  if(isprelim){
+    TText *prelim = new TText(px,py,"preliminary");
+    prelim->SetTextAngle(0);
+    prelim->SetTextSize(0.1);
+    prelim->SetTextColor(17);
+    prelim->SetTextFont(42);
+    frame1->GetListOfFunctions()->Add(prelim);
+  }
+  frame1->Draw();
+  //TAxis *xaxis = frame1->GetXaxis();
+  //xaxis->SetNoExponent(true);
+
+  //make some new gstyles for thick lines
+  //https://root.cern.ch/root/html/TStyle.html#TStyle:SetLineStyleString
+  gStyle->SetLineStyleString(12,"36 36"); //dashed
+  gStyle->SetLineStyleString(13,"12 24"); //dotted
+  gStyle->SetLineStyleString(14,"36 48 12 48"); //dash-dot
+  gStyle->SetLineStyleString(15,"60 36 12 36 12 36 12 36"); //dash-triple-dot
+
+  Double_t perc=1.05;
+  Double_t energies[3] = {672,562,407};
+  Double_t cascade0[2] = {669.4,2.58};
+  Double_t cascade1[3] = {553.8,5.47,2.58*perc};
+  Double_t cascade2[4] = {382.8,15.72,5.47*perc,2.58*perc*perc};
+  Double_t par[1];
+  Double_t x[1];
+  par[0]=0.159;
+  TF1 *f = new TF1("lindhard",lindhard_k,0,1000,1);
+  f->SetNpx(10000);
+  f->SetParameter(0,0.159);
+  f->SetLineColor(kBlack);
+  f->Draw("same");
+  leg->AddEntry(f,Form("Linhdard yield model (k=0.159)"),"l");
+  //print up legend
+  //leg->SetHeader(Form("%d GeV %s primaries ",energy,getFullPartName(part).c_str()));
+  leg->SetFillColor(0);
+  leg->SetLineWidth(2);
+  leg->SetTextFont(42);
+  leg->SetTextSize(.03);
+
+  TGraph *g = new TGraph();
+  x[0] = 672.0;
+  g->SetPoint(0,672,lindhard_k(x,par));
+  x[0] = 562.0;
+  g->SetPoint(1,562,lindhard_k(x,par));
+  x[0] = 407.0;
+  g->SetPoint(2,407,lindhard_k(x,par));
+
+  g->SetMarkerStyle(20);
+  g->SetMarkerSize(1);
+  g->SetMarkerColor(kBlack);
+  g->Draw("p");
+
+  x[0] = cascade0[0];
+  TLine *l0_0 = new TLine(cascade0[0],ymin,cascade0[0],ymax);
+  x[0] = cascade0[1];
+  TLine *l0_1 = new TLine(cascade0[1],ymin,cascade0[1],ymax);
+  l0_0->SetLineColor(kRed);
+  l0_0->SetLineStyle(2);
+  l0_0->SetLineWidth(3);
+  l0_0->Draw("same");
+  l0_1->SetLineColor(kRed);
+  l0_1->SetLineStyle(2);
+  l0_1->SetLineWidth(3);
+  l0_1->Draw("same");
+
+  x[0] = cascade1[0];
+  TLine *l1_0 = new TLine(cascade1[0],ymin,cascade1[0],ymax);
+  x[0] = cascade1[1];
+  TLine *l1_1 = new TLine(cascade1[1],ymin,cascade1[1],ymax);
+  x[0] = cascade1[2];
+  TLine *l1_2 = new TLine(cascade1[2],ymin,cascade1[2],ymax);
+  l1_0->SetLineColor(kBlue);
+  l1_0->SetLineStyle(2);
+  l1_0->SetLineWidth(3);
+  l1_0->Draw("same");
+  l1_1->SetLineColor(kBlue);
+  l1_1->SetLineStyle(2);
+  l1_1->SetLineWidth(3);
+  l1_1->Draw("same");
+  l1_2->SetLineColor(kBlue);
+  l1_2->SetLineStyle(2);
+  l1_2->SetLineWidth(3);
+  l1_2->Draw("same");
+
+  x[0] = cascade2[0];
+  TLine *l2_0 = new TLine(cascade2[0],ymin,cascade2[0],ymax);
+  x[0] = cascade2[1];
+  TLine *l2_1 = new TLine(cascade2[1],ymin,cascade2[1],ymax);
+  x[0] = cascade2[2];
+  TLine *l2_2 = new TLine(cascade2[2],ymin,cascade2[2],ymax);
+  x[0] = cascade2[3];
+  TLine *l2_3 = new TLine(cascade2[3],ymin,cascade2[3],ymax);
+  l2_0->SetLineColor(kGreen);
+  l2_0->SetLineStyle(2);
+  l2_0->SetLineWidth(3);
+  l2_0->Draw("same");
+  l2_1->SetLineColor(kGreen);
+  l2_1->SetLineStyle(2);
+  l2_1->SetLineWidth(3);
+  l2_1->Draw("same");
+  l2_2->SetLineColor(kGreen);
+  l2_2->SetLineStyle(2);
+  l2_2->SetLineWidth(3);
+  l2_2->Draw("same");
+  l2_3->SetLineColor(kGreen);
+  l2_3->SetLineStyle(2);
+  l2_3->SetLineWidth(3);
+  l2_3->Draw("same");
+  leg->AddEntry(l0_0,Form("2-gamma cascade"),"l");
+  leg->AddEntry(l1_0,Form("3-gamma cascade"),"l");
+  leg->AddEntry(l2_0,Form("4-gamma cascade"),"l");
+  leg->Draw("same");
+  //output the file
+  if(print){
+      plotCanvas(c1,Form("figures/YRecoilLindhardFunction"),ext);
+  }
+}
