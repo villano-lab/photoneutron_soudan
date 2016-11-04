@@ -187,8 +187,8 @@ void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe
   else if(datatype=="lewide"){
     xmin=0.0;
     xmax=2.0;
-    px=0.4;
-    py=1e3;
+    px=0.876553;
+    py=2069.57;
     //file="/data/chocula/villaa/PhotoN_SuperSim/ZipSum/sbbe_trees_160405_all_wtime_v2.root";
   }
   else if(datatype=="ledwide"){
@@ -232,9 +232,13 @@ void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe
 
 
   TH1D *hnr = getDetNREDist(zip,100,xmin,xmax,false,file);
+  hnr->SetLineWidth(3);
   TH1D *hnrs = getDetNREDist(zip,100,xmin,xmax,true,file);
+  hnrs->SetLineWidth(3);
   TH1D *her = getDetEREDist(zip,100,xmin,xmax,true,file);
+  her->SetLineWidth(3);
   TH1D *hmix = getDetEREDist(zip,100,xmin,xmax,false,file);
+  hmix->SetLineWidth(3);
   hnr->SetLineColor(kBlue);
   hnrs->SetLineColor(kRed);
   her->SetLineColor(kGreen);
@@ -245,7 +249,7 @@ void plotAllEDist(bool print=0,bool isprelim=true,int zip=1,string datatype="ybe
   hsum->Add(her);
   hsum->Add(hmix);
   hsum->SetLineColor(kBlack);
-  hsum->SetLineWidth(2);
+  hsum->SetLineWidth(3);
   leg->AddEntry(hnr,Form("iZIP %d: NR multiples",zip),"l");
   leg->AddEntry(hnrs,Form("iZIP %d: NR singles",zip),"l");
   leg->AddEntry(her,Form("iZIP %d: ER all",zip),"l");
