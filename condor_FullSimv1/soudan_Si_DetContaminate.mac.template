@@ -1,0 +1,37 @@
+/control/verbose 0
+/run/verbose 0
+/CDMS/verbose 0
+
+# Configure lab
+/CDMS/Lab NoLab 
+
+/CDMS/Detector scdms
+/CDMS/Layout/ZipMaterial G4_Si 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+/CDMS/Source contaminant
+/CDMS/Contaminant/Volume Zip
+/CDMS/Contaminant/bulk
+
+#set up the particle generation
+/CDMS/Contaminant/AddSpectrum nfile:SOURCE_neuts.dat
+
+#configure a step counter
+/CDMS/StepCounter flux
+/CDMS/FluxCounter/setParticleVolume gamma Zip 11 
+
+#configure a neturon capture
+/CDMS/StepCounter nCapture 
+/CDMS/nCapture/setParticleVolume neutron Zip 11 
+
+/CDMS/updateGeom
+
+/CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
+/CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
+/CDMS/writeData DATAOUT                      # Do/Don't write text out file
+
+# 
+# NEVENTS events
+#
+/run/autoSeed true
+/CDMS/writeFilePrefix /data/chocula/villaa/PhotoN_SuperSim/DATADIR/SOURCE_SetIDTHESETID_pNEVENTS_TIMEOFDAY 
+/run/setRunID RUNNUMBER 
+/run/beamOn NEVENTS 
