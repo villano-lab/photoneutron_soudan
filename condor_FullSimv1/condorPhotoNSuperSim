@@ -21,7 +21,7 @@ do
 
   if [ "${input[i]}" = "-usage" ];
   then
-    echo "condorPhotoNSuperSim -n NJOBS -src SOURCE -set DATASETID -ngen NEV -prim -otype OTYPE -merge"
+    echo "condorPhotoNSuperSim -n NJOBS -src SOURCE -set DATASETID -ngen NEV -prim -otype OTYPE -merge -template TEMPLATEFILE"
     exit
   fi
 
