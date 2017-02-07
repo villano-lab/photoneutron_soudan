@@ -1,0 +1,160 @@
+#!/bin/sh
+
+
+DATASETID=0
+NJOBS=1
+SOURCE=ybe
+NEV=100
+EXE=no
+OTYPE=ascii
+TREEOUT="false"
+PRIMOUT="false"
+DATAOUT="true"
+SOURCEDIR="${SOURCE}"
+MERGE="false"
+TEMPLATEFILE="soudan_photon_neutron.mac.template"
+
+input=($@)
+
+for((i=0; i<$#; i++))
+do
+
+  if [ "${input[i]}" = "-usage" ];
+  then
+    echo "condorPhotoNSuperSim -n NJOBS -src SOURCE -set DATASETID -ngen NEV -prim -otype OTYPE -merge -template TEMPLATEFILE"
+    exit
+  fi
+
+  if [ "${input[i]}" = "-n" ];
+  then
+    NJOBS=${input[i+1]}
+  fi
+
+  if [ "${input[i]}" = "-src" ];
+  then
+    SOURCE=${input[i+1]}
+  fi
+
+  if [ "${input[i]}" = "-set" ];
+  then
+    DATASETID=${input[i+1]}
+  fi
+
+  if [ "${input[i]}" = "-ngen" ];
+  then
+    NEV=${input[i+1]}
+  fi
+
+  if [ "${input[i]}" = "-prim" ];
+  then
+    PRIMOUT="true" 
+  fi
+
+  if [ "${input[i]}" = "-otype" ];
+  then
+    OTYPE=${input[i+1]}
+  fi
+
+  if [ "${input[i]}" = "-merge" ];
+  then
+    MERGE="true"
+  fi
+
+  if [ "${input[i]}" = "-template" ];
+  then
+    TEMPLATEFILE=${input[i+1]}
+  fi
+
+  if [ "${input[i]}" = "-exe" ];
+  then
+    EXE=yes
+  fi
+
+done
+
+if [ "${OTYPE}" = "root" ];
+then
+  PRIMOUT="false"
+  DATAOUT="false"
+  TREEOUT="true"
+  SOURCEDIR=${SOURCE}"root"
+fi
+
+
+DATASETIDHEX=`printf "0x%04x" ${DATASETID}`
+DATE=`date +%y%m%d"_"%H%M%S"_"%N`
+
+#echo ${DATE}
+
+
+if [ ${NEV} -gt 999999 ]
+then
+  REDNEV=$[NEV/1000000]M
+elif [ ${NEV} -gt 999 ]
+then
+  REDNEV=$[NEV/1000]K
+else
+  REDNEV=${NEV}
+fi
+
+#be sure data directories exist based on OTYPE
+#if [ "${OTYPE}" = "root" ];
+#then
+#  mkdir -p ${PREFIXDIR}SLACroot/
+#else
+#  mkdir -p ${PREFIXDIR}SLAC/
+#fi
+
+for ((i=0; i<${NJOBS}; i++))
+do
+
+  if [ ${EXE} != "yes" ]
+  then
+
+    if [ "${MERGE}" != "true" ]
+    then
+       #make the macro file and put it in the macros/ directory
+       sed -e 's|SOURCE|'${SOURCE}'|g' -e 's|THESETID|'${DATASETIDHEX}'|' -e 's|NEVENTS|'${NEV}'|' -e 's|RUNNUMBER|'${i}'|' -e 's|TIMEOFDAY|'${DATE}'|' -e 's|PRIMOUT|'${PRIMOUT}'|' -e 's|DATAOUT|'${DATAOUT}'|' -e 's|TREEOUT|'${TREEOUT}'|' -e 's|DATADIR|'${SOURCEDIR}'|'  < ${TEMPLATEFILE} > 'macros/'${SOURCE}'_'${DATASETIDHEX}'_'${i}'_'${DATE}'.mac'
+
+       #make the condor file
+       args='macros/'${SOURCE}'_'${DATASETIDHEX}'_'${i}'_'${DATE}'.mac'
+       echo ${args}
+       sed -e 's|THEARGUMENTS|'"${args}"'|' -e 's|IDENTIFIER|'${DATASETIDHEX}'|'  < condor-SuperSim > .condorjob_${SOURCE}_${TEMPLATEFILE}
+    else
+       #make the condor file
+       #2 0 ybe 100000
+       args=${DATASETID}' '${i}' '${SOURCE}' '${NEV}' '${TEMPLATEFILE}
+       echo ${args}
+       sed -e 's|THEARGUMENTS|'"${args}"'|' -e 's|IDENTIFIER|'${DATASETIDHEX}'|'  < condor-SuperSimROOT > .condorjob_${SOURCE}_${TEMPLATEFILE}
+
+    fi
+
+    #print condor output
+    cat .condorjob_${SOURCE}_${TEMPLATEFILE}
+    rm .condorjob_${SOURCE}_${TEMPLATEFILE}
+  else
+    echo submitting to batch farm...
+
+    if [ "${MERGE}" != "true" ]
+    then
+       #make the macro file and put it in the macros/ directory
+       sed -e 's|SOURCE|'${SOURCE}'|g' -e 's|THESETID|'${DATASETIDHEX}'|' -e 's|NEVENTS|'${NEV}'|' -e 's|RUNNUMBER|'${i}'|' -e 's|TIMEOFDAY|'${DATE}'|' -e 's|PRIMOUT|'${PRIMOUT}'|' -e 's|DATAOUT|'${DATAOUT}'|' -e 's|TREEOUT|'${TREEOUT}'|' -e 's|DATADIR|'${SOURCEDIR}'|'  < ${TEMPLATEFILE} > 'macros/'${SOURCE}'_'${DATASETIDHEX}'_'${i}'_'${DATE}'.mac'
+
+       #make the condor file
+       args='macros/'${SOURCE}'_'${DATASETIDHEX}'_'${i}'_'${DATE}'.mac'
+       echo ${args}
+       sed -e 's|THEARGUMENTS|'"${args}"'|' -e 's|IDENTIFIER|'${DATASETIDHEX}'|'  < condor-SuperSim > .condorjob_${SOURCE}_${TEMPLATEFILE}
+    else
+       #make the condor file
+       #2 0 ybe 100000
+       args=${DATASETID}' '${i}' '${SOURCE}' '${NEV}' '${TEMPLATEFILE}
+       echo ${args}
+       sed -e 's|THEARGUMENTS|'"${args}"'|' -e 's|IDENTIFIER|'${DATASETIDHEX}'|'  < condor-SuperSimROOT > .condorjob_${SOURCE}_${TEMPLATEFILE}
+
+    fi
+
+    #submit to condor
+    condor_submit .condorjob_${SOURCE}_${TEMPLATEFILE}
+    rm .condorjob_${SOURCE}_${TEMPLATEFILE}
+  fi
+done
