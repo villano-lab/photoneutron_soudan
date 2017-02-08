@@ -9,6 +9,7 @@ TEMPLATEFILE=$5
 SHIFT=$6
 SOURCEZ=$7
 SOURCEA=$8
+SOURCEDIR=${SOURCE}
 
 if [ "${OTYPE}" = "root" ];
 then
@@ -27,7 +28,7 @@ DAY=`date +%y%m%d`
 #echo ${DATE}
 
 #compute the box position
-BOXPOSITION=${SHIFT+8.15}
+BOXPOSITION=`bc <<< "${SHIFT} + 8.15"`
 
 #make the simulation macro file (USE ROOT output)
 sed -e 's|SOURCENAME|'${SOURCE}'|g' -e 's|THESETID|'${DATASETIDHEX}'|g' -e 's|NEVENTS|'${NEV}'|g' -e 's|RUNNUMBER|'${RUN}'|g' -e 's|TIMEOFDAY|'${DATE}'|g' -e 's|PRIMOUT|'${PRIMOUT}'|g' -e 's|DATAOUT|'${DATAOUT}'|g' -e 's|TREEOUT|'${TREEOUT}'|g' -e 's|DATADIR|'${SOURCEDIR}'|g' -e 's|BOXPOSITION|'${BOXPOSITION}'|g' -e 's|SOURCEZ|'${SOURCEZ}'|g' -e 's|SOURCEA|'${SOURCEA}'|g' -e 's|BOXSHIFT|'${SHIFT}'|g'  < ${TEMPLATEFILE} > 'macros/'${SOURCE}'_'${DATASETIDHEX}'_SHIFT'${SHIFT}'_'${RUN}'_'${DATE}'.mac'
