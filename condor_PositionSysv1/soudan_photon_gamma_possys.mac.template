@@ -30,6 +30,6 @@
 # NEVENTS events
 #
 /run/autoSeed true
-/CDMS/writeFilePrefix /data/chocula/villaa/PhotoN_SuperSim/DATADIR/SOURCE_SetIDTHESETID_pNEVENTS_TIMEOFDAY 
+/CDMS/writeFilePrefix /data/chocula/villaa/PhotoN_SuperSim/DATADIR/SOURCENAME_SetIDTHESETID_shiftBOXSHIFT_pNEVENTS_TIMEOFDAY 
 /run/setRunID RUNNUMBER 
 /run/beamOn NEVENTS 

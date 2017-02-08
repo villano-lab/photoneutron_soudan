@@ -3,10 +3,10 @@
 +CondorGroup = "cdms"
 +HappyToBeEvicted = TRUE
 Universe        = vanilla
-Executable      = /home/phys/villaa/supersim/condor/photoNSimRootCondense.sh
+Executable      = /home/phys/villaa/analysis/cdms_simulation/photoneutron_soudan/condor_PositionSysv1/photoNSimRootCondense_PositionSys.sh
 GetEnv		= true
 
-remote_initialdir = /home/phys/villaa/analysis/cdms_simulation/photoneutron_soudan/condor_FullSimv1
+remote_initialdir = /home/phys/villaa/analysis/cdms_simulation/photoneutron_soudan/condor_PositionSysv1
 
 Notification = error
 Notify_user = $ENV(USER)@physics.umn.edu
