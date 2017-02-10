@@ -20,6 +20,9 @@
 #/CDMS/GammaBe/AddIsotope 51 124 ## Sb-124
 /CDMS/GammaBe/Volume SourceCapsule
 
+#disable the decays counter so we don't have an mcDecay tree
+/CDMS/DisableCounter decays
+
 /CDMS/updateGeom
 
 /CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
