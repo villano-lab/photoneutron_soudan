@@ -1,0 +1,4 @@
+convert -delay 10 -loop 0 inputfiles*.png animaion.gif
+
+from: 
+https://ubuntuforums.org/showthread.php?t=1132058

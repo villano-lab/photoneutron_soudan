@@ -1,0 +1,44 @@
+# $Id: soudan-draw.mac,v 1.7 2014/05/19 21:45:42 kelsey Exp $
+# SCDMS 5-tower x 3-ZIP (3") geometry with shielding in Soudan cavern
+#
+# 20111003  Follow refactoring of housing to separate class
+# 20111104  M. Kelsey -- Do rendered surface drawing instead of wireframe
+# 20111114  Do three axial views
+# 20120312  Modify for three ZIPs per stack
+# 20140506  Draw SCDMS instead of old CDMS-II
+
+/control/verbose 0
+/run/verbose 0
+/CDMS/verbose 0
+
+# Configure lab
+/CDMS/Lab NoLab 
+
+/CDMS/Detector scdms
+/CDMS/UseShield partial
+/CDMS/Source gammaBe
+#/CDMS/GammaBe/Position -1.36988 +3.87342 0. cm 
+/CDMS/GammaBe/Position -1.1637 +0.8148 0. cm 
+/CDMS/GammaBe/RotZAngle 50 deg
+/CDMS/GammaBe/boxOffset 8.5 cm 
+
+/CDMS/updateGeom
+
+/vis/open OGLIX 600x600-0+0
+/vis/verbose errors
+/vis/viewer/set/style surface
+/vis/viewer/set/autoRefresh false
+/vis/viewer/set/culling global
+/vis/viewer/set/upVector 0 1 0
+/vis/viewer/set/background white
+/vis/viewer/zoomTo 2
+/vis/ogl/set/printMode pixmap
+/vis/ogl/set/printFilename pics/vertmovie_HEIGHTSHIFT
+
+# Side view of long axis of cavern
+/vis/viewer/set/viewpointVector 0 0 1 
+#/vis/viewer/pan 0 20 cm 
+/vis/viewer/addCutawayPlane 0 0 HEIGHTSHIFT cm 0 0 -1
+/vis/drawVolume
+/vis/viewer/flush
+/vis/ogl/printEPS
