@@ -8,7 +8,7 @@
 /CDMS/Detector scdms
 /CDMS/UseShield partial
 /CDMS/Source gammaBe
-/CDMS/GammaBe/Position -1.36988 +3.87342 0. cm 
+/CDMS/GammaBe/Position -1.1637 +0.8148 0. cm 
 /CDMS/GammaBe/RotZAngle 50 deg
 #/CDMS/GammaBe/boxOffset 8.15 cm 
 /CDMS/GammaBe/boxOffset BOXPOSITION cm 
