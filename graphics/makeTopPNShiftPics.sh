@@ -16,4 +16,4 @@ do
   LIST="${LIST} pics/photon-top-shift_${BPUS}_0.png"
 done
 echo ${LIST}
-convert -delay 100 -loop 0 ${LIST} Soudan_PhotoNeutron_shiftAnimation_side.gif
+convert -delay 100 -loop 0 ${LIST} Soudan_PhotoNeutron_shiftAnimation_top.gif

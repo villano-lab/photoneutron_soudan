@@ -43,3 +43,5 @@ CDMS_GGSim macros/${SOURCE}_${DATASETIDHEX}_SHIFT${SHIFT}_${RUN}_${DATE}.mac
 #remove the original ROOT file
 rm /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
 
+#now just add the tree for metaData
+root -l -b addMetaData.C\(\"/data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}_merged.root\"\); 

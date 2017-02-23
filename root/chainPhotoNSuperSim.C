@@ -36,6 +36,7 @@ TChain *chainPhotoNSuperSim(int &nev,int n=-1,int datasetno=0,string source="ybe
     }
     count++;
   }
+
   
   return data;
 
@@ -50,13 +51,8 @@ TChain *chainPhotoNSuperSimPosSys(int &nev,int n=-1,int datasetno=0,string sourc
 
   //create a chain
   TChain *data = new TChain(treename.c_str(),treename.c_str());
-  TChain *decay = new TChain("mcDecays","mcDecays");
-  TChain *shiftch = new TChain("source_shifts","source_shifts");
+  TChain *shiftch = new TChain("metaData","metaData");
 
-
-  //set up the variables
-  double shift;
-  shifttree->Branch("shift",&shift,"shift/D");
 
   //make a command to use with a root pipe
   command = "ls "+dir+" |grep .root |grep "+dataset+"_ |grep "+source+" |grep _merge";
@@ -73,36 +69,71 @@ TChain *chainPhotoNSuperSimPosSys(int &nev,int n=-1,int datasetno=0,string sourc
     iss >> filename;
 
 
-    //extract the shift from the filename
-    int p0 = filename.find("shift");
-    int p1 = filename.find("_p");
-    string strshift = filename.substr(p0+5,p1-p0-5);
-    //strshift = "134_0556";
-    cout << strshift << endl;
-    int u = strshift.find("_");
-    string strshift_dec;
-    if(u!=string::npos){
-      strshift_dec=strshift.substr(0,u);
-      strshift_dec+=".";
-      strshift_dec+=strshift.substr(u+1,strshift.size()-u);
-    }
-    else
-      strshift_dec=strshift;
-
-    //change to double
-    istringstream streamshift(strshift_dec);
-    streamshift >> shift;
-
-
-
     if(n<0 || count<n){
       string fullfilename = dir+"/"+filename;
+      bool isok = insertMetaData(fullfilename);
+      if(!isok) continue;
+      cout << fullfilename << endl;
       data->Add(fullfilename.c_str());
-      decay->Add(fullfilename.c_str());
+      shiftch->Add(fullfilename.c_str());
     }
     count++;
   }
-  
+ 
+  data->AddFriend(shiftch);
   return data;
 
+}
+bool insertMetaData(string filename,bool force=false)
+{
+  //read the root file, find a Tree called metaData, overwrite it with new meta data
+  //open the file and get the old tree
+  TFile *f = new TFile(filename.c_str(),"UPDATE");
+
+  bool havetree = (bool)f->GetListOfKeys()->FindObject("metaData");
+
+  if(havetree && !force) return true;
+
+  TTree *oldt = f->Get("mcmerged");
+  if(!oldt) return false;
+  //make a tree
+  TTree *t = new TTree("metaData","metaData");
+
+  double shift;
+  t->Branch("shift",&shift,"shift/D");
+
+  //get meta data
+  //extract the shift from the filename
+  int p0 = filename.find("shift");
+  int p1 = filename.find("_p");
+  string strshift = filename.substr(p0+5,p1-p0-5);
+  //strshift = "134_0556";
+  cout << strshift << endl;
+  int u = strshift.find("_");
+  string strshift_dec;
+  if(u!=string::npos){
+    strshift_dec=strshift.substr(0,u);
+    strshift_dec+=".";
+    strshift_dec+=strshift.substr(u+1,strshift.size()-u);
+  }
+  else
+    strshift_dec=strshift;
+
+  //change to double
+  istringstream streamshift(strshift_dec);
+  streamshift >> shift;
+
+  //echo the computed shift
+  cout << "The computed shift is: " << shift << endl;
+
+  //add this to the tree
+  for(int i=0;i<oldt->GetEntries();i++) t->Fill();
+
+
+
+  //write it back to the file
+  t->Write("",TObject::kOverwrite);
+  f->Close();
+
+  return true;
 }

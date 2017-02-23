@@ -3,10 +3,10 @@
 +CondorGroup = "cdms"
 +HappyToBeEvicted = TRUE
 Universe        = vanilla
-Executable      = /home/phys/villaa/supersim/CDMSscripts/analysis/CombineTrees
+Executable      = /home/phys/villaa/analysis/cdms_simulation/photoneutron_soudan/condor_PositionSysv1/combineAndRemove.sh
 GetEnv		= true
 
-remote_initialdir = /data/chocula/villaa/PhotoN_SuperSim/SOURCEroot/ 
+remote_initialdir = /home/phys/villaa/analysis/cdms_simulation/photoneutron_soudan/condor_PositionSysv1
 
 Notification = error
 Notify_user = $ENV(USER)@physics.umn.edu
