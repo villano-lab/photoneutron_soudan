@@ -39,7 +39,7 @@
 #x points to estem and x-cross-y points upward (+z)
 /vis/viewer/set/viewpointVector 0.76604 -0.64278 0 
 #/vis/viewer/set/viewpointVector 0 0 1 
-#/vis/viewer/pan 0 -6 
+/vis/viewer/pan 0 20 cm
 #/vis/viewer/addCutawayPlane 1 0 0 cm 0 -1 0
 /vis/viewer/addCutawayPlane -1.1637 0.8148 0 cm -0.76604 0.64278 0 
 /vis/drawVolume
