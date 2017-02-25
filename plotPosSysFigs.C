@@ -3,6 +3,7 @@
 #include "plotFunctions.C"
 #include "readPhotoNSuperSimTxt.C"
 #include "drawTowers.C" 
+#include "chainPhotoNSuperSim.C"
 
 void plotPosShift(bool print=0,bool isprelim=true, string ext="eps",bool resave=false)
 {
@@ -125,7 +126,7 @@ void plotPosShift(bool print=0,bool isprelim=true, string ext="eps",bool resave=
   h3->Draw("same");
   //print up legend
   //leg->SetHeader(Form("%d GeV %s primaries ",energy,getFullPartName(part).c_str()));
-  //leg->BorderSize(0);
+  //leg->SetBorderSize(0);
   leg->SetFillColor(0);
   leg->SetLineWidth(2);
   leg->SetTextFont(42);
@@ -138,4 +139,165 @@ void plotPosShift(bool print=0,bool isprelim=true, string ext="eps",bool resave=
     plotCanvas(c1,Form("figures/geomShiftLayout"),ext);
   }
 
+}
+void plotRatesLineShift(bool print=0,bool isprelim=true, string ext="eps",bool resave=false)
+{
+  
+  //let's do some calculations to make the axis size ratio correct for some specified
+  //ratio of x-size to y-size.  
+  int xw=810,yw=-1;
+  double r=1.0;
+  double xr = 0.05;
+  double xl = 0.15;
+  double yt = 0.05;
+  double yb = 0.12;
+  double padsp=0.1;
+
+  findCanvasSize(xw,yw,1,1,r,xr,xl,yt,yb,padsp);
+
+  gROOT->SetStyle("Plain");
+  //make a canvas
+  TCanvas* c1 = (TCanvas*) gROOT->GetListOfCanvases()->FindObject("c1");
+  if(c1){
+    c1->Close();
+    c1 = new TCanvas("c1","Gamma Rates",200,10,xw,yw);
+  }
+  else
+    c1 = new TCanvas("c1","Gamma Rates",200,10,xw,yw);
+
+
+  c1->cd();
+  //log-log plot
+  c1->SetLogy();
+  //c1->SetLogx();
+  c1->SetTickx();
+  c1->SetTicky();
+  c1->SetLeftMargin(xl);
+  c1->SetBottomMargin(yb);
+  c1->SetTopMargin(yt);
+  c1->SetRightMargin(xr);
+  c1->SetGrid(1,1);
+  TLegend *leg;
+  leg = new TLegend(0.20,0.57,0.60,0.67);
+
+  double px=-12.8996,py=2728;
+  //size of x-axis
+  double xmin=-14;
+  double xmax=7.0;
+  double ymin=10;
+  double ymax=1e4;
+
+  gStyle->SetLineWidth(2);
+  gStyle->SetHistLineWidth(1);
+  gStyle->SetGridWidth(0);
+
+  //make a frame for this histogram
+  TH1* frame1;
+  frame1 = makeFrame(xmin,xmax,ymin,ymax,10,"along-bridge shift [cm]","rate [Hz/mCi]",1.2,0.8);
+  if(isprelim){
+    TText *prelim = new TText(px,py,"preliminary");
+    prelim->SetTextAngle(0);
+    prelim->SetTextSize(0.1);
+    prelim->SetTextColor(17);
+    prelim->SetTextFont(42);
+    frame1->GetListOfFunctions()->Add(prelim);
+  }
+  frame1->Draw();
+  //TAxis *xaxis = frame1->GetXaxis();
+  //xaxis->SetNoExponent(true);
+
+  //make some new gstyles for thick lines
+  //https://root.cern.ch/root/html/TStyle.html#TStyle:SetLineStyleString
+  gStyle->SetLineStyleString(12,"36 36"); //dashed
+  gStyle->SetLineStyleString(13,"12 24"); //dotted
+  gStyle->SetLineStyleString(14,"36 48 12 48"); //dash-dot
+  gStyle->SetLineStyleString(15,"60 36 12 36 12 36 12 36"); //dash-triple-dot
+
+  //first try to find the info in a file
+  TFile *f = new TFile("data/possysdata.root","UPDATE");
+  string h14name = "it5z2_100"; //name and threshold
+  string h4name = "it2z1_1000"; //name and threshold
+
+  int nev;
+  TChain *ch = chainPhotoNSuperSimPosSys(nev,-1,1,"88y","/data/chocula/villaa/PhotoN_SuperSim/possys");
+
+  //the shift step is 0.86 cm
+  double binwidth = (6.7/2.0/2.0/2.0)/10.0;
+  double xend = 6.7 + (binwidth/2.0);
+  double xstart = -13.4 - (binwidth/2.0);
+  int nbins = (xend-xstart)/(binwidth);
+  TH1D *h14 = new TH1D("shift_it5z2","shift_it5z2",nbins,xstart,xend);
+  TH1D *h4 = new TH1D("shift_it2z1","shift_it2z1",nbins,xstart,xend);
+
+
+  TGraphErrors *g14;
+  if(!f->GetListOfKeys()->FindObject(h14name.c_str()) || resave){
+    ch->Draw("shift>>shift_it5z2","Sum$(allzips.Edep*(allzips.DetNum==14))>100.0","goff");
+    g14 = new TGraphErrors();
+    for(int i=0;i<h14->GetNbinsX();i++){
+      double x,y,xerr,yerr;
+      y=h14->GetBinContent(i+1);
+      x=h14->GetBinCenter(i+1);
+      yerr=sqrt(y);
+      xerr=0;
+      g14->SetPoint(i,x,y);
+      g14->SetPointError(i,xerr,yerr);
+    }
+    g14->SetMarkerStyle(20);
+    g14->SetMarkerColor(kRed);
+    g14->SetName(h14name.c_str());
+    g14->SetTitle(h14name.c_str());
+  }
+  else{
+    g14 = (TGraphErrors*) f->Get(h14name.c_str());
+  }
+
+  TGraphErrors *g4;
+  if(!f->GetListOfKeys()->FindObject(h4name.c_str()) || resave){
+    ch->Draw("shift>>shift_it2z1","Sum$(allzips.Edep*(allzips.DetNum==4))>1000.0","goff");
+    g4 = new TGraphErrors();
+    for(int i=0;i<h4->GetNbinsX();i++){
+      double x,y,xerr,yerr;
+      y=h4->GetBinContent(i+1);
+      x=h4->GetBinCenter(i+1);
+      yerr=sqrt(y);
+      xerr=0;
+      g4->SetPoint(i,x,y);
+      g4->SetPointError(i,xerr,yerr);
+    }
+    g4->SetMarkerStyle(21);
+    g4->SetMarkerColor(kBlue);
+    g4->SetName(h4name.c_str());
+    g4->SetTitle(h4name.c_str());
+  }
+  else{
+    g4 = (TGraphErrors*) f->Get(h4name.c_str());
+  }
+  
+  
+  leg->AddEntry(g14,Form("IT5Z2 rate above 100 eV"),"p");
+  leg->AddEntry(g4,Form("IT2Z1 rate above 1 keV"),"p");
+
+  g14->Draw("p");
+  g4->Draw("p");
+  //print up legend
+  //leg->SetHeader(Form("%d GeV %s primaries ",energy,getFullPartName(part).c_str()));
+  leg->SetBorderSize(0);
+  leg->SetFillColor(0);
+  //leg->SetFillStyle(0);
+  leg->SetLineWidth(2);
+  leg->SetTextFont(42);
+  leg->SetTextSize(.03);
+  leg->Draw("same");
+
+  //output the file
+  if(print){
+    cout << c1 << endl;
+    plotCanvas(c1,Form("figures/rateFromShift"),ext);
+  }
+
+  f->cd();
+  g14->Write("",TObject::kOverwrite);
+  g4->Write("",TObject::kOverwrite);
+  f->Close();
 }
