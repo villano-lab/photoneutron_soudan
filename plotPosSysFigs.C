@@ -228,20 +228,38 @@ void plotRatesLineShift(bool print=0,bool isprelim=true, string ext="eps",bool r
   int nbins = (xend-xstart)/(binwidth);
   TH1D *h14 = new TH1D("shift_it5z2","shift_it5z2",nbins,xstart,xend);
   TH1D *h4 = new TH1D("shift_it2z1","shift_it2z1",nbins,xstart,xend);
-
+  TH1D *hnorm = new TH1D("shift_norm","shift_norm",nbins,xstart,xend);
+  bool gotnorm=false;
 
   TGraphErrors *g14;
   if(!f->GetListOfKeys()->FindObject(h14name.c_str()) || resave){
-    ch->Draw("shift>>shift_it5z2","Sum$(allzips.Edep*(allzips.DetNum==14))>100.0","goff");
+    ch->Draw("shift>>shift_it5z2","Sum$(allzips.Edep*(allzips.DetNum==14))>100.0","goff",ch->GetEntries());
+    if(!gotnorm){
+      ch->Draw("shift>>shift_norm","","goff",ch->GetEntries());
+      gotnorm=true;
+    }
     g14 = new TGraphErrors();
+    int count=0;
     for(int i=0;i<h14->GetNbinsX();i++){
+     
+      //get data 
       double x,y,xerr,yerr;
       y=h14->GetBinContent(i+1);
       x=h14->GetBinCenter(i+1);
       yerr=sqrt(y);
       xerr=0;
-      g14->SetPoint(i,x,y);
-      g14->SetPointError(i,xerr,yerr);
+
+      //get normalization 
+      double xn,yn;
+      yn=hnorm->GetBinContent(i+1);
+      xn=hnorm->GetBinCenter(i+1);
+
+
+      if(yn>0.0){
+        g14->SetPoint(count,x,(y/yn)*37000000.0);  //norm to 1mCi
+        g14->SetPointError(count,xerr,yerr*(37000000.0/yn));
+        count++;
+      }
     }
     g14->SetMarkerStyle(20);
     g14->SetMarkerColor(kRed);
@@ -254,16 +272,32 @@ void plotRatesLineShift(bool print=0,bool isprelim=true, string ext="eps",bool r
 
   TGraphErrors *g4;
   if(!f->GetListOfKeys()->FindObject(h4name.c_str()) || resave){
-    ch->Draw("shift>>shift_it2z1","Sum$(allzips.Edep*(allzips.DetNum==4))>1000.0","goff");
+    ch->Draw("shift>>shift_it2z1","Sum$(allzips.Edep*(allzips.DetNum==4))>1000.0","goff",ch->GetEntries());
+    if(!gotnorm){
+      ch->Draw("shift>>shift_norm","","goff",ch->GetEntries());
+      gotnorm=true;
+    }
     g4 = new TGraphErrors();
+    int count=0;
     for(int i=0;i<h4->GetNbinsX();i++){
+      
+      //get data 
       double x,y,xerr,yerr;
       y=h4->GetBinContent(i+1);
       x=h4->GetBinCenter(i+1);
       yerr=sqrt(y);
       xerr=0;
-      g4->SetPoint(i,x,y);
-      g4->SetPointError(i,xerr,yerr);
+
+      //get normalization 
+      double xn,yn;
+      yn=hnorm->GetBinContent(i+1);
+      xn=hnorm->GetBinCenter(i+1);
+
+      if(yn>0.0){
+        g4->SetPoint(i,x,(y/yn)*37000000.0); //norm to 1mCi
+        g4->SetPointError(i,xerr,yerr*(37000000.0/yn));
+        count++;
+      }
     }
     g4->SetMarkerStyle(21);
     g4->SetMarkerColor(kBlue);
