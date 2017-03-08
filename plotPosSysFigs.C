@@ -95,25 +95,25 @@ void plotPosShift(bool print=0,bool isprelim=true, string ext="eps",bool resave=
 
 
   int nev;
-  TTree *t = readPhotoNSuperSimTxtPrimaries(nev,-1,1);
-  TTree *t0 = readPhotoNSuperSimTxtPrimaries(nev,-1,0);
+  TTree *t = readPhotoNSuperSimTxtPrimaries(nev,-1,2);
+  //TTree *t0 = readPhotoNSuperSimTxtPrimaries(nev,-1,0);
   TH2Poly *z = towerLayout();
   z->SetBinContent(2,100);
   z->SetBinContent(5,100);
   h0 = new TH2D("xy0","xy0",1000,-12,12,1000,-12,12);
   t->Draw("y*100:x*100>>xy0","","goff");
-  h1 = new TH2D("xy1","xy1",1000,-12,12,1000,-12,12);
-  t->Draw("y*100:x*100>>xy1","shift==0","goff");
-  h1->SetMarkerColor(kRed);
-  h1->SetMarkerStyle(20);
 
   h2 = new TH2D("xy2","xy2",1000,-12,12,1000,-12,12);
-  t0->Draw("y*100:x*100>>xy2","","goff");
+  t->Draw("y*100:x*100>>xy2","","goff");
   h3 = new TH2D("xy3","xy3",1000,-12,12,1000,-12,12);
-  t0->Draw("y*100:x*100>>xy3","shift==0","goff");
+  t->Draw("y*100:x*100>>xy3","shift==0","goff");
   h3->SetMarkerColor(kGreen);
   h3->SetMarkerStyle(20);
 
+  h1 = new TH2D("xy1","xy1",1000,-12,12,1000,-12,12);
+  t->Draw("y*100:x*100>>xy1","shift==0 && lshift==0","goff");
+  h1->SetMarkerColor(kRed);
+  h1->SetMarkerStyle(20);
 
 
   //leg->AddEntry(z,Form("iZIP towers"),"l");
@@ -121,9 +121,9 @@ void plotPosShift(bool print=0,bool isprelim=true, string ext="eps",bool resave=
 
   z->Draw("colz same");
   h0->Draw("same");
-  h1->Draw("same");
   h2->Draw("same");
   h3->Draw("same");
+  h1->Draw("same");
   //print up legend
   //leg->SetHeader(Form("%d GeV %s primaries ",energy,getFullPartName(part).c_str()));
   //leg->SetBorderSize(0);

@@ -13,7 +13,7 @@ TTree *readPhotoNSuperSimTxtPrimaries(int &nev,int n=-1,int datasetno=0,string s
   TTree *data = new TTree(treename.c_str(),treename.c_str());
 
   //set up the variables
-  double E,x,y,z,px,py,pz,D,t,shift;
+  double E,x,y,z,px,py,pz,D,t,shift,lshift;
   int event,type;
   data->Branch("E",&E,"E/D");
   data->Branch("x",&x,"x/D");
@@ -25,6 +25,7 @@ TTree *readPhotoNSuperSimTxtPrimaries(int &nev,int n=-1,int datasetno=0,string s
   data->Branch("D",&D,"D/D");
   data->Branch("t",&t,"t/D");
   data->Branch("shift",&shift,"shift/D");
+  data->Branch("lshift",&lshift,"lshift/D");
   data->Branch("event",&event,"event/I");
   data->Branch("type",&type,"type/I");
 
@@ -45,10 +46,23 @@ TTree *readPhotoNSuperSimTxtPrimaries(int &nev,int n=-1,int datasetno=0,string s
 
     //extract the shift from the filename
     int p0 = filename.find("shift");
-    int p1 = filename.find("_p10000");
-    string strshift = filename.substr(p0+5,p1-p0-5);
+    int p1 = filename.find("_lshift");
+    int p2 = filename.find("_p");
+
+    string strshift;
+    string strlshift;
+    if(p1!=string::npos){
+      strshift = filename.substr(p0+5,p1-p0-5);
+      strlshift = filename.substr(p1+7,p2-p1-7);
+    }
+    else{
+      strshift = filename.substr(p0+5,p2-p0-5);
+      strlshift = "-99999";
+    }
     //strshift = "134_0556";
     cout << strshift << endl;
+    cout << strlshift << endl;
+  
     int u = strshift.find("_");
     string strshift_dec;
     if(u!=string::npos){
@@ -58,10 +72,26 @@ TTree *readPhotoNSuperSimTxtPrimaries(int &nev,int n=-1,int datasetno=0,string s
     }
     else
       strshift_dec=strshift;
+  
+    u = strlshift.find("_");
+    string strlshift_dec;
+    if(u!=string::npos){
+      strlshift_dec=strlshift.substr(0,u);
+      strlshift_dec+=".";
+      strlshift_dec+=strlshift.substr(u+1,strlshift.size()-u);
+    }
+    else
+      strlshift_dec=strlshift;
 
     //change to double
     istringstream streamshift(strshift_dec);
     streamshift >> shift;
+    istringstream streamlshift(strlshift_dec);
+    streamlshift >> lshift;
+
+    //echo the computed shift
+    cout << "The computed shift is: " << shift << endl;
+    cout << "The computed lshift is: " << lshift << endl;
 
     //fill the tree
     ifstream streamfile((dir+"/"+filename).c_str(),ios::in);

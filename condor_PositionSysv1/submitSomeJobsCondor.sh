@@ -30,3 +30,14 @@ do
     ./condorPhotoNSuperSim_PositionSys -n 1 -src 88y -set 2 -ngen 37000000 -prim -otype root -merge -template soudan_photon_gamma_2Dpossys.mac.template -shift ${j} -lshift ${i} -srcZ 39 -srcA 88 -exe
   done
 done
+
+# loop with lateral displacement as well
+# small jobs to record the primaries
+# loop to submit many jobs 
+#for i in -2 -1 0 1 2 3
+#do
+#  for j in -13.4 -12.56 -11.73 -10.89 -10.05 -9.21 -8.38 -7.54 -6.7 -5.86 -5.03 -4.19 -3.35 -2.51 -1.68 -0.84 0 0.84 1.68 2.51 3.35 4.19 5.03 5.86 6.7
+#  do 
+#    ./condorPhotoNSuperSim_PositionSys -n 1 -src 88y -set 2 -ngen 1000 -prim -otype ascii -template soudan_photon_gamma_2Dpossys.mac.template -shift ${j} -lshift ${i} -srcZ 39 -srcA 88 -exe
+#  done
+#done
