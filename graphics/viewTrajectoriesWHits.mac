@@ -38,10 +38,10 @@
 
 /CDMS/writeTrees false		     # Do/Don't write ROOT files
 /CDMS/writePrimaries false                 # Do/Don't write primaries to file
-/CDMS/writeData false                      # Do/Don't write text out file
+/CDMS/writeData true                      # Do/Don't write text out file
 
-#/vis/open OGLIX 600x600-0+0
-/vis/open HepRepFile
+/vis/open OGLIX 600x600-0+0
+#/vis/open HepRepFile
 /vis/verbose errors
 /vis/viewer/set/style surface
 /vis/viewer/set/autoRefresh false
@@ -49,8 +49,8 @@
 /vis/viewer/set/upVector 0 0 1
 /vis/viewer/set/background white
 /vis/viewer/zoomTo 2
-#/vis/ogl/set/printMode pixmap
-#/vis/ogl/set/printFilename pics/photon-side-shift_6_7
+/vis/ogl/set/printMode pixmap
+/vis/ogl/set/printFilename trajectory-shift_6_7
 
 # Side view of long axis of cavern
 #/vis/viewer/set/viewpointVector 0 -1 0 rotate to 50deg by x'=cos(50)x - sin(50)y and y'=
@@ -73,8 +73,10 @@
 
 /vis/scene/endOfEventAction accumulate
 
+#/run/autoSeed true
+/CDMS/writeFilePrefix trajectorySupersim 
 /run/setRunID 1000
-/run/beamOn 100
+/run/beamOn 1000
 
-#/vis/ogl/printEPS
+/vis/ogl/printEPS
 
