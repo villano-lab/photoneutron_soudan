@@ -41,7 +41,8 @@ sed -e 's|SOURCENAME|'${SOURCE}'|g' -e 's|THESETID|'${DATASETIDHEX}'|g' -e 's|NE
 CDMS_GGSim macros/${SOURCE}_${DATASETIDHEX}_SHIFT${SHIFT}_LSHIFT${LSHIFT}_${RUN}_${DATE}.mac
 
 #upon return run the ROOT output condensation
-/home/phys/villaa/supersim/CDMSscripts/analysis/CombineTrees /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
+#/home/phys/villaa/supersim/CDMSscripts/analysis/CombineTrees /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
+/home/phys/villaa/supersim_analysis/CombineTrees /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
 
 #remove the original ROOT file
 rm /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
