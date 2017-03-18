@@ -23,6 +23,7 @@
 
 #disable the decays counter so we don't have an mcDecay tree
 /CDMS/DisableCounter decays
+/CDMS/writeDecayAncestor 0
 
 /CDMS/updateGeom
 
