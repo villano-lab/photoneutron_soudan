@@ -585,7 +585,7 @@ void plotYieldFromLindhard(bool print=0,bool isprelim=true,double lindhard=0.159
   c1->SetRightMargin(xr);
   //c1->SetGrid(1,1);
   TLegend *leg;
-  leg = new TLegend(0.25,0.15,0.90,0.30);
+  leg = new TLegend(0.2,0.76,0.7,0.91);
 
   double px=20.0,py=0.09;
   //size of x-axis
@@ -633,10 +633,11 @@ void plotYieldFromLindhard(bool print=0,bool isprelim=true,double lindhard=0.159
   f->SetParameter(0,0.159);
   f->SetLineColor(kBlack);
   f->Draw("same");
-  leg->AddEntry(f,Form("Linhdard yield model (k=0.159)"),"l");
+  leg->AddEntry(f,Form("Lindhard yield model (k=0.159)"),"l");
   //print up legend
   //leg->SetHeader(Form("%d GeV %s primaries ",energy,getFullPartName(part).c_str()));
   leg->SetFillColor(0);
+  //leg->SetBorderSize(0);
   leg->SetLineWidth(2);
   leg->SetTextFont(42);
   leg->SetTextSize(.03);
