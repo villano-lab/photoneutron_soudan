@@ -62,10 +62,11 @@ CDMS_GGSim ${RELPATH}macros/${SOURCE}_${DATASETIDHEX}_SHIFT${SHIFT}_LSHIFT${LSHI
 
 #upon return run the ROOT output condensation
 #/home/phys/villaa/supersim/CDMSscripts/analysis/CombineTrees /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
-#/home/phys/villaa/supersim_analysis/CombineTrees /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
+#below is the version of 'Combine Trees' I made after the large file issue
+/home/phys/villaa/supersim_analysis/CombineTrees /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
 
 #remove the original ROOT file
-#rm /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
+rm /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
 
 #now just add the tree for metaData
-#root -l -b addMetaData.C\(\"/data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}_merged.root\"\); 
+root -l -b addMetaData.C\(\"/data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_shift${SHIFT}_lshift${LSHIFT}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}_merged.root\"\); 
