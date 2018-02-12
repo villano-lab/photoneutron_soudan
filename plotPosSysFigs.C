@@ -414,7 +414,7 @@ void plotRatesLineShift_Fix(bool print=0,bool isprelim=true, string ext="eps",bo
   string h4name = "it2z1_1000"; //name and threshold
 
   int nev;
-  TChain *ch = chainPhotoNSuperSimPosSys(nev,-1,4,"88y","/data/chocula/villaa/PhotoN_SuperSim/88yroot");
+  TChain *ch = chainPhotoNSuperSimPosSys(nev,-1,4,"88y","/data/chocula/villaa/PhotoN_SuperSim/possys");
 
   //the shift step is 0.86 cm
   double binwidth = (6.7/2.0/2.0/2.0)/10.0;
@@ -429,8 +429,10 @@ void plotRatesLineShift_Fix(bool print=0,bool isprelim=true, string ext="eps",bo
   TGraphErrors *g14;
   if(!f->GetListOfKeys()->FindObject(h14name.c_str()) || resave){
     ch->Draw("shift>>shift_it5z2","Sum$(allzips.Edep*(allzips.DetNum==14))>100.0","goff",ch->GetEntries());
+    cout << "Drew first tower" << endl;
     if(!gotnorm){
       ch->Draw("shift>>shift_norm","","goff",ch->GetEntries());
+      cout << "(got normalization)" << endl;
       gotnorm=true;
     }
     g14 = new TGraphErrors();
@@ -468,8 +470,10 @@ void plotRatesLineShift_Fix(bool print=0,bool isprelim=true, string ext="eps",bo
   TGraphErrors *g4;
   if(!f->GetListOfKeys()->FindObject(h4name.c_str()) || resave){
     ch->Draw("shift>>shift_it2z1","Sum$(allzips.Edep*(allzips.DetNum==4))>1000.0","goff",ch->GetEntries());
+    cout << "Drew second tower" << endl;
     if(!gotnorm){
       ch->Draw("shift>>shift_norm","","goff",ch->GetEntries());
+      cout << "(got normalization)" << endl;
       gotnorm=true;
     }
     g4 = new TGraphErrors();
@@ -522,7 +526,7 @@ void plotRatesLineShift_Fix(bool print=0,bool isprelim=true, string ext="eps",bo
   //output the file
   if(print){
     cout << c1 << endl;
-    plotCanvas(c1,Form("figures/rateFromShift"),ext);
+    plotCanvas(c1,Form("figures/rateFromShift_SSimV03-01-04"),ext);
   }
 
   f->cd();

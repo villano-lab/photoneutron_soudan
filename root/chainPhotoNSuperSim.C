@@ -164,3 +164,85 @@ bool insertMetaData(string filename,bool force=false)
 
   return true;
 }
+bool insertMetaData_Light(string filename,bool force=false)
+{
+  //try to save on space and not assume I have one root tree entry for every event
+
+  //read the root file, find a Tree called metaData, overwrite it with new meta data
+  //open the file and get the old tree
+  TFile *f = new TFile(filename.c_str(),"UPDATE");
+
+  bool havetree = (bool)f->GetListOfKeys()->FindObject("metaData");
+
+  if(havetree && !force) return true;
+
+  TTree *oldt = f->Get("mcmerged");
+  if(!oldt) return false;
+  //make a tree
+  TTree *t = new TTree("metaData","metaData");
+
+  double shift,lshift;
+  t->Branch("shift",&shift,"shift/D");
+  t->Branch("lshift",&lshift,"lshift/D");
+
+  //get meta data
+  //extract the shift from the filename
+  int p0 = filename.find("shift");
+  int p1 = filename.find("_lshift");
+  int p2 = filename.find("_p");
+
+  string strshift;
+  string strlshift;
+  if(p1!=string::npos){
+    strshift = filename.substr(p0+5,p1-p0-5);
+    strlshift = filename.substr(p1+7,p2-p1-7);
+  }
+  else{
+    strshift = filename.substr(p0+5,p2-p0-5);
+    strlshift = "-99999";
+  }
+  //strshift = "134_0556";
+  cout << strshift << endl;
+  cout << strlshift << endl;
+
+  int u = strshift.find("_");
+  string strshift_dec;
+  if(u!=string::npos){
+    strshift_dec=strshift.substr(0,u);
+    strshift_dec+=".";
+    strshift_dec+=strshift.substr(u+1,strshift.size()-u);
+  }
+  else
+    strshift_dec=strshift;
+
+  u = strlshift.find("_");
+  string strlshift_dec;
+  if(u!=string::npos){
+    strlshift_dec=strlshift.substr(0,u);
+    strlshift_dec+=".";
+    strlshift_dec+=strlshift.substr(u+1,strlshift.size()-u);
+  }
+  else
+    strlshift_dec=strlshift;
+
+  //change to double
+  istringstream streamshift(strshift_dec);
+  streamshift >> shift;
+  istringstream streamlshift(strlshift_dec);
+  streamlshift >> lshift;
+
+  //echo the computed shift
+  cout << "The computed shift is: " << shift << endl;
+  cout << "The computed lshift is: " << lshift << endl;
+
+  //add this to the tree
+  for(int i=0;i<oldt->GetEntries();i++) t->Fill();
+
+
+
+  //write it back to the file
+  t->Write("",TObject::kOverwrite);
+  f->Close();
+
+  return true;
+}

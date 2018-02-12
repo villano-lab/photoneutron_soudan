@@ -6,6 +6,7 @@
 /CDMS/Lab NoLab 
 
 /CDMS/Detector scdms
+#/CDMS/Layout/ZipInactive 1 2 3 5 6 7 8 9 10 11 12 13 15
 /CDMS/UseShield partial
 /CDMS/Source gammaBe
 /CDMS/GammaBe/Position POSX POSY 0. cm 
@@ -30,8 +31,13 @@
 /CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
 /CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
 /CDMS/writeData DATAOUT                      # Do/Don't write text out file
+/CDMS/writeData false
+/CDMS/writeEmptyHits true 
+/CDMS/writeEmptyEvents false 
 
 /CDMS/ListCounters
+
+/CDMS/writeProcessInfo false
 
 # 
 # NEVENTS events
