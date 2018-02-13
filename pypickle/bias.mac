@@ -1,0 +1,30 @@
+/CDMS/Source cylinder 1
+/CDMS/Cylinder/AddSpectrum gfile:gammas.dat 1
+/CDMS/Cylinder/Position x y z unit
+/CDMS/Cylinder/Radius rad unit
+#how do you specify the orientation of the cylinder, is it always with Z "up"?
+/CDMS/Cylinder/surface
+#actually I only want them generated from the bottom surface, guess need a "position bias" for that
+/CDMS/Cylinder/Inward false
+#the following is incredibly complicated and I don't understand it: how is this different from "inward" above? What is "center of volume" does that mean the volume of the cylinder I just created?  Or a named volume?
+/CDMS/Cylinder/BiasSurface choice
+#the following is incredibly complicated and I don't understand it: what does "Toward the global center of detector" mean? does it mean in that 2pi angular space that is GENERALLY toward the global center ,or literally toward that point (the second thing would be an odd way to generate)
+/CDMS/Cylinder/BiasDirection choice
+
+
+
+/CDMS/Cylinder/Limit R < 5 cm l #generate a bunch of events from < 5 cm in R 
+
+/run/beamOn 1000
+
+/CDMS/Cylinder/Unlimit
+
+/CDMS/Cylinder/Limit R > 5 cm l #generate a bunch of events from > 5 cm in R 
+
+/run/beamOn 1000
+
+/CDMS/Cylinder/Unlimit
+
+/CDMS/Cylinder/Limit R > 105 % max #what does this mean?  is it legal?  Does it mean R is more than 5% past the edge? does it ever stop?
+
+/run/beamOn 1000

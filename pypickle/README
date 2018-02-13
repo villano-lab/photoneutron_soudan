@@ -1,0 +1,4 @@
+This directory contains code for changeing some of the simulation output I have in to more
+convenient python pickle files. 
+
+Got to have a working PyROOT installation code inspired by A. Anderson and D. Barker's code(s)
