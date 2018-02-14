@@ -42,8 +42,8 @@
 /CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
 /CDMS/writeData DATAOUT                      # Do/Don't write text out file
 /CDMS/writeData false
-/CDMS/writeEmptyHits false 
-/CDMS/writeEmptyEvents false 
+#/CDMS/writeEmptyHits false 
+#/CDMS/writeEmptyEvents false 
 
 /CDMS/ListCounters
 
