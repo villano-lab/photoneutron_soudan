@@ -11,6 +11,7 @@ import cPickle as pickle
 import sys
 
 infilename = sys.argv[1] #first argument is file name
+outfilename = sys.argv[2] #second argument is output file name
 infile = TFile(infilename, 'READ')
 
 EventNum = array('d', [0.])
@@ -85,6 +86,7 @@ for jevt in range(nevt):
 # end loop over decay tree
 
 
-outfile = file('/data/chocula/villaa/PhotoN_SuperSim/possys/flux_data_v2.pkl', 'w')
+#outfile = file('/data/chocula/villaa/PhotoN_SuperSim/possys/flux_data_v2.pkl', 'w')
+outfile = file(outfilename, 'w')
 pickle.dump(decays, outfile)
 outfile.close()
