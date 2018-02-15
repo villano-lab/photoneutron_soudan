@@ -44,7 +44,10 @@ decaytree.SetBranchAddress('Time3', time)
 decaytree.SetBranchAddress('PType', ptype)
 decaytree.SetBranchAddress('InOut', inout)
 decaytree.SetBranchAddress('VolName', volname)
-nevt = decaytree.GetEntries()
+#nevt = decaytree.GetEntries()
+decaytree.Draw('X1','InOut==3 || InOut==2','goff')
+nevt = decaytree.GetSelectedRows()
+print 'There are: {}\n'.format(nevt) 
 #nevt = 100000 
 
 # (DB) dictionaries need keys and values: making the keys here...
@@ -62,26 +65,32 @@ decays['ptype'] = np.zeros(nevt)
 decays['inout'] = np.zeros(nevt)
 decays['volname'] = np.array([], dtype=str)
 # (DB) ...now filling in the values 
-for jevt in range(nevt):
+c=0;
+for jevt in range(decaytree.GetEntries()):
     #print 'processing event %d of %d\r' % (jevt,nevt)
-    print 'processing event {} of {}\r'.format(jevt,nevt),
+    print 'processing event {} of {}\r'.format(jevt,decaytree.GetEntries()),
     decaytree.GetEntry(jevt)
-    decays['EventNum'][jevt] = EventNum[0]
-    decays['Edep'][jevt] = Edep[0]
-    decays['x'][jevt] = x[0]
-    decays['y'][jevt] = y[0]
-    decays['z'][jevt] = z[0]
-    decays['px'][jevt] = px[0]
-    decays['py'][jevt] = py[0]
-    decays['pz'][jevt] = pz[0]
-    decays['time'][jevt] = time[0]
-    decays['ptype'][jevt] = ptype[0]
-    decays['inout'][jevt] = inout[0]
-    # (DB) cannot add in strings in the same manner
-    decays['volname'] = np.append(decays['volname'], volname.tostring())
+
+    #only interested in events that have an exiting boundary crossing
+    if((inout[0]==2) | (inout[0]==3)):
+      decays['EventNum'][c] = EventNum[0]
+      decays['Edep'][c] = Edep[0]
+      decays['x'][c] = x[0]
+      decays['y'][c] = y[0]
+      decays['z'][c] = z[0]
+      decays['px'][c] = px[0]
+      decays['py'][c] = py[0]
+      decays['pz'][c] = pz[0]
+      decays['time'][c] = time[0]
+      decays['ptype'][c] = ptype[0]
+      decays['inout'][c] = inout[0]
+      # (DB) cannot add in strings in the same manner
+      #decays['volname'] = np.append(decays['volname'], volname.tostring())
+      c+=1
+    
     ## debugging...
-    #if (jevt % 100000) == 0:
-    #    print 'processing event ',jevt,' in mcDecays'
+    #if (jevt % 10000) == 0:
+    #  print 'processing event ',jevt,' in mcDecays'
     #    print '... its volume is ',volname.tostring()
 # end loop over decay tree
 
