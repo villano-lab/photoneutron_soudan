@@ -8,12 +8,22 @@ from ROOT import TFile, TTree, TChain
 from array import array
 import numpy as np
 import cPickle as pickle
+from scipy.stats import gaussian_kde
 import sys
+from vecCalc import *
 
 outfilename = sys.argv[1] #first argument is output file name
 #infilename = sys.argv[1] #first argument is file name
 flist=[] #empty list for files
 
+#print(dotProd([1,2,3],[1,2,3]))
+#print(np.linalg.norm([1,2,3]))
+#a = [1,2]
+#print(np.linalg.norm(a))
+#a = a/np.linalg.norm(a)
+#print(np.linalg.norm(a))
+#print(cosCalc([-1,-1,-1],[5,5,5]))
+#sys.exit(0)
 for n,i in enumerate(sys.argv):
   if n>1:
     flist.append(i)
@@ -84,6 +94,9 @@ decays['pz'] = np.zeros(nevt)
 decays['time'] = np.zeros(nevt)
 decays['ptype'] = np.zeros(nevt)
 decays['inout'] = np.zeros(nevt)
+decays['costhet_3d'] = np.zeros(nevt)
+decays['costhet_2dvert'] = np.zeros(nevt)
+decays['costhet_2dhori'] = np.zeros(nevt)
 decays['volname'] = np.array([], dtype=str)
 # (DB) ...now filling in the values 
 #c=0;
@@ -109,8 +122,12 @@ for c in range(nevt):
       decays['time'][c] = time[0]
       decays['ptype'][c] = ptype[0]
       decays['inout'][c] = inout[0]
+      costhet_3d,costhet_2dvert,costhet_2dhori = cosCalc([px[0],py[0],pz[0]],[x[0],y[0],z[0]])
+      decays['costhet_3d'][c] = costhet_3d 
+      decays['costhet_2dvert'][c] = costhet_2dvert 
+      decays['costhet_2dhori'][c] = costhet_2dhori 
       # (DB) cannot add in strings in the same manner
-      #decays['volname'] = np.append(decays['volname'], volname.tostring())
+      decays['volname'] = np.append(decays['volname'], volname.tostring())
     
     ## debugging...
     #if (jevt % 10000) == 0:
@@ -118,8 +135,43 @@ for c in range(nevt):
     #    print '... its volume is ',volname.tostring()
 # end loop over decay tree
 
+#put some extra information in, because it's computationally intensive
+# Calculate the point density
+x = decays['x']
+y = decays['y']
+z = decays['z']
+
+#decrease them if over 100k points--to keep KDE to a reasonable time
+randcut = np.ones(np.shape(x),True)
+if(len(x)>100000):
+  print 'limiting number of points to 100k'
+  fac = 100000.0/float(len(x))
+  randvec = np.random.rand(*np.shape(x))
+  randcut[randvec>fac] = False 
+
+xlim = x[randcut]
+ylim = y[randcut]
+zlim = z[randcut]
+
+xyz = np.vstack([x,y,z])
+xyzlim = np.vstack([xlim,ylim,zlim])
+kde_3d = gaussian_kde(xyzlim)
+color = kde_3d(xyz)
+
+# Sort the points by density, so that the densest points are plotted last
+idx = color.argsort()
+#x, y, z, color = x[idx], y[idx], z[idx], color[idx]
+#decays['color'] = color
+
+#re-order all the vectors
+decays['color'] = color[idx]
+decays['EventNum'], decays['Edep'],  decays['x'],  decays['y'],  decays['z'],  decays['px'],  decays['py'],  decays['pz'],  decays['time'],  decays['ptype'],  decays['inout'],  decays['costhet_3d'],  decays['costhet_2dvert'],  decays['costhet_2dhori'],  decays['volname'] = decays['EventNum'][idx], decays['Edep'][idx],  decays['x'][idx],  decays['y'][idx],  decays['z'][idx],  decays['px'][idx],  decays['py'][idx],  decays['pz'][idx],  decays['time'][idx],  decays['ptype'][idx],  decays['inout'][idx],  decays['costhet_3d'][idx],  decays['costhet_2dvert'][idx],  decays['costhet_2dhori'][idx],  decays['volname'][idx] 
+
+#why don't we save the kde
+decays['outflux_kde'] = kde_3d
 
 #outfile = file('/data/chocula/villaa/PhotoN_SuperSim/possys/flux_data_v2.pkl', 'w')
 outfile = file(outfilename, 'w')
 pickle.dump(decays, outfile)
 outfile.close()
+
