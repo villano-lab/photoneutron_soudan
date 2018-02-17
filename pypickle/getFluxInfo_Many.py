@@ -142,7 +142,7 @@ y = decays['y']
 z = decays['z']
 
 #decrease them if over 100k points--to keep KDE to a reasonable time
-randcut = np.ones(np.shape(x),True)
+randcut = np.ones(np.shape(x),dtype=bool)
 if(len(x)>100000):
   print 'limiting number of points to 100k'
   fac = 100000.0/float(len(x))
