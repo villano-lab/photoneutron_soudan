@@ -1,6 +1,6 @@
 import numpy as np
 
-def getOVCBoundaries(x,y):
+def getOVCBoundaries(x,y,z):
 
         #Recall from N-MISC-16-001 pg 33 the position of the source
 	d = 8.1534 #cm
@@ -15,11 +15,15 @@ def getOVCBoundaries(x,y):
 	npts = 100
 	rcirc = 0.1
 	thet = np.arange(npts)*(2*np.pi/np.float(npts))
-	xsrc = np.ones(np.shape(thet))*xsrc
-	ysrc = np.ones(np.shape(thet))*ysrc
+	#xsrc = np.ones(np.shape(thet))*xsrc
+	#ysrc = np.ones(np.shape(thet))*ysrc
 	xcirc = xsrc + rcirc*np.cos(thet)
 	ycirc = ysrc + rcirc*np.sin(thet)
 
+	dsrc = np.sqrt((x-xsrc)**2 + (y-ysrc)**2)
+	cOVCLidPr = np.zeros(np.shape(x),dtype=bool)
+	cOVCLidPr[dsrc<rcirc] = True
+	cuts['cOVCLidPr'] = cOVCLidPr
 
 	r = 0.25
 
@@ -44,6 +48,14 @@ def getOVCBoundaries(x,y):
 	xB = np.concatenate((xB,np.flip(xlineB,0)),0)
 	yB = np.concatenate((yB,np.flip(ylineB,0)),0)
 
+	rad = np.sqrt(x**2 + y**2)
+	cOVCLidB = np.zeros(np.shape(x),dtype=bool)
+	cTempA = np.zeros(np.shape(x),dtype=bool)
+	cTempB = np.zeros(np.shape(x),dtype=bool)
+	cTempA[rad<r] = True
+	cTempB[y<(mB*x+bB)] = True
+	cOVCLidB = cTempA&cTempB
+	cuts['cOVCLidB'] = cOVCLidB
 
 
 	#make a line for location D
@@ -67,6 +79,13 @@ def getOVCBoundaries(x,y):
 	xD = np.concatenate((xD,np.flip(xlineD,0)),0)
 	yD = np.concatenate((yD,np.flip(ylineD,0)),0)
 
+	cOVCLidD = np.zeros(np.shape(x),dtype=bool)
+	cTempA = np.zeros(np.shape(x),dtype=bool)
+	cTempB = np.zeros(np.shape(x),dtype=bool)
+	cTempA[rad<r] = True
+	cTempB[y>(mD*x+bD)] = True
+	cOVCLidD = cTempA&cTempB
+	cuts['cOVCLidD'] = cOVCLidD
 
 	#make a semicircle for location A
 	deg0A = 7*(np.pi/180.0) #do a 7 deg start line
@@ -100,6 +119,14 @@ def getOVCBoundaries(x,y):
 	xlineAfull = np.concatenate((xA,xlineArr))
 	ylineAfull = np.concatenate((yA,ylineArr))
 
+	cOVCLidA = np.zeros(np.shape(x),dtype=bool)
+	cTempA = np.zeros(np.shape(x),dtype=bool)
+	cTempB = np.zeros(np.shape(x),dtype=bool)
+	cTempA[rad<r] = True
+	cTempB[y>(mA*x+bA)] = True
+	cOVCLidA = cTempA&cTempB&~cOVCLidD&~cOVCLidB
+	cuts['cOVCLidA'] = cOVCLidA
+	
 
 	#make a semicircle for location C
 	deg0C = 145*(np.pi/180.0) #do a 7 deg start line
@@ -131,12 +158,46 @@ def getOVCBoundaries(x,y):
 	xlineCfull = np.concatenate((xC,xlineCrr))
 	ylineCfull = np.concatenate((yC,ylineCrr))
 
+
+	cOVCLidC = np.zeros(np.shape(x),dtype=bool)
+	cTempA = np.zeros(np.shape(x),dtype=bool)
+	cTempB = np.zeros(np.shape(x),dtype=bool)
+	cTempA[rad<r] = True
+	cTempB[y<(mC*x+bC)] = True
+	cOVCLidC = cTempA&cTempB&~cOVCLidD&~cOVCLidB
+	cuts['cOVCLidC'] = cOVCLidC
+
+	#make a  square for vertical side function of phi and Z
+	cYPos = np.zeros(np.shape(x),dtype=bool)
+	cYNeg = np.zeros(np.shape(x),dtype=bool)
+	cYPos[y>=0] = True
+	cYNeg[y<0] = True
+	phi = np.zeros(np.shape(x))
+	phi[cYPos] = np.arccos(x[cYPos]/np.sqrt(x[cYPos]**2+y[cYPos]**2))
+	phi[cYNeg] = 2*np.pi - np.arccos(x[cYNeg]/np.sqrt(x[cYNeg]**2+y[cYNeg]**2))
+	y0VA = 0.6
+	y1VA = 0.71
+	xVA = np.concatenate((np.linspace(0,2*np.pi,100),np.ones(10)*2*np.pi,np.flip(np.linspace(0,2*np.pi,100),0),np.zeros(10)),0)
+	yVA = np.concatenate((np.ones(100)*y0VA,np.linspace(y0VA,y1VA,10),np.ones(100)*y1VA,np.flip(np.linspace(y0VA,y1VA,10),0)),0)
+	y0VB = 0.5
+	y1VB = 0.6
+	xVB = np.concatenate((np.linspace(0,2*np.pi,100),np.ones(10)*2*np.pi,np.flip(np.linspace(0,2*np.pi,100),0),np.zeros(10)),0)
+	yVB = np.concatenate((np.ones(100)*y0VB,np.linspace(y0VB,y1VB,10),np.ones(100)*y1VB,np.flip(np.linspace(y0VB,y1VB,10),0)),0)
+	cOVCVertA = np.zeros(np.shape(x),dtype=bool)
+	cOVCVertA[(z>y0VA)&(z<=y1VA)] = True
+	cuts['cOVCVertA'] = cOVCVertA
+	cOVCVertB = np.zeros(np.shape(x),dtype=bool)
+	cOVCVertB[(z>y0VB)&(z<=y1VB)] = True
+	cuts['cOVCVertB'] = cOVCVertB
+
 	boundaries = {}
 	boundaries['Pr'] = {}
 	boundaries['A'] = {}
 	boundaries['B'] = {}
 	boundaries['C'] = {}
 	boundaries['D'] = {}
+	boundaries['VA'] = {}
+	boundaries['VB'] = {}
 
 	boundaries['Pr']['x'] = xcirc
 	boundaries['Pr']['y'] = ycirc
@@ -148,5 +209,9 @@ def getOVCBoundaries(x,y):
 	boundaries['C']['y'] = ylineCfull
 	boundaries['D']['x'] = xD
 	boundaries['D']['y'] = yD
+	boundaries['VA']['x'] = xVA
+	boundaries['VA']['y'] = yVA
+	boundaries['VB']['x'] = xVB
+	boundaries['VB']['y'] = yVB
 
-	return boundaries
+	return boundaries,cuts
