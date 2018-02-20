@@ -74,7 +74,7 @@ decaytree.SetBranchAddress('VolName', volname)
 #nevt = decaytree.GetEntries()
 decaytree.SetEstimate(decaytree.GetEntries())
 #decaytree.Draw('Entry$*(InOut>0)','InOut==3 || InOut==2','goff')
-decaytree.Draw('Entry$','InOut==3 || InOut==2','goff')
+decaytree.Draw('Entry$','(InOut==3 || InOut==2)&&Z3<0.9','goff')
 nevt = decaytree.GetSelectedRows()
 ent=decaytree.GetV1()
 idx = range(nevt)
@@ -113,6 +113,7 @@ for c in range(nevt):
     if((inout[0]==2) | (inout[0]==3)):
       decays['EventNum'][c] = EventNum[0]
       decays['Edep'][c] = Edep[0]
+      decays['ke'][c] = KE[0]
       decays['x'][c] = x[0]
       decays['y'][c] = y[0]
       decays['z'][c] = z[0]

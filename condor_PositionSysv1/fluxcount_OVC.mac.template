@@ -1,0 +1,55 @@
+/control/verbose 0
+/run/verbose 0
+/CDMS/verbose 0
+
+# Configure lab
+/CDMS/Lab NoLab 
+
+/CDMS/Detector scdms
+#/CDMS/Layout/ZipInactive 1 2 3 5 6 7 8 9 10 11 12 13 15
+/CDMS/UseShield partial
+/CDMS/Source gammaBe
+/CDMS/GammaBe/Position POSX POSY 0. cm 
+#/CDMS/GammaBe/Position -1.1637 +0.8148 0. cm 
+/CDMS/GammaBe/RotZAngle 50 deg
+#/CDMS/GammaBe/boxOffset 8.15 cm 
+/CDMS/GammaBe/boxOffset BOXPOSITION cm 
+
+
+#set up the particle generation
+/CDMS/GammaBe/AddIsotope SOURCEZ SOURCEA ## Y-88
+#/CDMS/GammaBe/AddIsotope 39 88 ## Y-88
+#/CDMS/GammaBe/AddIsotope 51 124 ## Sb-124
+/CDMS/GammaBe/Volume SourceCapsule
+
+#disable the decays counter so we don't have an mcDecay tree
+/CDMS/DisableCounter decays
+/CDMS/writeDecayAncestor 0
+
+/CDMS/updateGeom
+
+/CDMS/StepCounter flux
+
+#make flux counters out of all the bricks
+#Vessel/OuterVacuum
+/CDMS/FluxCounter/setParticleVolume gamma Vessel/OuterVacuum 6 
+
+/CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
+/CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
+/CDMS/writeData DATAOUT                      # Do/Don't write text out file
+/CDMS/writeData false
+#/CDMS/writeEmptyHits false 
+#/CDMS/writeEmptyEvents false 
+
+/CDMS/ListCounters
+
+/CDMS/writeProcessInfo false
+
+
+# 
+# NEVENTS events
+#
+/run/autoSeed true
+/CDMS/writeFilePrefix /data/chocula/villaa/PhotoN_SuperSim/DATADIR/SOURCENAME_OVC_SetIDTHESETID_shiftBOXSHIFT_lshiftLATERALSHIFT_pNEVENTS_TIMEOFDAY 
+/run/setRunID RUNNUMBER 
+/run/beamOn NEVENTS 

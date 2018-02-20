@@ -513,6 +513,12 @@ void plotRatesLineShift_Fix(bool print=0,bool isprelim=true, string ext="eps",bo
 
   g14->Draw("p");
   g4->Draw("p");
+  for(int i=0;i<g14->GetN();i++){
+    double x,y,ye;
+    g14->GetPoint(i,x,y);
+    ye = g14->GetErrorY(i);
+    cout << "at " << x << "cm Error is: " << (ye/y)*100 << " %%" << endl; 
+  }
   //print up legend
   //leg->SetHeader(Form("%d GeV %s primaries ",energy,getFullPartName(part).c_str()));
   leg->SetBorderSize(0);
