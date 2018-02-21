@@ -1,0 +1,33 @@
+/control/verbose 0
+/run/verbose 0
+/CDMS/verbose 0
+
+# Configure lab
+/CDMS/Lab NoLab 
+
+/CDMS/Detector scdms
+/CDMS/UseShield partial
+/CDMS/Source gammaBe
+/CDMS/GammaBe/Position -1.1637 +0.8148 0. cm 
+/CDMS/GammaBe/RotZAngle 50 deg
+/CDMS/GammaBe/boxOffset 8.15 cm 
+
+
+#set up the particle generation
+/CDMS/GammaBe/AddSpectrum nfile:SOURCE_neuts.dat
+
+/CDMS/updateGeom
+
+/CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
+/CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
+/CDMS/writeData DATAOUT                      # Do/Don't write text out file
+/CDMS/writeEmptyHits true 
+/CDMS/writeEmptyEvents false 
+
+# 
+# NEVENTS events
+#
+/run/autoSeed true
+/CDMS/writeFilePrefix /data/chocula/villaa/PhotoN_SuperSim/DATADIR/SOURCE_SetIDTHESETID_pNEVENTS_TIMEOFDAY 
+/run/setRunID RUNNUMBER 
+/run/beamOn NEVENTS 
