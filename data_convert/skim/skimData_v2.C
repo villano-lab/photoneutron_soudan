@@ -87,7 +87,7 @@ void skimData_v2::Begin(TTree * /*tree*/)
 }
 
 //_____________________________________________________________________
-void skimdata_v2::SlaveBegin(TTree *tree)
+void skimData_v2::SlaveBegin(TTree *tree)
 {
 // function called before starting the event loop
 //  -it performs some cleanup
@@ -142,7 +142,8 @@ Bool_t skimData_v2::Process(Long64_t entry)
 
    // to read complete event, call fChain->GetTree()->GetEntry(entry)
    // read branches not processed in ProcessCut
-   fChain->GetTree()->GetEntry(entry)
+   fChain->GetTree()->GetEntry(entry);
+   arrPrint(zip_PType,zip_n);
    //b_zip->GetEntry(entry);
    //b_cap->GetEntry(entry);
    //b_prim->GetEntry(entry);
@@ -185,7 +186,7 @@ string in_energy)
   return;
 }
 //_____________________________________________________________________
-void skimData_v2::arrPrint(Double_t *arr,Int_t n);
+void skimData_v2::arrPrint(Double_t *arr,Int_t n)
 {
   cout << "Array for fChain event: " << chainentry << "=============" << endl;
   for(int i=0;i<n;i++){
