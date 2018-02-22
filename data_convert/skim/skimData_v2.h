@@ -23,6 +23,7 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TEntryList.h>
+#include <TEventList.h>
 #include <TFile.h>
 #include <TSelector.h>
 
@@ -39,6 +40,9 @@ class skimData_v2 : public TSelector {
 
 
    TTree          *fChain;    //pointer to the analyzed TTree or TChain
+   TTree          *fSimData;    //pointer to the analyzed TTree or TChain
+   TTree          *fOutTree;    //pointer to the Output TTree or TChain
+   Int_t          zip; //zip to do the tree for
    //Declaration of leaves types
    //Zip stuff
    Long64_t        zip_n;
@@ -84,6 +88,31 @@ class skimData_v2 : public TSelector {
    TBranch        *b_cap;
    TBranch        *b_prim;
 
+   //vars for new TTree
+   Long64_t     nhit;
+   Long64_t     NRhit;
+   Long64_t     ERhit;
+   Long64_t     totalevents;
+   Long64_t     eventnum;
+   Double_t     edepNR;
+   Double_t     edepER;
+   Double_t     edepNR_late;
+   Double_t     edepER_late;
+   Double_t     NRedep[10000];
+   Double_t     ERedep[10000];
+   Double_t     NRx[10000];
+   Double_t     NRy[10000];
+   Double_t     NRz[10000];
+   Double_t     NRYield[10000];
+   Double_t     NRt[10000];
+   Double_t     ERx[10000];
+   Double_t     ERy[10000];
+   Double_t     ERz[10000];
+   Double_t     ERYield[10000];
+   Double_t     ERt[10000];
+   Double_t     NRPType[10000];
+   Double_t     ERPType[10000];
+   
    skimData_v2(TTree *tree=0);
    ~skimData_v2();
    int     Version() const {return 1;}
@@ -95,6 +124,8 @@ class skimData_v2 : public TSelector {
    void    SetOption(const char *option) { fOption = option; }
    void    SetObject(TObject *obj) { fObject = obj; }
    void    SetVerbosity(Int_t v){verbosity=v;}
+   void    SetZip(Int_t z){zip=z;}
+   void    SetSimDataChain(TTree *simdata){fSimData = simdata}
    //void    SetInputList(TList *input) {fInput = input;}
    //TList  *GetOutputList() const { return fOutput; }
    void    SlaveTerminate();
@@ -128,6 +159,7 @@ skimData_v2::skimData_v2(TTree * /*tree*/)
    elist = 0;
    fChain = 0;
    verbosity=0;
+   zip = 14; //for now
    fillList = kFALSE;
    useList  = kFALSE;
 
@@ -188,6 +220,48 @@ void skimData_v2::Init(TTree *tree)
    fChain->SetBranchAddress("mcprimary.Xmom",&prim_Xmom,&(b_prim));
    fChain->SetBranchAddress("mcprimary.Ymom",&prim_Ymom,&(b_prim));
    fChain->SetBranchAddress("mcprimary.Zmom",&prim_Zmom,&(b_prim));
+
+   //hook up the output tree to the variables
+   fOutTree = new TTree(Form("edeptree_zip%d",zip),"energy deposition data");
+   fOutTree->Branch("eventnum",&eventnum,"eventnum/L");
+   fOutTree->Branch("totalevents",&totalevents,"totalevents/L");
+   fOutTree->Branch("nhit",&nhit,"nhit/L");
+   fOutTree->Branch("NRhit",&NRhit,"NRhit/L");
+   fOutTree->Branch("ERhit",&ERhit,"ERhit/L");
+   fOutTree->Branch("edepNR",&edepNR,"edepNR/D");
+   fOutTree->Branch("edepER",&edepER,"edepER/D");
+   fOutTree->Branch("edepNR_late",&edepNR_late,"edepNR/D");
+   fOutTree->Branch("edepER_late",&edepER_late,"edepER/D");
+   fOutTree->Branch("NRedep",&NRedep,"NRedep[NRhit]/D");
+   fOutTree->Branch("NRPType",&NRPType,"NRPType[NRhit]/D");
+   fOutTree->Branch("NRx",&NRx,"NRx[NRhit]/D");
+   fOutTree->Branch("NRy",&NRy,"NRy[NRhit]/D");
+   fOutTree->Branch("NRz",&NRz,"NRz[NRhit]/D");
+   fOutTree->Branch("NRt",&NRt,"NRt[NRhit]/D");
+   fOutTree->Branch("NRYield",&NRYield,"NRYield[NRhit]/D");
+   fOutTree->Branch("ERedep",&ERedep,"ERedep[ERhit]/D");
+   fOutTree->Branch("ERPType",&ERPType,"ERPType[ERhit]/D");
+   fOutTree->Branch("ERx",&ERx,"ERx[ERhit]/D");
+   fOutTree->Branch("ERy",&ERy,"ERy[ERhit]/D");
+   fOutTree->Branch("ERz",&ERz,"ERz[ERhit]/D");
+   fOutTree->Branch("ERt",&ERt,"ERt[NRhit]/D");
+   fOutTree->Branch("ERYield",&ERYield,"ERYield[ERhit]/D");
+
+   //apply event list to cut on ZIP and nhits>0
+   cout << "Cutting to get only zip " <<  zip << " events" << endl;
+   ostringstream cutstream;
+   cutstream << "allzips.DetNum==" << zip << " && allzips.nhits>0 ";
+   cut = cutstream.str();
+   cout << cut << endl;
+   //string cut = "allzips.DetNum==14";
+   elist = new TEntryList(Form("elist_it%d",zip),Form("elist_it%d",zip));
+   Long64_t ncut;
+   fChain->Draw(Form(">>elist_it%d",zip),cut.c_str(),"entrylist");
+   ncut = elist->GetN();
+   cout << "Selected " << ncut << " events out of " << fChain->GetEntries() << " total." << endl;
+   fChain->SetEntryList(elist);
+
+
 }
 
 //_____________________________________________________________________

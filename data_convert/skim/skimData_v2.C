@@ -143,7 +143,8 @@ Bool_t skimData_v2::Process(Long64_t entry)
    // to read complete event, call fChain->GetTree()->GetEntry(entry)
    // read branches not processed in ProcessCut
    fChain->GetTree()->GetEntry(entry);
-   arrPrint(zip_PType,zip_n);
+   if(verbosity>0)
+     arrPrint(zip_DetNum,zip_n);
    //b_zip->GetEntry(entry);
    //b_cap->GetEntry(entry);
    //b_prim->GetEntry(entry);
