@@ -58,6 +58,9 @@ class skimData_v2 : public TSelector {
    Double_t        zip_Zmom1[10000];
    Double_t        zip_Yield[10000];
    Double_t        zip_DetNum[10000];
+   Double_t        zip_TrkStep[10000];
+   Double_t        zip_Parent[10000];
+   Bool_t          zip_InCapProg[10000]; //not linked to tree
 
    //capture stuff
    Long64_t        cap_n;
@@ -71,6 +74,8 @@ class skimData_v2 : public TSelector {
    Double_t        cap_Zmom3[10000];
    Double_t        cap_Time3[10000];
    Double_t        cap_DetNum[10000];
+   Double_t        cap_TrkStep[10000];
+   Double_t        cap_Parent[10000];
 
    //primaries stuff
    Long64_t        prim_n;
@@ -112,6 +117,27 @@ class skimData_v2 : public TSelector {
    Double_t     ERt[10000];
    Double_t     NRPType[10000];
    Double_t     ERPType[10000];
+   Double_t     NRcapProg[10000]; //this has NRhit entries
+   Double_t     ERcapProg[10000]; //this has ERhit entries
+   Long64_t     ncap;
+   Double_t     Cx[10000];  //next three have ncap entries
+   Double_t     Cy[10000];
+   Double_t     Cz[10000];
+   Double_t     Ct[10000];
+   Double_t     Cpx[10000];  //next two have ncap entries
+   Double_t     Cpy[10000];
+   Double_t     Cpz[10000];
+   Double_t     CTS[10000];  // these two are NOT written to file
+   Double_t     CTrk[10000];
+   Long64_t     nprim;
+   Double_t     PPType[10000];
+   Double_t     PKE[10000];
+   Double_t     PX[10000];
+   Double_t     PY[10000];
+   Double_t     PZ[10000];
+   Double_t     PXmom[10000];
+   Double_t     PYmom[10000];
+   Double_t     PZmom[10000];
    
    skimData_v2(TTree *tree=0);
    ~skimData_v2();
@@ -125,7 +151,8 @@ class skimData_v2 : public TSelector {
    void    SetObject(TObject *obj) { fObject = obj; }
    void    SetVerbosity(Int_t v){verbosity=v;}
    void    SetZip(Int_t z){zip=z;}
-   void    SetSimDataChain(TTree *simdata){fSimData = simdata}
+   void    SetSimDataChain(TTree *simdata){fSimData = simdata;}
+   TTree*  GetOutTree(){return fOutTree;}
    //void    SetInputList(TList *input) {fInput = input;}
    //TList  *GetOutputList() const { return fOutput; }
    void    SlaveTerminate();
@@ -133,6 +160,7 @@ class skimData_v2 : public TSelector {
 
    //some functions for setting/getting private stuff
    void arrPrint(Double_t *arr,Int_t n);
+   Bool_t isInVector(Double_t element,vector<Double_t> list);
    void SetConfiguration(Double_t in_detlength, Double_t in_density, Int_t in_partcount,
                   string in_matname="myScintC9H12",
                   string in_munuc="on",
@@ -144,6 +172,7 @@ class skimData_v2 : public TSelector {
    private :
 
    //functions for specialized procedures 
+   void clearvec(double*,int);
    //void resetThermTracks();
 };
 
@@ -196,6 +225,8 @@ void skimData_v2::Init(TTree *tree)
    fChain->SetBranchAddress("allzips.Zmom1",&zip_Zmom1,&(b_zip));
    fChain->SetBranchAddress("allzips.Yield",&zip_Yield,&(b_zip));
    fChain->SetBranchAddress("allzips.DetNum",&zip_DetNum,&(b_zip));
+   fChain->SetBranchAddress("allzips.TrkStep",&zip_TrkStep,&(b_zip));
+   fChain->SetBranchAddress("allzips.Parent",&zip_Parent,&(b_zip));
 
    //capture stuff
    fChain->SetBranchAddress("mcnCapture.nhits",&cap_n,&(b_cap));
@@ -205,10 +236,12 @@ void skimData_v2::Init(TTree *tree)
    fChain->SetBranchAddress("mcnCapture.Y3",&cap_Y3,&(b_cap));
    fChain->SetBranchAddress("mcnCapture.Z3",&cap_Z3,&(b_cap));
    fChain->SetBranchAddress("mcnCapture.Time3",&cap_Time3,&(b_cap));
-   fChain->SetBranchAddress("mcnCapture.Xmom3",&cap_Xmom3,&(b_cap));
-   fChain->SetBranchAddress("mcnCapture.Ymom3",&cap_Ymom3,&(b_cap));
-   fChain->SetBranchAddress("mcnCapture.Zmom3",&cap_Zmom3,&(b_cap));
+   fChain->SetBranchAddress("mcnCapture.Xmom1",&cap_Xmom3,&(b_cap));
+   fChain->SetBranchAddress("mcnCapture.Ymom1",&cap_Ymom3,&(b_cap));
+   fChain->SetBranchAddress("mcnCapture.Zmom1",&cap_Zmom3,&(b_cap));
    fChain->SetBranchAddress("mcnCapture.DetNum",&cap_DetNum,&(b_cap));
+   fChain->SetBranchAddress("mcnCapture.TrkStep",&cap_TrkStep,&(b_cap));
+   fChain->SetBranchAddress("mcnCapture.Parent",&cap_Parent,&(b_cap));
 
    //primaries stuff
    fChain->SetBranchAddress("mcprimary.nprimaries",&prim_n,&(b_prim));
@@ -246,6 +279,25 @@ void skimData_v2::Init(TTree *tree)
    fOutTree->Branch("ERz",&ERz,"ERz[ERhit]/D");
    fOutTree->Branch("ERt",&ERt,"ERt[NRhit]/D");
    fOutTree->Branch("ERYield",&ERYield,"ERYield[ERhit]/D");
+   fOutTree->Branch("NRcapProg",&NRcapProg,"NRcapProg[NRhit]/D");
+   fOutTree->Branch("ERcapProg",&ERcapProg,"ERcapProg[ERhit]/D");
+   fOutTree->Branch("nprim",&prim_n,"nprim/L");
+   fOutTree->Branch("prim_PType",&prim_PType,"prim_PType[nprim]/D");
+   fOutTree->Branch("prim_KE",&prim_KE,"prim_KE[nprim]/D");
+   fOutTree->Branch("prim_X",&prim_X,"prim_X[nprim]/D");
+   fOutTree->Branch("prim_Y",&prim_Y,"prim_Y[nprim]/D");
+   fOutTree->Branch("prim_Z",&prim_Z,"prim_Z[nprim]/D");
+   fOutTree->Branch("prim_Xmom",&prim_Xmom,"prim_Xmom[nprim]/D");
+   fOutTree->Branch("prim_Ymom",&prim_Ymom,"prim_Ymom[nprim]/D");
+   fOutTree->Branch("prim_Zmom",&prim_Zmom,"prim_Zmom[nprim]/D");
+   fOutTree->Branch("ncap",&ncap,"ncap/L");
+   fOutTree->Branch("cap_X",&Cx,"cap_X[ncap]/D");
+   fOutTree->Branch("cap_Y",&Cy,"cap_Y[ncap]/D");
+   fOutTree->Branch("cap_Z",&Cz,"cap_Z[ncap]/D");
+   fOutTree->Branch("cap_Time",&Ct,"cap_Time[ncap]/D");
+   fOutTree->Branch("cap_Xmom",&Cpx,"cap_Xmom[ncap]/D");
+   fOutTree->Branch("cap_Ymom",&Cpy,"cap_Ymom[ncap]/D");
+   fOutTree->Branch("cap_Zmom",&Cpz,"cap_Zmom[ncap]/D");
 
    //apply event list to cut on ZIP and nhits>0
    cout << "Cutting to get only zip " <<  zip << " events" << endl;
