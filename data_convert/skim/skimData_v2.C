@@ -149,6 +149,8 @@ Bool_t skimData_v2::Process(Long64_t entry)
    if(verbosity>0)
      arrPrint(zip_DetNum,zip_n);
 
+   printf("in entry %5d of %7d\r",chaincount,elist->GetN());
+   chaincount++;
    //clear out variables
    NRhit=0;
    ERhit=0;
@@ -224,13 +226,9 @@ Bool_t skimData_v2::Process(Long64_t entry)
 	 zip_InCapProg[i] = true;
        }
      }
-     if(foundnew)
-       cout << "Found a new event!" << endl;
-     else
-       cout << "get out!" << endl;
    }
-   cout << "Finished progeny for entry: " << entry << endl;
-   cout << "found " << progeny_ts.size() << " hits in progeny" << endl;
+   //cout << "Finished progeny for entry: " << entry << endl;
+   //cout << "found " << progeny_ts.size() << " hits in progeny" << endl;
 
    //do stuff to this zip data
     for(int l=0;l<zip_n;l++){

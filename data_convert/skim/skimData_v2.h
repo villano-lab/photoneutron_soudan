@@ -33,6 +33,7 @@ class skimData_v2 : public TSelector {
    public :
 
    Long64_t        chainentry;
+   Long64_t        chaincount;
    Int_t           verbosity;
    Bool_t          useList;
    Bool_t          fillList;
@@ -188,6 +189,7 @@ skimData_v2::skimData_v2(TTree * /*tree*/)
    elist = 0;
    fChain = 0;
    verbosity=0;
+   chaincount=0;
    zip = 14; //for now
    fillList = kFALSE;
    useList  = kFALSE;

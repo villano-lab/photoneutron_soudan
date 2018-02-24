@@ -1,0 +1,16 @@
+{
+cout << "******************************" << endl;
+cout << "*  Welcome to ROOT v" << gROOT->GetVersion() << "  *" << endl;
+cout << "******************************" << endl;
+cout << endl;
+char *inc1 = gSystem->ExpandPathName(".../../root/");
+gInterpreter->AddIncludePath(inc1);
+delete [] inc1;
+
+//extend the macro path
+char *macropath = gROOT->GetMacroPath();
+char longerpath[256];
+sprintf(longerpath,"../../root:%s",macropath);
+gROOT->SetMacroPath(longerpath);
+printf("macro path: %s\n",longerpath);
+}

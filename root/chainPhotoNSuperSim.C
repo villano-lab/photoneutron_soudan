@@ -32,6 +32,7 @@ TChain *chainPhotoNSuperSim(int &nev,int n=-1,int datasetno=0,string source="ybe
     iss >> filename;
     if(n<0 || count<n){
       string fullfilename = dir+"/"+filename;
+      cout << fullfilename << endl;
       data->Add(fullfilename.c_str());
     }
     count++;
