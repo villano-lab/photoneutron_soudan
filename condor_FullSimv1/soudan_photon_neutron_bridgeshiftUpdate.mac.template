@@ -18,11 +18,20 @@
 
 /CDMS/updateGeom
 
+/CDMS/DisableCounter decays
+
+#configure a step counter
+/CDMS/StepCounter nCapture 
+/CDMS/nCapture/setParticleVolume neutron Zip 4 
+/CDMS/nCapture/setParticleVolume neutron Zip 5 
+/CDMS/nCapture/setParticleVolume neutron Zip 14 
+
 /CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
 /CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
 /CDMS/writeData DATAOUT                      # Do/Don't write text out file
 /CDMS/writeEmptyHits true 
 /CDMS/writeEmptyEvents false 
+#/CDMS/writeEventInfo false	# Should turn off mcevent tree corresponds to allzips variables in merged
 
 # 
 # NEVENTS events

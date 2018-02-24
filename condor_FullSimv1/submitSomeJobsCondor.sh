@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # use this one for standard beryllium
-for i in $(seq 1 55) 
-do
-  for j in 1 2 3 4 5  
-  do
-    ./condorNeutReflect -n 1 -set 18 -src 88Y -d -6 -dr ${i} -dt ${j} -bepure -ngen 1000000 -exe
-  done
-done
+#for i in $(seq 1 55) 
+#do
+#  for j in 1 2 3 4 5  
+#  do
+#    ./condorNeutReflect -n 1 -set 18 -src 88Y -d -6 -dr ${i} -dt ${j} -bepure -ngen 1000000 -exe
+#  done
+#done
 
 # use this one for standard beryllium
 #for i in $(seq 1 55) 
@@ -26,3 +26,6 @@ done
 #    ./bsubNeutReflect -n 1 -set 13 -src 124Sb -d -3 -dr ${i} -dt ${j} -ngen 1000000 -exe
 #  done
 #done
+
+#use this for ybe 0x0004 photoneutron jobs
+./condorPhotoNSuperSim -n 100 -src ybe -set 4 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe

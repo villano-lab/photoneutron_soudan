@@ -9,7 +9,7 @@ TEMPLATEFILE=$5
 
 if [ "${OTYPE}" = "root" ];
 then
-  PRIMOUT="false"
+  PRIMOUT="true"
   DATAOUT="false"
   TREEOUT="true"
   SOURCEDIR=${SOURCE}"root"
@@ -35,4 +35,7 @@ CDMS_GGSim macros/${SOURCE}_${DATASETIDHEX}_${RUN}_${DATE}.mac
 
 #remove the original ROOT file
 rm /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}.root 
+
+#remove the text primary file 
+rm /data/chocula/villaa/PhotoN_SuperSim/${SOURCEDIR}/${SOURCE}_SetID${DATASETIDHEX}_p${NEV}_${DATE}_10${DAY}_${RUNNUM4DIG}_Primary.txt 
 
