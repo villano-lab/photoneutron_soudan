@@ -152,7 +152,7 @@ class skimData_v2 : public TSelector {
    void    SetObject(TObject *obj) { fObject = obj; }
    void    SetVerbosity(Int_t v){verbosity=v;}
    void    SetZip(Int_t z){zip=z;}
-   void    SetSimDataChain(TTree *simdata){fSimData = simdata;}
+   void    SetSimDataChain(TTree *simdata);
    TTree*  GetOutTree(){return fOutTree;}
    //void    SetInputList(TList *input) {fInput = input;}
    //TList  *GetOutputList() const { return fOutput; }
@@ -334,4 +334,19 @@ Bool_t skimData_v2::Notify()
       }
    }
    return kTRUE;
+}
+//_____________________________________________________________________
+void skimData_v2::SetSimDataChain(TTree *simdata){
+  fSimData = simdata;
+   //set total number of primaries
+   if(fSimData){
+     totalevents=0;
+     Double_t* vecprim;
+     fSimData->Draw("Events","","goff");
+     Int_t nch = fSimData->GetSelectedRows();
+     vecprim = fSimData->GetV1();
+     for(int i=0;i<nch;i++)
+       totalevents+=vecprim[i];
+   }
+   return;
 }
