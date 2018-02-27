@@ -280,7 +280,7 @@ void skimData_v2::Init(TTree *tree)
    fOutTree->Branch("ERx",&ERx,"ERx[ERhit]/D");
    fOutTree->Branch("ERy",&ERy,"ERy[ERhit]/D");
    fOutTree->Branch("ERz",&ERz,"ERz[ERhit]/D");
-   fOutTree->Branch("ERt",&ERt,"ERt[NRhit]/D");
+   fOutTree->Branch("ERt",&ERt,"ERt[ERhit]/D");
    fOutTree->Branch("ERYield",&ERYield,"ERYield[ERhit]/D");
    fOutTree->Branch("NRcapProg",&NRcapProg,"NRcapProg[NRhit]/D");
    fOutTree->Branch("ERcapProg",&ERcapProg,"ERcapProg[ERhit]/D");
