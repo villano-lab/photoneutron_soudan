@@ -193,6 +193,7 @@ Bool_t skimData_v2::Process(Long64_t entry)
    for(int i=0;i<cap_n;i++){
      if(cap_PType[i]==2112 && cap_DetNum[i]==zip){ 
         ncap++; 
+        CKE[nidx] = cap_KE[i];
         Cx[nidx] = cap_X3[i];
         Cy[nidx] = cap_Y3[i];
         Cz[nidx] = cap_Z3[i];

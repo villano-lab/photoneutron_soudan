@@ -125,6 +125,7 @@ class skimData_v2 : public TSelector {
    Double_t     Cy[10000];
    Double_t     Cz[10000];
    Double_t     Ct[10000];
+   Double_t     CKE[10000];
    Double_t     Cpx[10000];  //next two have ncap entries
    Double_t     Cpy[10000];
    Double_t     Cpz[10000];
@@ -293,6 +294,7 @@ void skimData_v2::Init(TTree *tree)
    fOutTree->Branch("prim_Ymom",&prim_Ymom,"prim_Ymom[nprim]/D");
    fOutTree->Branch("prim_Zmom",&prim_Zmom,"prim_Zmom[nprim]/D");
    fOutTree->Branch("ncap",&ncap,"ncap/L");
+   fOutTree->Branch("cap_KE",&CKE,"cap_KE[ncap]/D");
    fOutTree->Branch("cap_X",&Cx,"cap_X[ncap]/D");
    fOutTree->Branch("cap_Y",&Cy,"cap_Y[ncap]/D");
    fOutTree->Branch("cap_Z",&Cz,"cap_Z[ncap]/D");
