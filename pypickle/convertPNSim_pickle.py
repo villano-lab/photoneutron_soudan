@@ -49,8 +49,18 @@ output['nprim'] = np.ones((nev,),dtype=int)*-1 #start out with negative ones
 output['totalevents'] = np.int(-1) 
 output['NRedep'] = np.zeros((nev,maxnr)) #start out with zeros 
 output['NRYield'] = np.zeros((nev,maxnr)) #start out with zeros 
+output['NRx'] = np.zeros((nev,maxnr)) #start out with zeros 
+output['NRy'] = np.zeros((nev,maxnr)) #start out with zeros 
+output['NRz'] = np.zeros((nev,maxnr)) #start out with zeros 
+output['NRt'] = np.zeros((nev,maxnr)) #start out with zeros 
+output['cNRcapProg'] = np.zeros((nev,maxnr),dtype=bool) #start out with False 
 output['ERedep'] = np.zeros((nev,maxer)) #start out with zeros 
 output['ERYield'] = np.zeros((nev,maxer)) #start out with zeros 
+output['ERx'] = np.zeros((nev,maxer)) #start out with zeros 
+output['ERy'] = np.zeros((nev,maxer)) #start out with zeros 
+output['ERz'] = np.zeros((nev,maxer)) #start out with zeros 
+output['ERt'] = np.zeros((nev,maxer)) #start out with zeros 
+output['cERcapProg'] = np.zeros((nev,maxer),dtype=bool) #start out with False 
 output['prim_PType'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['prim_KE'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['prim_X'] = np.zeros((nev,maxprim)) #start out with zeros 
@@ -59,7 +69,7 @@ output['prim_Z'] = np.zeros((nev,maxprim)) #start out with zeros
 output['prim_Xmom'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['prim_Ymom'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['prim_Zmom'] = np.zeros((nev,maxprim)) #start out with zeros 
-#output['cap_KE'] = np.zeros((nev,maxprim)) #start out with zeros 
+output['cap_KE'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['cap_X'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['cap_Y'] = np.zeros((nev,maxprim)) #start out with zeros 
 output['cap_Z'] = np.zeros((nev,maxprim)) #start out with zeros 
@@ -81,14 +91,29 @@ for entry in range(nev):
     output['NRhit'][entry] = pntree.NRhit
     output['ERhit'][entry] = pntree.ERhit
     output['ncap'][entry] = pntree.ncap
-    output['nprim'][entry] = pntree.ncap
+    output['nprim'][entry] = pntree.nprim
     for i in np.arange(np.min([pntree.NRhit,maxnr])):
+      #if pntree.ncap>0:
+      #  print('{} iteration for event {}; NR energy: {}'.format(i,entry,pntree.NRedep[i]))
       output['NRedep'][entry][i] = pntree.NRedep[i]
       output['NRYield'][entry][i] = pntree.NRYield[i]
+      output['NRx'][entry][i] = pntree.NRx[i]
+      output['NRy'][entry][i] = pntree.NRy[i]
+      output['NRz'][entry][i] = pntree.NRz[i]
+      output['NRt'][entry][i] = pntree.NRt[i]
+      output['cNRcapProg'][entry][i] = np.bool(pntree.NRcapProg[i])
+
+    #if pntree.ncap>0:
+    #  print(output['NRedep'][entry])
 
     for i in np.arange(np.min([pntree.ERhit,maxer])):
       output['ERedep'][entry][i] = pntree.ERedep[i]
       output['ERYield'][entry][i] = pntree.ERYield[i]
+      output['ERx'][entry][i] = pntree.ERx[i]
+      output['ERy'][entry][i] = pntree.ERy[i]
+      output['ERz'][entry][i] = pntree.ERz[i]
+      output['ERt'][entry][i] = pntree.ERt[i]
+      output['cERcapProg'][entry][i] = np.bool(pntree.ERcapProg[i])
     
     for i in np.arange(np.min([pntree.nprim,maxprim])):
       output['prim_PType'][entry][i] = pntree.prim_PType[i]
@@ -101,7 +126,7 @@ for entry in range(nev):
       output['prim_Zmom'][entry][i] = pntree.prim_Zmom[i]
 
     for i in np.arange(np.min([pntree.ncap,maxcap])):
-      #output['cap_KE'][entry][i] = pntree.cap_KE[i]
+      output['cap_KE'][entry][i] = pntree.cap_KE[i]
       output['cap_X'][entry][i] = pntree.cap_X[i]
       output['cap_Y'][entry][i] = pntree.cap_Y[i]
       output['cap_Z'][entry][i] = pntree.cap_Z[i]
