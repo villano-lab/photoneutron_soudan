@@ -74,37 +74,46 @@ print 'There are: {}\n'.format(nev)
 cascadetree.GetEntry(0)
 output['totalevents'] = nev 
 #for jevt in range(cascadetree.GetEntries()):
-for entry in range(nev):
-    print 'processing event {} of {}\r'.format(entry,nev),
-    cascadetree.GetEntry(entry)
 
-    output['NRhit'][entry] = cascadetree.n
-    output['ERhit'][entry] = 0 
-    output['cEscape'][entry] = np.bool(escapetree.didInteract) 
+#the events are simulated in order in their cascades so we must randomize
+idx = np.arange(cascadetree.GetEntries())
+idx_rand = np.random.choice(idx,nev,replace=False)
+count=0;
+
+for entry in idx_rand:
+    print 'processing event {} of {}\r'.format(count,nev),
+    #print(entry) #should be random
+    cascadetree.GetEntry(entry)
+    escapetree.GetEntry(entry)
+
+    output['NRhit'][count] = cascadetree.n
+    output['ERhit'][count] = 0 
+    output['cEscape'][count] = np.bool(escapetree.didInteract) 
     for i in np.arange(np.min([cascadetree.n,maxnr])):
       #if pntree.ncap>0:
-      #  print('{} iteration for event {}; NR energy: {}'.format(i,entry,pntree.NRedep[i]))
-      output['NRedep'][entry][i] = cascadetree.E[i]
-      output['NRYield'][entry][i] = cascadetree.Ei[i]/cascadetree.E[i]
-      output['NRx'][entry][i] = 0 
-      output['NRy'][entry][i] = 0 
-      output['NRz'][entry][i] = 0 
-      output['NRt'][entry][i] = 0 
-      output['cNRcapProg'][entry][i] = True 
+      #  print('{} iteration for event {}; NR energy: {}'.format(i,count,pntree.NRedep[i]))
+      output['NRedep'][count][i] = cascadetree.E[i]
+      output['NRYield'][count][i] = cascadetree.Ei[i]/cascadetree.E[i]
+      output['NRx'][count][i] = 0 
+      output['NRy'][count][i] = 0 
+      output['NRz'][count][i] = 0 
+      output['NRt'][count][i] = 0 
+      output['cNRcapProg'][count][i] = True #by definition
 
     #if pntree.ncap>0:
-    #  print(output['NRedep'][entry])
+    #  print(output['NRedep'][count])
 
     #currently there are not ERs in this file
     for i in np.arange(np.min([0,maxer])):
-      output['ERedep'][entry][i] = 0 
-      output['ERYield'][entry][i] = 0 
-      output['ERx'][entry][i] = 0 
-      output['ERy'][entry][i] = 0 
-      output['ERz'][entry][i] = 0 
-      output['ERt'][entry][i] = 0 
-      output['cERcapProg'][entry][i] = True 
+      output['ERedep'][count][i] = 0 
+      output['ERYield'][count][i] = 0 
+      output['ERx'][count][i] = 0 
+      output['ERy'][count][i] = 0 
+      output['ERz'][count][i] = 0 
+      output['ERt'][count][i] = 0 
+      output['cERcapProg'][count][i] = True 
     
+    count+=1
     ## debugging...
     #if (jevt % 10000) == 0:
     #  print 'processing event ',jevt,' in mcDecays'
