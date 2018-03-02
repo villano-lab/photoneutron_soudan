@@ -12,15 +12,16 @@ from scipy.stats import gaussian_kde
 import sys
 
 outfilename = sys.argv[1] #first argument is output file name
+zip = sys.argv[2] #first argument is output file name
 flist=[] #empty list for files
 
 for n,i in enumerate(sys.argv):
-  if n>1:
+  if n>2:
     flist.append(i)
 
 print(flist)
 
-pntree = TChain('edeptree_zip14','edeptree_zip14')
+pntree = TChain('edeptree_zip{}'.format(zip),'edeptree_zip{}'.format(zip))
 
 for i in flist:
   pntree.Add(i)
