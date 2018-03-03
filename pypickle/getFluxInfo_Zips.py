@@ -73,8 +73,8 @@ decaytree.SetBranchAddress('InOut', inout)
 decaytree.SetBranchAddress('VolName', volname)
 #nevt = decaytree.GetEntries()
 decaytree.SetEstimate(decaytree.GetEntries())
-#decaytree.Draw('Entry$*(InOut>0)','InOut==1','goff')
-decaytree.Draw('Entry$*(InOut>0)','','goff')
+decaytree.Draw('Entry$*(InOut>0)','InOut!=0','goff')
+#decaytree.Draw('Entry$*(InOut>0)','','goff')
 #decaytree.Draw('Entry$','(InOut==3 || InOut==2)&&Z3<0.9','goff')
 nevt = decaytree.GetSelectedRows()
 ent=decaytree.GetV1()
@@ -86,6 +86,7 @@ print 'There are: {}\n'.format(nevt)
 decays = dict()
 decays['EventNum'] = np.zeros(nevt)
 decays['Edep'] = np.zeros(nevt)
+decays['ke'] = np.zeros(nevt)
 decays['x'] = np.zeros(nevt)
 decays['y'] = np.zeros(nevt)
 decays['z'] = np.zeros(nevt)
@@ -108,7 +109,7 @@ for c in range(nevt):
     decaytree.GetEntry(entry)
 
     #only interested in events that have an exiting boundary crossing
-    if((inout[0]==2) | (inout[0]==3)):
+    if(inout[0]!=0):
       decays['EventNum'][c] = EventNum[0]
       decays['Edep'][c] = Edep[0]
       decays['ke'][c] = KE[0]
@@ -150,6 +151,8 @@ zlim = z[randcut]
 
 xyz = np.vstack([x,y,z])
 xyzlim = np.vstack([xlim,ylim,zlim])
+#print(np.shape(xyzlim))
+#print(xyzlim[np.arange(3)][np.arange(3)])
 kde_3d = gaussian_kde(xyzlim)
 color = kde_3d(xyz)
 
@@ -163,7 +166,7 @@ decays['color'] = color[idx]
 decays['EventNum'], decays['Edep'],  decays['x'],  decays['y'],  decays['z'],  decays['px'],  decays['py'],  decays['pz'],  decays['time'],  decays['ptype'],  decays['inout'], decays['volname'] = decays['EventNum'][idx], decays['Edep'][idx],  decays['x'][idx],  decays['y'][idx],  decays['z'][idx],  decays['px'][idx],  decays['py'][idx],  decays['pz'][idx],  decays['time'][idx],  decays['ptype'][idx],  decays['inout'][idx], decays['volname'][idx] 
 
 #why don't we save the kde
-decays['outflux_kde'] = kde_3d
+decays['flux_kde'] = kde_3d
 
 #outfile = file('/data/chocula/villaa/PhotoN_SuperSim/possys/flux_data_v2.pkl', 'w')
 outfile = file(outfilename, 'w')
