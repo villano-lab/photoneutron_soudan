@@ -27,9 +27,9 @@
 
 #make flux counters out of all the bricks
 #Vessel/OuterVacuum
-/CDMS/FluxCounter/setParticleVolume gamma Zip 4 
-/CDMS/FluxCounter/setParticleVolume gamma Zip 5 
-/CDMS/FluxCounter/setParticleVolume gamma Zip 14 
+/CDMS/FluxCounter/setParticleVolume neutron Zip 4 
+/CDMS/FluxCounter/setParticleVolume neutron Zip 5 
+/CDMS/FluxCounter/setParticleVolume neutron Zip 14 
 
 /CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
 /CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
