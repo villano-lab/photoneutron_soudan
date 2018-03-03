@@ -92,7 +92,7 @@ for entry in idx_rand:
     for i in np.arange(np.min([cascadetree.n,maxnr])):
       #if pntree.ncap>0:
       #  print('{} iteration for event {}; NR energy: {}'.format(i,count,pntree.NRedep[i]))
-      output['NRedep'][count][i] = cascadetree.E[i]
+      output['NRedep'][count][i] = cascadetree.delE[i]
       output['NRYield'][count][i] = cascadetree.Ei[i]/cascadetree.E[i]
       output['NRx'][count][i] = 0 
       output['NRy'][count][i] = 0 
