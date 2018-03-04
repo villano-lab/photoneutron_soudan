@@ -1,0 +1,50 @@
+/control/verbose 0
+/run/verbose 0
+/CDMS/verbose 0
+
+# Configure lab
+/CDMS/Lab NoLab 
+
+/CDMS/Detector scdms
+#/CDMS/Layout/ZipInactive 1 2 3 5 6 7 8 9 10 11 12 13 15
+/CDMS/UseShield partial
+/CDMS/Source gammaBe
+/CDMS/GammaBe/Position -1.1637 +0.8148 0. cm 
+/CDMS/GammaBe/RotZAngle 50 deg
+/CDMS/GammaBe/boxOffset 8.15 cm 
+
+
+#set up the particle generation
+/CDMS/GammaBe/AddSpectrum nfile:SOURCE_neuts.dat
+
+#disable the decays counter so we don't have an mcDecay tree
+/CDMS/DisableCounter decays
+/CDMS/writeDecayAncestor 0
+
+/CDMS/updateGeom
+
+/CDMS/StepCounter flux
+
+#make flux counters out of all the bricks
+#Vessel/OuterVacuum
+/CDMS/FluxCounter/setParticleVolume neutron Zip 4 
+
+/CDMS/writeTrees TREEOUT		     # Do/Don't write ROOT files
+/CDMS/writePrimaries PRIMOUT                 # Do/Don't write primaries to file
+/CDMS/writeData DATAOUT                      # Do/Don't write text out file
+/CDMS/writeData false
+#/CDMS/writeEmptyHits false 
+#/CDMS/writeEmptyEvents false 
+
+/CDMS/ListCounters
+
+/CDMS/writeProcessInfo false
+
+
+# 
+# NEVENTS events
+#
+/run/autoSeed true
+/CDMS/writeFilePrefix /data/chocula/villaa/PhotoN_SuperSim/DATADIR/SOURCE_FluxZIP4_SetIDTHESETID_shift0_lshift0_pNEVENTS_TIMEOFDAY 
+/run/setRunID RUNNUMBER 
+/run/beamOn NEVENTS 
