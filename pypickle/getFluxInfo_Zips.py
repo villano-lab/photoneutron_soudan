@@ -31,9 +31,11 @@ for n,i in enumerate(sys.argv):
 print(flist)
 
 decaytree = TChain('G4SimDir/mcFluxCounter','G4SimDir/mcFluxCounter')
+infotree = TChain('G4SettingsInfoDir/runtime','G4SettingsInfoDir/runtime')
 
 for i in flist:
   decaytree.Add(i)
+  infotree.Add(i)
 
 #decaytree.Draw('X1','InOut==3 || InOut==2','goff')
 #nevt = decaytree.GetSelectedRows()
@@ -84,6 +86,14 @@ print 'There are: {}\n'.format(nevt)
 
 # (DB) dictionaries need keys and values: making the keys here...
 decays = dict()
+decays['totalevents'] = np.int(-1) 
+
+#get the total number of primaries
+decays['totalevents']=0
+for c in range(infotree.GetEntries()):
+  infotree.GetEntry(c)
+  decays['totalevents']+=infotree.Events
+
 decays['EventNum'] = np.zeros(nevt)
 decays['Edep'] = np.zeros(nevt)
 decays['ke'] = np.zeros(nevt)
