@@ -1,0 +1,8 @@
+The code ENDF6.py in this directory is taken from:
+
+https://github.com/DavidWalz/pyENDF6
+
+On 3/06/18.  That code is not being developed currently, so it makes sense to include it here, and
+it is just one file.  It provides a library for reading ENDF6 files, which the JENDL 4.0
+evaluation seems to be stored in.  See the markdown file ENDF6_README.md for an example of how to
+use the code.  I will put my own ENDF files in a top directory called ENDF6.  
