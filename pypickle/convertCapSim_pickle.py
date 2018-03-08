@@ -42,7 +42,7 @@ for i in flist:
 
 #start making data structures
 nev = cascadetree.GetEntries()
-nev = np.min([10000,nev]) #cut down on events
+nev = np.min([20000,nev]) #cut down on events
 maxnr = 13
 maxer = 30
 maxcap = 1
