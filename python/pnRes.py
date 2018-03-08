@@ -2,7 +2,7 @@
 import numpy as np
 
 
-def getRes(det,mode):
+def getRes(det,mode=None):
   
     if det==None:
       raise ArgumentTypeError('getRes: detector not specified')
@@ -15,7 +15,7 @@ def getRes(det,mode):
     respar['z14']['cdmslite-70V']['epF'] = 0.58 
     respar['z14']['cdmslite-70V']['A'] = 0.0095 
     respar['z14']['cdmslite-70V']['sig0'] = 8.312 
-    respar['z14'] = {}
+    respar['z4'] = {}
     respar['z4']['cdmslite-25V'] = {} 
     respar['z4']['cdmslite-25V']['epF'] = 0.805 
     respar['z4']['cdmslite-25V']['A'] = 0.01072 
