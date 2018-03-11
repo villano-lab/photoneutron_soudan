@@ -1,6 +1,7 @@
 #this library provides functions to organize various simulation data beginning with sim v4 ID 0x0004
 import numpy as np
 import pickle
+import math
 
 def getFirstData_Simv4(loadFiles=False,suppressBig=False):
  
@@ -129,7 +130,8 @@ def condenseFirstData_Simv4(file=None,suppressBig=False):
           data_condense[det][set] = {}
 
 	#replace the captures
-        data[det][set][datalabel_r] = replaceCaptures(data[det][set][datalabel]) #correct file is default
+        seedStr = det + set #a reproducible string to get seed for shuffling of events
+        data[det][set][datalabel_r] = replaceCaptures(data[det][set][datalabel],seedStr) #correct file is default
         data_condense[det][set] = {}
         data_condense[det][set]['NRedep'] = data[det][set][datalabel_r]['NRedep'] 
         data_condense[det][set]['cEscape'] = data[det][set][datalabel_r]['cEscape'] 
@@ -145,7 +147,7 @@ def condenseFirstData_Simv4(file=None,suppressBig=False):
     return data_condense
 
 
-def replaceCaptures(data, file='/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_z14_180307_cap_slow.pkl'): #data is standard .pkl simulation detector sub-structure
+def replaceCaptures(data, seedString='1', file='/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_z14_180307_cap_slow.pkl'): #data is standard .pkl simulation detector sub-structure
 
     #open the capture file
     with open(file,'rb') as readFile:
@@ -179,7 +181,9 @@ def replaceCaptures(data, file='/data/chocula/villaa/PhotoN_SuperSim/ZipSum/ybe_
     #when we cut out the ones that didn't have all gammas escape, the dataset will
     #be different sized unless you use a consistent random state
     rstate = np.random.RandomState()
-    rstate.seed(1)
+    repint = int.from_bytes(seedString.encode(), 'little') % (2**32-1) #reproducible based on the string input seedString
+    print(repint) #reproducible based on the string input seedString
+    rstate.seed(repint) #reproducible based on the string input seedString
     idx_rand = rstate.choice(idx,np.int(Ncap),replace=False)
     
     #get indicies of capture in original vector 
