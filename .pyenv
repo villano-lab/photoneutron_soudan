@@ -16,3 +16,11 @@ legend_font = {'fontname':'Arial', 'size':'22'}
 
 #fonts global settings
 mpl.rc('font',family=legend_font['fontname'])
+
+#NOTE we should have the following file:
+#~/.python3rc as follows:
+#import os.path
+#
+##whatever directory you start in execute the .pyenv script
+#if(os.path.isfile('.pyenv')):
+#  exec(open('.pyenv').read())
