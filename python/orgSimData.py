@@ -133,6 +133,7 @@ def condenseFirstData_Simv4(file=None,suppressBig=False):
         seedStr = det + set #a reproducible string to get seed for shuffling of events
         data[det][set][datalabel_r] = replaceCaptures(data[det][set][datalabel],seedStr) #correct file is default
         data_condense[det][set] = {}
+        data_condense[det][set]['totalevents'] = data[det][set][datalabel_r]['totalevents'] 
         data_condense[det][set]['NRedep'] = data[det][set][datalabel_r]['NRedep'] 
         data_condense[det][set]['cEscape'] = data[det][set][datalabel_r]['cEscape'] 
         data_condense[det][set]['ncap'] = data[det][set][datalabel_r]['ncap']
@@ -160,6 +161,9 @@ def replaceCaptures(data, seedString='1', file='/data/chocula/villaa/PhotoN_Supe
     
     #get the full structure with all hits as well
     NRedep = data['NRedep']
+    NRhit = data['NRhit']
+    ERedep = data['ERedep']
+    ERhit = data['ERhit']
 
     #take the number of total captures (with or without ER)
     oneper = np.ones(np.shape(data['ncap']))
@@ -197,6 +201,9 @@ def replaceCaptures(data, seedString='1', file='/data/chocula/villaa/PhotoN_Supe
     #replace cap events in original structure
     edepNR[idx_cap] = edepNR_cap[idx_rand]
     NRedep[idx_cap] = capdata['NRedep'][idx_rand]
+    NRhit[idx_cap] = 1
+    ERedep[idx_cap] = capdata['ERedep'][idx_rand]
+    ERhit[idx_cap] = 0
     
     print('')
     print('Capture structure shapes and first capture AFTER replacement================')
@@ -207,7 +214,7 @@ def replaceCaptures(data, seedString='1', file='/data/chocula/villaa/PhotoN_Supe
 
     #now have to expand the cut cEscape to cover the whole dataset
     cEscape = np.ones(np.shape(edepNR),dtype=bool) #default is all escaped
-    cEscape[idx_cap] = capdata['cEscape'][idx_rand]
+    #cEscape[idx_cap] = capdata['cEscape'][idx_rand]
     
     print(np.shape(cEscape))
     oneper = np.ones(np.shape(cEscape))
@@ -217,6 +224,10 @@ def replaceCaptures(data, seedString='1', file='/data/chocula/villaa/PhotoN_Supe
 
     #replace all the relevant variables in data
     data['NRedep'] = NRedep
+    data['NRhit'] = NRhit
+    data['ERedep'] = ERedep
+    data['ERhit'] = ERhit
     data['cEscape'] = cEscape
+    #you also have to get rid of ERedep for these events
 
     return data 
