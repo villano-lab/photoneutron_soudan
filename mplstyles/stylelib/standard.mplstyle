@@ -7,7 +7,7 @@ lines.linewidth : 2
 xtick.top : False
 xtick.bottom : True
 xtick.minor.visible : True
-xtick.direction : 'in'
+xtick.direction : in
 xtick.major.size : 8
 xtick.minor.size : 4
 xtick.major.width : 2
@@ -17,7 +17,7 @@ xtick.labelsize : 22
 ytick.left : True
 ytick.right : False
 ytick.minor.visible : True
-ytick.direction : 'in'
+ytick.direction : in
 ytick.major.size : 8
 ytick.minor.size : 4
 ytick.major.width : 2
