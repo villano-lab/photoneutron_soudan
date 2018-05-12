@@ -11,7 +11,7 @@ remote_initialdir = /home/phys/villaa/analysis/cdms_simulation/photoneutron_soud
 Notification = error
 Notify_user = $ENV(USER)@physics.umn.edu
 
-Requirements = (Machine != "cdms2.spa.umn.edu") && (Arch=="X86_64")
+Requirements = (Machine != "cdms-04-3.spa.umn.edu") && (Arch=="X86_64")
 #request_memory = ImageSize
 
 OutputDir	= /home/phys/villaa/supersim/condor/logs 
