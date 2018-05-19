@@ -14,7 +14,7 @@ Notify_user = $ENV(USER)@physics.umn.edu
 Requirements = (Machine != "cdms-04-3.spa.umn.edu") && (Arch=="X86_64")
 #request_memory = ImageSize
 
-OutputDir	= /home/phys/villaa/supersim/condor/logs 
+OutputDir	= /data/chocula/villaa/PhotoN_SuperSim/logs 
 Error       = $(OutputDir)/IDENTIFIER_condor.phys.err.$(Cluster)-$(Process).txt
 Log         = $(OutputDir)/IDENTIFIER_condor.phys.log.$(Cluster)-$(Process).txt
 Output		= $(OutputDir)/IDENTIFIER_condor.phys.out.$(Cluster)-$(Process).txt

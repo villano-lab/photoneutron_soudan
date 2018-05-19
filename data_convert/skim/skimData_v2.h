@@ -306,7 +306,8 @@ void skimData_v2::Init(TTree *tree)
    //apply event list to cut on ZIP and nhits>0
    cout << "Cutting to get only zip " <<  zip << " events" << endl;
    ostringstream cutstream;
-   cutstream << "allzips.DetNum==" << zip << " && allzips.nhits>0 ";
+   //cutstream << "allzips.DetNum==" << zip << " && allzips.nhits>0 ";
+   cutstream << "allzips.nhits>0";
    cut = cutstream.str();
    cout << cut << endl;
    //string cut = "allzips.DetNum==14";
