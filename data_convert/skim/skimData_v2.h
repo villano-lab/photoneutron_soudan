@@ -19,6 +19,7 @@
 //#include<map>
 //#include<vector>
 #include <climits> //LONG_MAX def
+#include <map>
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -28,6 +29,7 @@
 #include <TSelector.h>
 
 class   TH1D;
+class   TH3D;
 
 class skimData_v2 : public TSelector {
    public :
@@ -43,6 +45,7 @@ class skimData_v2 : public TSelector {
    TTree          *fChain;    //pointer to the analyzed TTree or TChain
    TTree          *fSimData;    //pointer to the analyzed TTree or TChain
    TTree          *fOutTree;    //pointer to the Output TTree or TChain
+   TH3D           *vmap_70_0; //pointer to the voltage map
    Int_t          zip; //zip to do the tree for
    //Declaration of leaves types
    //Zip stuff
@@ -154,6 +157,7 @@ class skimData_v2 : public TSelector {
    void    SetVerbosity(Int_t v){verbosity=v;}
    void    SetZip(Int_t z){zip=z;}
    void    SetSimDataChain(TTree *simdata);
+   void    SetVoltageMaps(TH3D *mapweight,TH3D *mapcount,TString label);
    TTree*  GetOutTree(){return fOutTree;}
    //void    SetInputList(TList *input) {fInput = input;}
    //TList  *GetOutputList() const { return fOutput; }
@@ -352,4 +356,34 @@ void skimData_v2::SetSimDataChain(TTree *simdata){
        totalevents+=vecprim[i];
    }
    return;
+}
+//_____________________________________________________________________
+void skimData_v2::SetVoltageMaps(TH3D *mapweight, TH3D *mapcount, TString label){
+
+  //store the resulting map in global
+  if(label=="70V_0extrap"){
+     vmap_70_0 = (TH3D*)mapweight->Clone();
+  }
+  else
+    return;
+
+  int nbinsX3D = mapweight->GetNbinsX();
+  int nbinsY3D = mapweight->GetNbinsY();
+  int nbinsZ3D = mapweight->GetNbinsZ();
+  int nbins3D = (nbinsX3D+2)*(nbinsY3D+2)*(nbinsZ3D+2); //plus 2 is for overflow and underflow bins
+
+  for(int binItr3D = 1; binItr3D <= nbins3D; binItr3D++)
+  {
+    double weightedBinContent3D = vmap_70_0->GetBinContent(binItr3D);
+    double nSamples3D = mapcount->GetBinContent(binItr3D);
+    double mapValue3D = (nSamples3D > 0 ? (weightedBinContent3D/nSamples3D) : 0);
+
+    if(nSamples3D > 1)
+      cout <<"nSamples3D = " << nSamples3D << endl;
+
+    //now overwrite the bin content 
+    vmap_70_0->SetBinContent(binItr3D, mapValue3D);
+  }
+  
+  return;
 }
