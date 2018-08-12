@@ -243,9 +243,18 @@ Bool_t skimData_v2::Process(Long64_t entry)
           edepER_late+=zip_Edep[l];
         ERedep[ERhit-1] = zip_Edep[l];
         ERPType[ERhit-1] = zip_PType[l];
+        ER_V70_0[ERhit-1] = -999999;
+        ER_V70_1[ERhit-1] = -999999;
+        ER_V25_0[ERhit-1] = -999999;
+        ER_V25_1[ERhit-1] = -999999;
+        ER_iZIP_0[ERhit-1] = -999999;
+        ER_iZIP_1[ERhit-1] = -999999;
         ERx[ERhit-1] = zip_X1[l];
         ERy[ERhit-1] = zip_Y1[l];
         ERz[ERhit-1] = zip_Z1[l];
+        //FIXME: need to confirm coordinate systems for map equal to Geant4 output
+        if(haveMap_70_0)
+          ER_V70_0[ERhit-1] = vmap_70_0->Interpolate(ERx[ERhit-1],ERy[ERhit-1],ERz[ERhit-1]);
         ERt[ERhit-1] = zip_Time1[l];
         ERYield[ERhit-1] = zip_Yield[l];
 	ERcapProg[ERhit-1] = (Double_t)zip_InCapProg[l];
@@ -258,9 +267,18 @@ Bool_t skimData_v2::Process(Long64_t entry)
           edepNR_late+=zip_Edep[l];
 	NRedep[NRhit-1] = zip_Edep[l];
 	NRPType[NRhit-1] = zip_PType[l];
+  NR_V70_0[NRhit-1] = -999999;
+  NR_V70_1[NRhit-1] = -999999;
+  NR_V25_0[NRhit-1] = -999999;
+  NR_V25_1[NRhit-1] = -999999;
+  NR_iZIP_0[NRhit-1] = -999999;
+  NR_iZIP_1[NRhit-1] = -999999;
 	NRx[NRhit-1] = zip_X1[l];
 	NRy[NRhit-1] = zip_Y1[l];
 	NRz[NRhit-1] = zip_Z1[l];
+  //FIXME: need to confirm coordinate systems for map equal to Geant4 output
+  if(haveMap_70_0)
+    NR_V70_0[NRhit-1] = vmap_70_0->Interpolate(NRx[NRhit-1],NRy[NRhit-1],NRz[NRhit-1]);
 	NRt[NRhit-1] = zip_Time1[l];
 	NRYield[NRhit-1] = zip_Yield[l];
 	NRcapProg[NRhit-1] = (Double_t)zip_InCapProg[l];

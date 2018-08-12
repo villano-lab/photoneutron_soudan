@@ -46,6 +46,17 @@ class skimData_v2 : public TSelector {
    TTree          *fSimData;    //pointer to the analyzed TTree or TChain
    TTree          *fOutTree;    //pointer to the Output TTree or TChain
    TH3D           *vmap_70_0; //pointer to the voltage map
+   Bool_t         haveMap_70_0;
+   TH3D           *vmap_70_1; //pointer to the voltage map
+   Bool_t         haveMap_70_1;
+   TH3D           *vmap_25_0; //pointer to the voltage map
+   Bool_t         haveMap_25_0;
+   TH3D           *vmap_25_1; //pointer to the voltage map
+   Bool_t         haveMap_25_1;
+   TH3D           *vmap_iZIP_0; //pointer to the voltage map
+   Bool_t         haveMap_iZIP_0;
+   TH3D           *vmap_iZIP_1; //pointer to the voltage map
+   Bool_t         haveMap_iZIP_1;
    Int_t          zip; //zip to do the tree for
    //Declaration of leaves types
    //Zip stuff
@@ -112,11 +123,23 @@ class skimData_v2 : public TSelector {
    Double_t     NRx[10000];
    Double_t     NRy[10000];
    Double_t     NRz[10000];
+   Double_t     NR_V70_0[10000];
+   Double_t     NR_V70_1[10000];
+   Double_t     NR_V25_0[10000];
+   Double_t     NR_V25_1[10000];
+   Double_t     NR_iZIP_0[10000];
+   Double_t     NR_iZIP_1[10000];
    Double_t     NRYield[10000];
    Double_t     NRt[10000];
    Double_t     ERx[10000];
    Double_t     ERy[10000];
    Double_t     ERz[10000];
+   Double_t     ER_V70_0[10000];
+   Double_t     ER_V70_1[10000];
+   Double_t     ER_V25_0[10000];
+   Double_t     ER_V25_1[10000];
+   Double_t     ER_iZIP_0[10000];
+   Double_t     ER_iZIP_1[10000];
    Double_t     ERYield[10000];
    Double_t     ERt[10000];
    Double_t     NRPType[10000];
@@ -198,6 +221,12 @@ skimData_v2::skimData_v2(TTree * /*tree*/)
    zip = 14; //for now
    fillList = kFALSE;
    useList  = kFALSE;
+   haveMap_70_0  = kFALSE;
+   haveMap_70_1  = kFALSE;
+   haveMap_25_0  = kFALSE;
+   haveMap_25_1  = kFALSE;
+   haveMap_iZIP_0  = kFALSE;
+   haveMap_iZIP_1  = kFALSE;
 
    //set default values for things
 
@@ -277,6 +306,12 @@ void skimData_v2::Init(TTree *tree)
    fOutTree->Branch("NRx",&NRx,"NRx[NRhit]/D");
    fOutTree->Branch("NRy",&NRy,"NRy[NRhit]/D");
    fOutTree->Branch("NRz",&NRz,"NRz[NRhit]/D");
+   fOutTree->Branch("NR_V70_0",&NR_V70_0,"NR_V70_0[NRhit]/D");
+   fOutTree->Branch("NR_V70_1",&NR_V70_1,"NR_V70_1[NRhit]/D");
+   fOutTree->Branch("NR_V25_0",&NR_V25_0,"NR_V25_0[NRhit]/D");
+   fOutTree->Branch("NR_V25_1",&NR_V25_1,"NR_V25_1[NRhit]/D");
+   fOutTree->Branch("NR_iZIP_0",&NR_iZIP_0,"NR_iZIP_0[NRhit]/D");
+   fOutTree->Branch("NR_iZIP_1",&NR_iZIP_1,"NR_iZIP_1[NRhit]/D");
    fOutTree->Branch("NRt",&NRt,"NRt[NRhit]/D");
    fOutTree->Branch("NRYield",&NRYield,"NRYield[NRhit]/D");
    fOutTree->Branch("ERedep",&ERedep,"ERedep[ERhit]/D");
@@ -284,6 +319,12 @@ void skimData_v2::Init(TTree *tree)
    fOutTree->Branch("ERx",&ERx,"ERx[ERhit]/D");
    fOutTree->Branch("ERy",&ERy,"ERy[ERhit]/D");
    fOutTree->Branch("ERz",&ERz,"ERz[ERhit]/D");
+   fOutTree->Branch("ER_V70_0",&ER_V70_0,"ER_V70_0[ERhit]/D");
+   fOutTree->Branch("ER_V70_1",&ER_V70_1,"ER_V70_1[ERhit]/D");
+   fOutTree->Branch("ER_V25_0",&ER_V25_0,"ER_V25_0[ERhit]/D");
+   fOutTree->Branch("ER_V25_1",&ER_V25_1,"ER_V25_1[ERhit]/D");
+   fOutTree->Branch("ER_iZIP_0",&ER_iZIP_0,"ER_iZIP_0[ERhit]/D");
+   fOutTree->Branch("ER_iZIP_1",&ER_iZIP_1,"ER_iZIP_1[ERhit]/D");
    fOutTree->Branch("ERt",&ERt,"ERt[ERhit]/D");
    fOutTree->Branch("ERYield",&ERYield,"ERYield[ERhit]/D");
    fOutTree->Branch("NRcapProg",&NRcapProg,"NRcapProg[NRhit]/D");
@@ -360,9 +401,13 @@ void skimData_v2::SetSimDataChain(TTree *simdata){
 //_____________________________________________________________________
 void skimData_v2::SetVoltageMaps(TH3D *mapweight, TH3D *mapcount, TString label){
 
+  TH3D *thismap;
+
   //store the resulting map in global
   if(label=="70V_0extrap"){
      vmap_70_0 = (TH3D*)mapweight->Clone();
+     thismap = vmap_70_0;
+     haveMap_70_0 = kTRUE;
   }
   else
     return;
@@ -374,7 +419,7 @@ void skimData_v2::SetVoltageMaps(TH3D *mapweight, TH3D *mapcount, TString label)
 
   for(int binItr3D = 1; binItr3D <= nbins3D; binItr3D++)
   {
-    double weightedBinContent3D = vmap_70_0->GetBinContent(binItr3D);
+    double weightedBinContent3D = thismap->GetBinContent(binItr3D);
     double nSamples3D = mapcount->GetBinContent(binItr3D);
     double mapValue3D = (nSamples3D > 0 ? (weightedBinContent3D/nSamples3D) : 0);
 
@@ -382,7 +427,7 @@ void skimData_v2::SetVoltageMaps(TH3D *mapweight, TH3D *mapcount, TString label)
       cout <<"nSamples3D = " << nSamples3D << endl;
 
     //now overwrite the bin content 
-    vmap_70_0->SetBinContent(binItr3D, mapValue3D);
+    thismap->SetBinContent(binItr3D, mapValue3D);
   }
   
   return;
