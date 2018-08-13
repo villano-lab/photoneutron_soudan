@@ -43,6 +43,7 @@ TFile *fout = new TFile(Form("/data/chocula/villaa/PhotoN_SuperSim/ZipSum/%s_z%d
 //TFile *f= new TFile(Form("/afs/slac.stanford.edu/u/dm/%s/geantfluka/GeantFluka_Data/GFCapData_%s_on_%s_%s.root",user.c_str(), material.c_str(), part.c_str(), energy.c_str()), "recreate");
 //list->Write();
 TTree *outtree = test->GetOutTree();
+outtree->Scan("NRx:NRy:NRz:NR_V70_0","","");
 outtree->Write(0,TObject::kOverwrite);
 fout->Close();
 //f->Close();

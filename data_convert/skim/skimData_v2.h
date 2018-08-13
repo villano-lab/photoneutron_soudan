@@ -404,7 +404,7 @@ void skimData_v2::SetVoltageMaps(TH3D *mapweight, TH3D *mapcount, TString label)
   TH3D *thismap;
 
   //store the resulting map in global
-  if(label=="70V_0extrap"){
+  if(label=="70V_0ex"){
      vmap_70_0 = (TH3D*)mapweight->Clone();
      thismap = vmap_70_0;
      haveMap_70_0 = kTRUE;
