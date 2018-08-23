@@ -20,5 +20,5 @@ Output		= $(OutputDir)/IDENTIFIER_condor.phys.out.$(Cluster)-$(Process).txt
 #should_transfer_files = YES
 #when_to_transfer_output = ON_EXIT
 
-Arguments = ""
+Arguments = "ARGUMENTS"
 Queue
