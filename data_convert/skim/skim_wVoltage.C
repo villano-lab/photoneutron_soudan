@@ -17,7 +17,7 @@ strftime (date,7,"%y%m%d",timeinfo);
 cout << setID.str() << endl;
 cout << type << endl;
 cout << date << endl;
-cout << Form("/data/chocula/villaa/PhotoN_SuperSim/ZipSum/%s_z%d_%s_%s_%s.root",type.c_str(),zip,date,setID.str().c_str(),suffix.c_str()) << endl;
+cout << Form("/data/chocula/villaa/PhotoN_SuperSim/ZipSum/skim_%s/%s_z%d_%s_%s_%s.root",setID.str(),type.c_str(),zip,date,setID.str().c_str(),suffix.c_str()) << endl;
 Int_t nev;
 TChain *ch = chainPhotoNSuperSim_wOffset(nev,maxfiles,off,dataset,Form("%s",type.c_str()),Form("/data/chocula/villaa/PhotoN_SuperSim/%sroot",type.c_str()),"mcmerged");
 TChain *infoch = chainPhotoNSuperSim_wOffset(nev,maxfiles,off,dataset,Form("%s",type.c_str()),Form("/data/chocula/villaa/PhotoN_SuperSim/%sroot",type.c_str()),"G4SettingsInfoDir/runtime");
@@ -34,7 +34,7 @@ TH3D *voltageMapCount = fvmaps->Get("voltageMapCount");
 test->SetVoltageMaps(voltageMapWeighted,voltageMapCount,"70V_0ex");
 
 ch->Process(test);
-TFile *fout = new TFile(Form("/data/chocula/villaa/PhotoN_SuperSim/ZipSum/%s_z%d_%s_%s_%s.root",type.c_str(),zip,date,setID.str().c_str(),suffix.c_str()),"RECREATE");
+TFile *fout = new TFile(Form("/data/chocula/villaa/PhotoN_SuperSim/ZipSum/skim_%s/%s_z%d_%s_%s_%s.root",setID.str(),type.c_str(),zip,date,setID.str().c_str(),suffix.c_str()),"RECREATE");
 
 
 TTree *outtree = test->GetOutTree()->Clone();
