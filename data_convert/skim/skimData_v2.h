@@ -200,6 +200,8 @@ class skimData_v2 : public TSelector {
 
    private :
 
+
+   Double_t iZIP_vmap_frac(Double_t x, Double_t y, Double_t z);
    //functions for specialized procedures 
    void clearvec(double*,int);
    //void resetThermTracks();
@@ -225,8 +227,8 @@ skimData_v2::skimData_v2(TTree * /*tree*/)
    haveMap_70_1  = kFALSE;
    haveMap_25_0  = kFALSE;
    haveMap_25_1  = kFALSE;
-   haveMap_iZIP_0  = kFALSE;
-   haveMap_iZIP_1  = kFALSE;
+   haveMap_iZIP_0  = kTRUE; //use function iZIP_vmap_frac
+   haveMap_iZIP_1  = kTRUE; //use function iZIP_vmap_frac
 
    //set default values for things
 

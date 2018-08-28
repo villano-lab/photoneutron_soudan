@@ -255,6 +255,13 @@ Bool_t skimData_v2::Process(Long64_t entry)
         //FIXME: need to confirm coordinate systems for map equal to Geant4 output
         if(haveMap_70_0)
           ER_V70_0[ERhit-1] = vmap_70_0->Interpolate(1000*ERx[ERhit-1],1000*ERy[ERhit-1],1000*ERz[ERhit-1]);
+
+        if(haveMap_iZIP_0)
+          ER_iZIP_0[ERhit-1] = iZIP_vmap_frac(1000*ERx[ERhit-1],1000*ERy[ERhit-1],1000*ERz[ERhit-1]);
+
+        if(haveMap_iZIP_1)
+          ER_iZIP_1[ERhit-1] = iZIP_vmap_frac(1000*ERx[ERhit-1],1000*ERy[ERhit-1],1000*ERz[ERhit-1]);
+
         ERt[ERhit-1] = zip_Time1[l];
         ERYield[ERhit-1] = zip_Yield[l];
 	ERcapProg[ERhit-1] = (Double_t)zip_InCapProg[l];
@@ -279,6 +286,13 @@ Bool_t skimData_v2::Process(Long64_t entry)
   //FIXME: need to confirm coordinate systems for map equal to Geant4 output
   if(haveMap_70_0)
     NR_V70_0[NRhit-1] = vmap_70_0->Interpolate(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
+
+  if(haveMap_iZIP_0)
+    NR_iZIP_0[NRhit-1] = iZIP_vmap_frac(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
+
+  if(haveMap_iZIP_1)
+    NR_iZIP_1[NRhit-1] = iZIP_vmap_frac(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
+
 	NRt[NRhit-1] = zip_Time1[l];
 	NRYield[NRhit-1] = zip_Yield[l];
 	NRcapProg[NRhit-1] = (Double_t)zip_InCapProg[l];
@@ -367,4 +381,12 @@ Bool_t skimData_v2::isInVector(Double_t element,vector<Double_t> list)
     if(element==list[i]) return true;	
   }
   return false;
+}
+Double_t skimData_v2::iZIP_vmap_frac(Double_t x, Double_t y, Double_t z)
+{
+  //simplest model in the world
+  if(z>23.5 || z<1)
+    return 0.5;
+  else
+    return 1;
 }
