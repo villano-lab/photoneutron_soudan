@@ -297,6 +297,8 @@ Bool_t skimData_v2::Process(Long64_t entry)
 	      NRYield[NRhit-1] = zip_Yield[l];
 	      NRcapProg[NRhit-1] = (Double_t)zip_InCapProg[l];
       }
+
+      //if capture progeny triggered: add some stuff to BOTH ERhit and NRhit and also a flag labeling the capture
     }
 
 
