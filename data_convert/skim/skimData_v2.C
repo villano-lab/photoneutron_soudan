@@ -237,7 +237,7 @@ Bool_t skimData_v2::Process(Long64_t entry)
       if(zip_DetNum[l]!=zip) continue;
       if((zip_PType[l]==11 || zip_PType[l]==-11) || zip_PType[l]==22){
         ERhit++;
-	if(!zip_InCapProg[l])
+	      if(!zip_InCapProg[l])
           edepER+=zip_Edep[l];
         if(!zip_InCapProg[l] && zip_Time1[l]>1e10) //ten seconds later
           edepER_late+=zip_Edep[l];
@@ -268,34 +268,34 @@ Bool_t skimData_v2::Process(Long64_t entry)
       }
       else if(zip_PType[l]==2112 || ((Long64_t)zip_PType-(Long64_t)zip_PType%10000)>1){
         NRhit++;
-	if(!zip_InCapProg[l])
+	      if(!zip_InCapProg[l])
           edepNR+=zip_Edep[l];
-	if(!zip_InCapProg[l] && zip_Time1[l]>1e10) //ten seconds later
+	      if(!zip_InCapProg[l] && zip_Time1[l]>1e10) //ten seconds later
           edepNR_late+=zip_Edep[l];
-	NRedep[NRhit-1] = zip_Edep[l];
-	NRPType[NRhit-1] = zip_PType[l];
-  NR_V70_0[NRhit-1] = -999999;
-  NR_V70_1[NRhit-1] = -999999;
-  NR_V25_0[NRhit-1] = -999999;
-  NR_V25_1[NRhit-1] = -999999;
-  NR_iZIP_0[NRhit-1] = -999999;
-  NR_iZIP_1[NRhit-1] = -999999;
-	NRx[NRhit-1] = zip_X1[l];
-	NRy[NRhit-1] = zip_Y1[l];
-	NRz[NRhit-1] = zip_Z1[l];
-  //FIXME: need to confirm coordinate systems for map equal to Geant4 output
-  if(haveMap_70_0)
-    NR_V70_0[NRhit-1] = vmap_70_0->Interpolate(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
+	      NRedep[NRhit-1] = zip_Edep[l];
+	      NRPType[NRhit-1] = zip_PType[l];
+        NR_V70_0[NRhit-1] = -999999;
+        NR_V70_1[NRhit-1] = -999999;
+        NR_V25_0[NRhit-1] = -999999;
+        NR_V25_1[NRhit-1] = -999999;
+        NR_iZIP_0[NRhit-1] = -999999;
+        NR_iZIP_1[NRhit-1] = -999999;
+	      NRx[NRhit-1] = zip_X1[l];
+	      NRy[NRhit-1] = zip_Y1[l];
+	      NRz[NRhit-1] = zip_Z1[l];
+        //FIXME: need to confirm coordinate systems for map equal to Geant4 output
+        if(haveMap_70_0)
+          NR_V70_0[NRhit-1] = vmap_70_0->Interpolate(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
 
-  if(haveMap_iZIP_0)
-    NR_iZIP_0[NRhit-1] = iZIP_vmap_frac(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
+        if(haveMap_iZIP_0)
+          NR_iZIP_0[NRhit-1] = iZIP_vmap_frac(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
 
-  if(haveMap_iZIP_1)
-    NR_iZIP_1[NRhit-1] = iZIP_vmap_frac(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
+        if(haveMap_iZIP_1)
+          NR_iZIP_1[NRhit-1] = iZIP_vmap_frac(1000*NRx[NRhit-1],1000*NRy[NRhit-1],1000*NRz[NRhit-1]);
 
-	NRt[NRhit-1] = zip_Time1[l];
-	NRYield[NRhit-1] = zip_Yield[l];
-	NRcapProg[NRhit-1] = (Double_t)zip_InCapProg[l];
+	      NRt[NRhit-1] = zip_Time1[l];
+	      NRYield[NRhit-1] = zip_Yield[l];
+	      NRcapProg[NRhit-1] = (Double_t)zip_InCapProg[l];
       }
     }
 

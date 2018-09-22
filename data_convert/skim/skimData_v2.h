@@ -45,6 +45,7 @@ class skimData_v2 : public TSelector {
    TTree          *fChain;    //pointer to the analyzed TTree or TChain
    TTree          *fSimData;    //pointer to the analyzed TTree or TChain
    TTree          *fOutTree;    //pointer to the Output TTree or TChain
+   TTree          *fCapSimTree;    //pointer to the capture simulation tree 
    TH3D           *vmap_70_0; //pointer to the voltage map
    Bool_t         haveMap_70_0;
    TH3D           *vmap_70_1; //pointer to the voltage map
@@ -180,6 +181,7 @@ class skimData_v2 : public TSelector {
    void    SetVerbosity(Int_t v){verbosity=v;}
    void    SetZip(Int_t z){zip=z;}
    void    SetSimDataChain(TTree *simdata);
+   void    SetCapDataChain(TTree *capdata);
    void    SetVoltageMaps(TH3D *mapweight,TH3D *mapcount,TString label);
    TTree*  GetOutTree(){return fOutTree;}
    //void    SetInputList(TList *input) {fInput = input;}
@@ -398,6 +400,11 @@ void skimData_v2::SetSimDataChain(TTree *simdata){
      for(int i=0;i<nch;i++)
        totalevents+=vecprim[i];
    }
+   return;
+}
+//_____________________________________________________________________
+void skimData_v2::SetCapDataChain(TTree *capdata){
+  fCapSimTree = capdata;
    return;
 }
 //_____________________________________________________________________
