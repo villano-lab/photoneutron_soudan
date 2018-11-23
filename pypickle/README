@@ -12,3 +12,9 @@ module load anaconda2-module
 alias startpy='source activate barker'
 alias endpy='source deactivate
 
+Or, see pg 56 of N-MISC-17-003
+
+$module use /local/gammasoft/modules
+$module load anaconda2-module
+$source activate barker
+
