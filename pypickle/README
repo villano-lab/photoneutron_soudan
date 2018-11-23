@@ -18,3 +18,8 @@ $module use /local/gammasoft/modules
 $module load anaconda2-module
 $source activate barker
 
+Invocation on command line is like:
+
+$python convertCapSim_pickle.py /data/chocula/villaa/cascadeSimData/normge_fast_test.pkl /data/chocula/villaa/cascadeSimData/normge_fast.root
+
+first file is file to write, second (and third, fourth, fifth, etc) are files to read and chain together. 
