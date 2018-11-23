@@ -2,3 +2,13 @@ This directory contains code for changeing some of the simulation output I have 
 convenient python pickle files. 
 
 Got to have a working PyROOT installation code inspired by A. Anderson and D. Barker's code(s)
+
+Easiest way is to use D'Ann's sourcing procedure:
+
+module load matlab/2015a
+# anaconda for python
+module use /local/gammasoft/modules
+module load anaconda2-module
+alias startpy='source activate barker'
+alias endpy='source deactivate
+
