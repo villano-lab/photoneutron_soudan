@@ -44,8 +44,8 @@ TFile *fout = new TFile(Form("/data/chocula/villaa/PhotoN_SuperSim/ZipSum/%s_z%d
 //list->Write();
 TTree *outtree = test->GetOutTree()->Clone();
 fout->cd();
-outtree->Scan("NRx:NRy:NRz:NR_V70_0:NR_iZIP_0:NR_iZIP_1","","");
-outtree->Scan("ERx:ERy:ERz:ER_V70_0:ER_iZIP_0:ER_iZIP_1","","");
+//outtree->Scan("NRx:NRy:NRz:NR_V70_0:NR_iZIP_0:NR_iZIP_1","","");
+//outtree->Scan("ERx:ERy:ERz:ER_V70_0:ER_iZIP_0:ER_iZIP_1","","");
 outtree->Write(0,TObject::kOverwrite);
 fout->Close();
 //f->Close();
