@@ -7,6 +7,10 @@ import numpy as np
 #from scipy.stats import gaussian_kde
 import sys
 import uproot
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+import h5py
+warnings.resetwarnings()
 
 outfilename = sys.argv[1] #first argument is output file name
 zip = sys.argv[2] #first argument is output file name
@@ -53,7 +57,7 @@ output['NRhit'] = np.ones((nev,),dtype=int)*-1 #start out with negative ones
 output['ERhit'] = np.ones((nev,),dtype=int)*-1 #start out with negative ones
 output['ncap'] = np.ones((nev,),dtype=int)*-1 #start out with negative ones
 output['nprim'] = np.ones((nev,),dtype=int)*-1 #start out with negative ones
-output['totalevents'] = np.int(-1) 
+output['totalevents'] = np.zeros((1,)) 
 output['NRedep'] = np.zeros((nev,maxnr)) #start out with zeros 
 output['NRYield'] = np.zeros((nev,maxnr)) #start out with zeros 
 output['NRx'] = np.zeros((nev,maxnr)) #start out with zeros 
@@ -97,6 +101,7 @@ for entry in range(nev):
     print('processing event {} of {}\r'.format(entry,nev))
     #pntree.GetEntry(entry))
 
+    output['totalevents'][0] = allarrays[b'totalevents'][entry]
     output['NRhit'][entry] = allarrays[b'NRhit'][entry]
     output['ERhit'][entry] = allarrays[b'ERhit'][entry]
     output['ncap'][entry] = allarrays[b'ncap'][entry] 
@@ -187,7 +192,16 @@ for entry in range(nev):
     #    print '... its volume is ',volname.tostring()
 # end loop over decay tree
 
+#open and write file
+of = h5py.File(outfilename, 'w')
 
+for k,v in output.items():
+  print(k)
+  print(np.shape(v))
+  dset_hits = of.create_dataset("simdata/{}".format(k), np.shape(v), dtype=np.dtype('float64').type, compression="gzip", compression_opts=9)
+  dset_hits[...] = v
+
+of.close()
 exit(1)
 #outfile = file('/data/chocula/villaa/PhotoN_SuperSim/possys/flux_data_v2.pkl', 'w')
 outfile = file(outfilename, 'w')
