@@ -34,7 +34,13 @@
 #./condorPhotoNSuperSim -n 100 -src sbbe -set 4 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
 
 #use this for ybe 0x0005 photoneutron jobs
-./condorPhotoNSuperSim -n 50 -src ybe -set 5 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
+#./condorPhotoNSuperSim -n 50 -src ybe -set 5 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
 
 #use this for sbbe 0x0005 photoneutron jobs
-./condorPhotoNSuperSim -n 50 -src sbbe -set 5 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
+#./condorPhotoNSuperSim -n 50 -src sbbe -set 5 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
+
+#use this for ybe 0x0006 photoneutron jobs
+./condorPhotoNSuperSim -n 50 -src ybe -set 6 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
+
+#use this for sbbe 0x0006 photoneutron jobs
+./condorPhotoNSuperSim -n 50 -src sbbe -set 6 -ngen 1000000 -prim -otype root -merge -template soudan_photon_neutron_bridgeshiftUpdate.mac.template -exe
