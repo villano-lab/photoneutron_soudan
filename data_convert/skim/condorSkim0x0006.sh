@@ -44,7 +44,7 @@ for i in $(seq 0 ${idx})
 do
   echo ${i}
   off=$((100*i))
-  sed -e 's|IDENTIFIER|'${DSET}'_'${i}'-'${NFMAX}'|g' -e 's|ARGUMENTS|'${ZIP}' '${SOURCE}' '${NFMAX}' '${off}' '${i}'_max'${NFMAX}'|g' < condor/condor-DataConvert > testcondor
+  sed -e 's|IDENTIFIER|'${DSET}'_'${i}'-'${NFMAX}'|g' -e 's|ARGUMENTS|'${ZIP}' '${SOURCE}' '${NFMAX}' '${off}' '${i}'_max'${NFMAX}' 6|g' < condor/condor-DataConvert > testcondor
   cat testcondor
   if [ ${EXE} != "yes" ]
   then
