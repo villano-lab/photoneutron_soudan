@@ -4,7 +4,7 @@ SOURCE=$1
 ZIP=$2
 DIR=/data/chocula/villaa/PhotoN_SuperSim/${SOURCE}root/
 DSET=0x0006
-NFMAX=100
+NFMAX=1300
 
 
 EXE=no
